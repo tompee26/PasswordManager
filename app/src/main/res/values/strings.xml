@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"> Ilog Password Manager</string>
+    <string name="service_name">Ilog Password Manager</string>
+    <string name="content_description">Content description</string>
+
+    <string name="invalid_package_signature">Invalid package signature</string>
+
+    <string name="control_cancel">Cancel</string>
+    <string name="control_ok">OK</string>
+
+    <string name="title_authenticate">Fingerprint Authentication</string>
+    <string name="title_authenticate_subtitle">Login to access app</string>
+    <string name="title_applications">Applications</string>
+
+    <string name="message_authenticate">Touch the sensor</string>
+    <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
+    <string name="message_fingerprint_not_registered">No fingerprint registered in this device. Register fingerprints first.</string>
+
+</resources>

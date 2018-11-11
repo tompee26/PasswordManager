@@ -1,0 +1,16 @@
+package com.tompee.utilities.passwordmanager.base
+
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import io.reactivex.disposables.CompositeDisposable
+
+abstract class BaseViewModel<T : BaseInteractor>(protected val interactor: T,
+                                                 protected val context: Context
+) : ViewModel() {
+    protected val subscriptions = CompositeDisposable()
+
+    override fun onCleared() {
+        subscriptions.clear()
+        super.onCleared()
+    }
+}
