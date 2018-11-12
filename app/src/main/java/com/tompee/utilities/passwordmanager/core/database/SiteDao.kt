@@ -13,5 +13,5 @@ interface SiteDao {
     fun insert(siteEntity: SiteEntity)
 
     @Query("SELECT * FROM site")
-    fun getPackages(): Observable<List<SiteEntity>>
+    fun getSites(): Observable<List<SiteEntity>>
 }

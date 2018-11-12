@@ -9,7 +9,12 @@ import dagger.Provides
 class SitesModule {
 
     @Provides
-    fun provideSitesViewModelFactory(mainInteractor: MainInteractor,
-                                   context: Context) : SitesViewModel.Factory =
+    fun provideSitesViewModelFactory(
+        mainInteractor: MainInteractor,
+        context: Context
+    ): SitesViewModel.Factory =
         SitesViewModel.Factory(mainInteractor, context)
+
+    @Provides
+    fun provideSiteAdapter(context: Context): SitesAdapter = SitesAdapter(context)
 }

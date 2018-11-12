@@ -8,6 +8,7 @@ import com.tompee.utilities.passwordmanager.core.database.entity.SiteEntity
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.model.PackageCredential
+import com.tompee.utilities.passwordmanager.model.SiteCredential
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -44,5 +45,14 @@ class MainInteractor(
                 )
             }
             .flatMapCompletable { Completable.fromAction { siteDao.insert(it) } }
+    }
+
+    fun getSiteList(): Observable<List<SiteCredential>> {
+        return siteDao.getSites().concatMap { list ->
+            Observable.fromIterable(list)
+                .map { SiteCredential(it.siteName, it.siteUrl, it.username, it.password) }
+                .toList()
+                .toObservable()
+        }
     }
 }

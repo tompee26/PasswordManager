@@ -2,10 +2,10 @@ package com.tompee.utilities.passwordmanager.model
 
 import android.graphics.drawable.Drawable
 
-data class PackageCredential(
+data class SiteCredential(
     val name: String,
-    val packageName: String,
+    val url: String,
     val username: String,
     val password: String,
-    val icon: Drawable
+    var icon: Drawable? = null
 )
