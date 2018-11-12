@@ -82,6 +82,7 @@
             android:background="@android:color/transparent"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
+            android:maxLines="1"
             android:textColor="@color/dialog_title"
             android:textCursorDrawable="@null"
             app:layout_constraintHorizontal_bias="0.0"
@@ -130,6 +131,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
+                android:maxLines="1"
                 android:textColor="@color/dialog_title" />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,4 +1,4 @@
-package com.tompee.utilities.passwordmanager.feature.main.apps
+package com.tompee.utilities.passwordmanager.feature.main.common
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -11,26 +11,31 @@ import io.reactivex.Completable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
-class AppViewModel private constructor(mainInteractor: MainInteractor, context: Context) :
+class PackageViewModel private constructor(mainInteractor: MainInteractor, context: Context) :
     BaseViewModel<MainInteractor>(mainInteractor, context) {
 
     class Factory(private val mainInteractor: MainInteractor, private val context: Context) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return AppViewModel(mainInteractor, context) as T
+            return PackageViewModel(mainInteractor, context) as T
         }
     }
 
     val list = MutableLiveData<List<PackageCredential>>()
     val searching = MutableLiveData<Boolean>()
+    val currentPackage = MutableLiveData<PackageCredential>()
 
     init {
         subscriptions += Completable.fromAction { searching.postValue(true) }
             .andThen(interactor.getPackageList())
             .doOnNext { searching.postValue(false) }
             .doFinally { searching.postValue(false) }
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.computation())
             .subscribe(list::postValue)
+    }
+
+    fun setCurrentPackage(pack: PackageCredential) {
+        currentPackage.postValue(pack)
     }
 }

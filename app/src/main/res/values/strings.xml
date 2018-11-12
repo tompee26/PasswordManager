@@ -10,6 +10,7 @@
     <string name="control_cancel">Cancel</string>
     <string name="control_ok">OK</string>
     <string name="control_generate">Generate</string>
+    <string name="control_copy">Copy</string>
 
     <string name="title_authenticate">Fingerprint Authentication</string>
     <string name="title_authenticate_subtitle">Login to access app</string>
@@ -24,6 +25,7 @@
     <string name="message_searching_packages">Finding all installed packages</string>
     <string name="message_searching_packages_credential">Finding all stored credentials</string>
     <string name="message_add_package">Set a credential for this package. Alternatively, you can also generate a strong password by tapping Generate.</string>
+    <string name="message_view_package">Tap COPY to copy the password to the clipboard.</string>
     <string name="message_add_site">Set a credential for a new site. Alternatively, you can also generate a strong password by tapping Generate.</string>
 
     <string name="label_login_name">Username</string>

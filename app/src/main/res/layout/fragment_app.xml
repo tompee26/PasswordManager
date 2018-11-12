@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.tompee.utilities.passwordmanager.feature.main.apps.AppViewModel" />
+            type="com.tompee.utilities.passwordmanager.feature.main.common.PackageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

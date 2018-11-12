@@ -27,7 +27,15 @@ class MainInteractor(
             Observable.fromIterable(list)
                 .concatMapSingle { entity ->
                     packageManager.getPackageFromName(entity.packageName)
-                        .map { PackageCredential(it.name, it.packageName, entity.username, entity.password, it.icon) }
+                        .map {
+                            val key = keystore.getKey(it.packageName)!!
+                            return@map PackageCredential(
+                                it.name, it.packageName, cipher.decrypt(
+                                    entity.username,
+                                    key.private
+                                ), cipher.decrypt(entity.password, key.private), it.icon
+                            )
+                        }
                 }
                 .toList()
                 .toObservable()

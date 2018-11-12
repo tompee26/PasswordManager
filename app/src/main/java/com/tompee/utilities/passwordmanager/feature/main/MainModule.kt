@@ -10,9 +10,11 @@ import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.MainScope
 import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppFragment
-import com.tompee.utilities.passwordmanager.feature.main.apps.AppModule
+import com.tompee.utilities.passwordmanager.feature.main.apps.AppViewModule
+import com.tompee.utilities.passwordmanager.feature.main.common.PackageViewModel
 import com.tompee.utilities.passwordmanager.feature.main.sites.SitesFragment
 import com.tompee.utilities.passwordmanager.feature.main.sites.SitesModule
+import com.tompee.utilities.passwordmanager.feature.main.view.ViewPackageDialog
 import com.tompee.utilities.passwordmanager.interactor.MainInteractor
 import dagger.Module
 import dagger.Provides
@@ -24,7 +26,7 @@ class MainModule {
     @Module
     interface Bindings {
 
-        @ContributesAndroidInjector(modules = [AppModule::class])
+        @ContributesAndroidInjector(modules = [AppViewModule::class])
         fun bindAppFragment(): AppFragment
 
         @ContributesAndroidInjector(modules = [SitesModule::class])
@@ -32,6 +34,9 @@ class MainModule {
 
         @ContributesAndroidInjector
         fun bindAddSitesDialog(): AddSitesDialog
+
+        @ContributesAndroidInjector
+        fun bindViewPackageDialog(): ViewPackageDialog
     }
 
     @Provides
@@ -59,6 +64,12 @@ class MainModule {
         appFragment: AppFragment,
         sitesFragment: SitesFragment
     ): MainViewPagerAdapter = MainViewPagerAdapter(fragmentManager, context, appFragment, sitesFragment)
+
+    @Provides
+    fun providePackageViewModelFactory(
+        mainInteractor: MainInteractor,
+        context: Context
+    ): PackageViewModel.Factory = PackageViewModel.Factory(mainInteractor, context)
 
     @Provides
     @MainScope
