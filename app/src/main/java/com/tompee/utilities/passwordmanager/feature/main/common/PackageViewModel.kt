@@ -8,6 +8,7 @@ import com.tompee.utilities.passwordmanager.base.BaseViewModel
 import com.tompee.utilities.passwordmanager.interactor.MainInteractor
 import com.tompee.utilities.passwordmanager.model.PackageCredential
 import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
@@ -25,6 +26,7 @@ class PackageViewModel private constructor(mainInteractor: MainInteractor, conte
     val list = MutableLiveData<List<PackageCredential>>()
     val searching = MutableLiveData<Boolean>()
     val currentPackage = MutableLiveData<PackageCredential>()
+    val copiedToClipboard = MutableLiveData<Boolean>()
 
     init {
         subscriptions += Completable.fromAction { searching.postValue(true) }
@@ -37,5 +39,12 @@ class PackageViewModel private constructor(mainInteractor: MainInteractor, conte
 
     fun setCurrentPackage(pack: PackageCredential) {
         currentPackage.postValue(pack)
+    }
+
+    fun copyToClipboard(text: String) {
+        subscriptions += interactor.copyToClipboard(text)
+            .doOnComplete { copiedToClipboard.postValue(true) }
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe()
     }
 }

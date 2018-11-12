@@ -56,6 +56,9 @@ dependencies {
     def rxKotlin = "2.3.0"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlin"
 
+    def rxAndroid = "2.1.0"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
+
     def room = "2.1.0-alpha02"
     implementation "androidx.room:room-runtime:$room"
     implementation "androidx.room:room-rxjava2:$room"

@@ -3,6 +3,7 @@ package com.tompee.utilities.passwordmanager.interactor
 import android.content.Context
 import com.tompee.utilities.passwordmanager.base.BaseInteractor
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
+import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.database.entity.SiteEntity
@@ -22,7 +23,8 @@ class MainInteractor(
     private val packageManager: PackageManager,
     private val keystore: Keystore,
     private val cipher: Cipher,
-    private val context: Context
+    private val context: Context,
+    private val clipboardManager: ClipboardManager
 ) : BaseInteractor {
 
     fun getPackageList(): Observable<List<PackageCredential>> {
@@ -75,4 +77,6 @@ class MainInteractor(
                 .toObservable()
         }
     }
+
+    fun copyToClipboard(text: String): Completable = clipboardManager.copyToClipboard(text)
 }

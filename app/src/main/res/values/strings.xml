@@ -27,6 +27,7 @@
     <string name="message_add_package">Set a credential for this package. Alternatively, you can also generate a strong password by tapping Generate.</string>
     <string name="message_view_credential">Below is the currently saved credential. Tap copy to save the password to the clipboard.</string>
     <string name="message_add_site">Set a credential for a new site. Alternatively, you can also generate a strong password by tapping Generate.</string>
+    <string name="message_clipboard">Password has been copied to clipboard</string>
 
     <string name="label_login_name">Username</string>
     <string name="label_login_pass">Password</string>

@@ -3,6 +3,7 @@ package com.tompee.utilities.passwordmanager.feature.main
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
+import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
@@ -53,9 +54,9 @@ class MainModule {
     @MainScope
     fun provideMainInteractor(
         packageDao: PackageDao, siteDao: SiteDao, packageManager: PackageManager,
-        keystore: Keystore, cipher: Cipher, context: Context
+        keystore: Keystore, cipher: Cipher, context: Context, clipboardManager: ClipboardManager
     ): MainInteractor =
-        MainInteractor(packageDao, siteDao, packageManager, keystore, cipher, context)
+        MainInteractor(packageDao, siteDao, packageManager, keystore, cipher, context, clipboardManager)
 
     @Provides
     @MainScope

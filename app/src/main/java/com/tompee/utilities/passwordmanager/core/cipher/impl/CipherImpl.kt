@@ -6,7 +6,7 @@ import java.security.Key
 
 class CipherImpl : Cipher {
     companion object {
-        var TRANSFORMATION_ASYMMETRIC = "RSA/ECB/PKCS1Padding"
+        private const val TRANSFORMATION_ASYMMETRIC = "RSA/ECB/PKCS1Padding"
     }
 
     private val cipher: javax.crypto.Cipher = javax.crypto.Cipher.getInstance(TRANSFORMATION_ASYMMETRIC)

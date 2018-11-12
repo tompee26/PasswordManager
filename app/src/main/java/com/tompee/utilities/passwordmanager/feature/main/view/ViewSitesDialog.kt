@@ -48,6 +48,10 @@ class ViewSitesDialog : BaseDialogFragment() {
             binding.cancel.visibility = View.GONE
         })
 
+        binding.generate.setOnClickListener{
+            vm.copyToClipboard(binding.etPassword.text.toString())
+        }
+
         binding.add.setOnClickListener {
             dismiss()
         }

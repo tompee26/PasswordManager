@@ -1,5 +1,6 @@
 package com.tompee.utilities.passwordmanager.feature.main.apps
 
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -46,6 +47,10 @@ class AppFragment : BaseFragment<FragmentAppBinding>(), HasSupportFragmentInject
             val dialog = ViewPackageDialog()
             dialog.show(fragmentManager, "view")
         }
+
+        vm.copiedToClipboard.observe(this, Observer {
+            if (it) Toast.makeText(context, getString(R.string.message_clipboard), Toast.LENGTH_SHORT).show()
+        })
 
         vm.list.observe(this, Observer {
             appAdapter.addPackages(it)

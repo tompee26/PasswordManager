@@ -1,5 +1,6 @@
 package com.tompee.utilities.passwordmanager.feature.main.sites
 
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -39,6 +40,10 @@ class SitesFragment : BaseFragment<FragmentSitesBinding>() {
             val dialog = ViewSitesDialog()
             dialog.show(fragmentManager, "view")
         }
+
+        vm.copiedToClipboard.observe(this, Observer {
+            if (it) Toast.makeText(context, getString(R.string.message_clipboard), Toast.LENGTH_SHORT).show()
+        })
 
         vm.list.observe(this, Observer {
             sitesAdapter.addSites(it)

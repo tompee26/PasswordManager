@@ -9,6 +9,7 @@ import com.tompee.utilities.passwordmanager.interactor.MainInteractor
 import com.tompee.utilities.passwordmanager.model.PackageCredential
 import com.tompee.utilities.passwordmanager.model.SiteCredential
 import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
@@ -26,6 +27,7 @@ class SitesViewModel private constructor(mainInteractor: MainInteractor, context
     val list = MutableLiveData<List<SiteCredential>>()
     val searching = MutableLiveData<Boolean>()
     val currentSite = MutableLiveData<SiteCredential>()
+    val copiedToClipboard = MutableLiveData<Boolean>()
 
     init {
         subscriptions += Completable.fromAction { searching.postValue(true) }
@@ -38,5 +40,12 @@ class SitesViewModel private constructor(mainInteractor: MainInteractor, context
 
     fun setCurrentSite(site: SiteCredential) {
         currentSite.postValue(site)
+    }
+
+    fun copyToClipboard(text: String) {
+        subscriptions += interactor.copyToClipboard(text)
+            .doOnComplete { copiedToClipboard.postValue(true) }
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe()
     }
 }
