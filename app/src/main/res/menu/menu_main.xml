@@ -5,12 +5,12 @@
         android:id="@+id/menu_about"
         android:title="@string/label_about"
         app:showAsAction="never" />
-    <!--<item-->
-    <!--android:id="@+id/menu_policy"-->
-    <!--android:title="@string/label_policy"-->
-    <!--app:showAsAction="never" />-->
-    <!--<item-->
-    <!--android:id="@+id/menu_license"-->
-    <!--android:title="@string/label_license"-->
-    <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/menu_policy"
+        android:title="@string/label_policy"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_license"
+        android:title="@string/label_license"
+        app:showAsAction="never" />
 </menu>

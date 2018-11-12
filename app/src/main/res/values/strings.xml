@@ -36,6 +36,8 @@
     <string name="label_site_url">URL</string>
     <string name="label_about">About</string>
     <string name="label_version">Version %1$s</string>
+    <string name="label_license">License</string>
+    <string name="label_policy">Privacy Policy</string>
 
     <string name="error_empty">Field cannot be empty</string>
 

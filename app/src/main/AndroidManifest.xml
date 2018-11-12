@@ -22,6 +22,7 @@
         <activity android:name=".feature.splash.SplashActivity" />
         <activity android:name=".feature.packages.PackageActivity" />
         <activity android:name=".feature.about.AboutActivity" />
+        <activity android:name=".feature.license.LicenseActivity" />
     </application>
 
 </manifest>

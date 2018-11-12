@@ -3,6 +3,7 @@ package com.tompee.utilities.passwordmanager.dependency
 import android.content.Context
 import androidx.room.Room
 import com.tompee.utilities.passwordmanager.Constants
+import com.tompee.utilities.passwordmanager.core.asset.AssetManager
 import com.tompee.utilities.passwordmanager.core.biometric.BiometricManager
 import com.tompee.utilities.passwordmanager.core.biometric.reprint.ReprintBiometricManager
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
@@ -63,6 +64,10 @@ class CoreModule {
     @Provides
     @Singleton
     fun provideClipboardManagerImpl(context: Context): ClipboardManagerImpl = ClipboardManagerImpl(context)
+
+    @Provides
+    @Singleton
+    fun provideAssetManager(context: Context): AssetManager = AssetManager(context)
 
     @Provides
     @Singleton

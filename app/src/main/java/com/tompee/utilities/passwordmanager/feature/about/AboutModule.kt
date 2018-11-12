@@ -1,6 +1,7 @@
 package com.tompee.utilities.passwordmanager.feature.about
 
 import android.content.Context
+import com.tompee.utilities.passwordmanager.core.asset.AssetManager
 import com.tompee.utilities.passwordmanager.dependency.scope.AboutScope
 import com.tompee.utilities.passwordmanager.interactor.AssetInteractor
 import dagger.Module
@@ -16,5 +17,5 @@ class AboutModule {
 
     @Provides
     @AboutScope
-    fun provideAsseInteractor(): AssetInteractor = AssetInteractor()
+    fun provideAsseInteractor(assetManager: AssetManager): AssetInteractor = AssetInteractor(assetManager)
 }

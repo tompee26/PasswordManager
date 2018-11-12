@@ -12,6 +12,7 @@ import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivityMainBinding
 import com.tompee.utilities.passwordmanager.feature.about.AboutActivity
+import com.tompee.utilities.passwordmanager.feature.license.LicenseActivity
 import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
 import com.tompee.utilities.passwordmanager.feature.packages.PackageActivity
 import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
@@ -56,20 +57,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 startActivityForResult(intent, REQUEST)
                 return true
             }
-//            R.id.menu_policy -> {
-//                intent = Intent(this, LicenseActivity::class.java)
-//                intent.putExtra(LicenseActivity.TAG_MODE, LicenseActivity.PRIVACY)
-//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                startActivity(intent)
-//                return true
-//            }
-//            R.id.menu_license -> {
-//                intent = Intent(this, LicenseActivity::class.java)
-//                intent.putExtra(LicenseActivity.TAG_MODE, LicenseActivity.LICENSE)
-//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                startActivity(intent)
-//                return true
-//            }
+            R.id.menu_policy -> {
+                intent = Intent(this, LicenseActivity::class.java)
+                intent.putExtra(LicenseActivity.TAG_MODE, LicenseActivity.PRIVACY)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivityForResult(intent, REQUEST)
+                return true
+            }
+            R.id.menu_license -> {
+                intent = Intent(this, LicenseActivity::class.java)
+                intent.putExtra(LicenseActivity.TAG_MODE, LicenseActivity.LICENSE)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivityForResult(intent, REQUEST)
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
