@@ -71,6 +71,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         fingerprintDialog.show(supportFragmentManager, "authenticate")
     }
 
+    override fun onPause() {
+        super.onPause()
+        fingerprintDialog.dismiss()
+    }
+
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
     override val layoutId: Int = R.layout.activity_splash
