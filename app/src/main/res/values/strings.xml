@@ -12,9 +12,12 @@
     <string name="title_authenticate">Fingerprint Authentication</string>
     <string name="title_authenticate_subtitle">Login to access app</string>
     <string name="title_applications">Applications</string>
+    <string name="title_sites">Sites</string>
+    <string name="title_packages">Packages</string>
 
     <string name="message_authenticate">Touch the sensor</string>
     <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
     <string name="message_fingerprint_not_registered">No fingerprint registered in this device. Register fingerprints first.</string>
+    <string name="message_searching_packages">Finding all installed packages</string>
 
 </resources>

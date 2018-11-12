@@ -22,6 +22,6 @@ class MainViewModel private constructor(mainInteractor: MainInteractor, context:
     val title = MutableLiveData<String>()
 
     init {
-        title.postValue(context.getString(R.string.title_applications))
+        title.postValue(context.getString(R.string.app_name))
     }
 }

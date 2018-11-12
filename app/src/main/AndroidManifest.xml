@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.main.MainActivity"/>
+        <activity android:name=".feature.packages.PackageActivity"/>
     </application>
 
 </manifest>
