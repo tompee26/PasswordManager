@@ -1,10 +1,14 @@
 package com.tompee.utilities.passwordmanager.dependency
 
 import android.content.Context
+import androidx.room.Room
+import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.core.biometric.BiometricManager
 import com.tompee.utilities.passwordmanager.core.biometric.reprint.ReprintBiometricManager
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.cipher.impl.CipherImpl
+import com.tompee.utilities.passwordmanager.core.database.PackageDao
+import com.tompee.utilities.passwordmanager.core.database.PasswordDatabase
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.keystore.impl.KeystoreImpl
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
@@ -48,4 +52,16 @@ class CoreModule {
     @Provides
     @Singleton
     fun provideKeystoreImpl(): KeystoreImpl = KeystoreImpl()
+
+    @Provides
+    @Singleton
+    fun provideDatabase(context: Context): PasswordDatabase {
+        return Room.databaseBuilder(context, PasswordDatabase::class.java, Constants.DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMedicineDao(database: PasswordDatabase): PackageDao = database.packageDao()
 }

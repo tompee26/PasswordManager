@@ -2,6 +2,8 @@ package com.tompee.utilities.passwordmanager.feature.main
 
 import android.content.Context
 import androidx.fragment.app.FragmentManager
+import com.tompee.utilities.passwordmanager.core.database.PackageDao
+import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.MainScope
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppFragment
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppModule
@@ -32,7 +34,8 @@ class MainModule {
 
     @Provides
     @MainScope
-    fun provideMainInteractor(): MainInteractor = MainInteractor()
+    fun provideMainInteractor(packageDao: PackageDao, packageManager: PackageManager): MainInteractor =
+        MainInteractor(packageDao, packageManager)
 
     @Provides
     @MainScope

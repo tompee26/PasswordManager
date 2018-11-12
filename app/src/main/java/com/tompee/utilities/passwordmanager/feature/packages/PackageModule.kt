@@ -1,6 +1,9 @@
 package com.tompee.utilities.passwordmanager.feature.packages
 
 import android.content.Context
+import com.tompee.utilities.passwordmanager.core.cipher.Cipher
+import com.tompee.utilities.passwordmanager.core.database.PackageDao
+import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.PackageScope
 import com.tompee.utilities.passwordmanager.feature.packages.add.AddPackageDialog
@@ -15,19 +18,28 @@ class PackageModule {
     @Module
     interface Bindings {
         @ContributesAndroidInjector
-        fun bindAddPackageDialog() : AddPackageDialog
+        fun bindAddPackageDialog(): AddPackageDialog
     }
 
     @Provides
     @PackageScope
-    fun providePackageViewModelFactory(packageInteractor: PackageInteractor, context: Context) : PackageViewModel.Factory =
-            PackageViewModel.Factory(packageInteractor, context)
+    fun providePackageViewModelFactory(
+        packageInteractor: PackageInteractor,
+        context: Context
+    ): PackageViewModel.Factory =
+        PackageViewModel.Factory(packageInteractor, context)
 
     @Provides
     @PackageScope
-    fun providePackageInteractor(packageManager: PackageManager) : PackageInteractor = PackageInteractor(packageManager)
+    fun providePackageInteractor(
+        packageManager: PackageManager,
+        keystore: Keystore,
+        cipher: Cipher,
+        packageDao: PackageDao
+    ):
+            PackageInteractor = PackageInteractor(packageManager, keystore, cipher, packageDao)
 
     @Provides
     @PackageScope
-    fun providePackageAdapter() : PackageAdapter = PackageAdapter()
+    fun providePackageAdapter(): PackageAdapter = PackageAdapter()
 }

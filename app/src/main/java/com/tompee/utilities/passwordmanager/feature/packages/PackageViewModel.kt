@@ -39,7 +39,14 @@ class PackageViewModel private constructor(packageInteractor: PackageInteractor,
             .subscribe(packageList::postValue)
     }
 
-    fun setCurrentPackage(pack : Package) {
+    fun setCurrentPackage(pack: Package) {
         currentPackage.postValue(pack)
+    }
+
+    fun saveCredential(username: String, password: String) {
+        val pack = currentPackage.value!!
+        subscriptions += interactor.savePackageCredential(pack, username, password)
+            .subscribeOn(Schedulers.computation())
+            .subscribe()
     }
 }

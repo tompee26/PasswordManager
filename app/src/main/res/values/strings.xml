@@ -21,9 +21,12 @@
     <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
     <string name="message_fingerprint_not_registered">No fingerprint registered in this device. Register fingerprints first.</string>
     <string name="message_searching_packages">Finding all installed packages</string>
+    <string name="message_searching_packages_credential">Finding all stored credentials</string>
     <string name="message_add_package">Set a credential for this package. Alternatively, you can also generate a strong password by tapping Generate.</string>
 
     <string name="label_login_name">Username</string>
     <string name="label_login_pass">Password</string>
+
+    <string name="error_empty">Field cannot be empty</string>
 
 </resources>

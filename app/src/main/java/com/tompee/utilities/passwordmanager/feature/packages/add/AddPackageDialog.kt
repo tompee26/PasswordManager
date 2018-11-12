@@ -38,6 +38,19 @@ class AddPackageDialog : BaseDialogFragment() {
             dismiss()
         }
 
+        binding.add.setOnClickListener{
+            if (binding.userView.text.isEmpty()) {
+                binding.userView.error = getString(R.string.error_empty)
+                return@setOnClickListener
+            }
+            if (binding.etPassword.text.toString().isEmpty()) {
+                binding.etPassword.error = getString(R.string.error_empty)
+                return@setOnClickListener
+            }
+            vm.saveCredential(binding.userView.text.toString(), binding.etPassword.text.toString())
+            dismiss()
+        }
+
         return AlertDialog.Builder(activity!!)
             .setView(binding.root)
             .setCancelable(false)

@@ -12,4 +12,7 @@ class AppModule {
     fun provideAppViewModelFactory(mainInteractor: MainInteractor,
                                    context: Context) : AppViewModel.Factory =
             AppViewModel.Factory(mainInteractor, context)
+
+    @Provides
+    fun provideAppAdapter() : AppAdapter = AppAdapter()
 }

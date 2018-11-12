@@ -5,6 +5,7 @@ import android.app.Service
 import android.content.Context
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import com.github.ajalt.reprint.core.Reprint
 import com.tompee.utilities.passwordmanager.dependency.DaggerAppComponent
 import dagger.android.AndroidInjector
@@ -23,12 +24,13 @@ class PasswordManagerApplication : MultiDexApplication(), HasActivityInjector, H
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
         Reprint.initialize(this)
 
         DaggerAppComponent.builder()
-                .application(this)
-                .build()
-                .inject(this)
+            .application(this)
+            .build()
+            .inject(this)
     }
 
     override fun attachBaseContext(base: Context) {
@@ -38,5 +40,5 @@ class PasswordManagerApplication : MultiDexApplication(), HasActivityInjector, H
 
     override fun activityInjector(): AndroidInjector<Activity> = dispatchingActivityInjector
 
-    override fun serviceInjector(): AndroidInjector<Service>  = dispatchingServiceInjector
+    override fun serviceInjector(): AndroidInjector<Service> = dispatchingServiceInjector
 }

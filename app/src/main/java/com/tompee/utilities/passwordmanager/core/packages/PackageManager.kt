@@ -5,4 +5,6 @@ import io.reactivex.Single
 
 interface PackageManager {
     fun getPackages(): Single<List<Package>>
+
+    fun getPackageFromName(packageName: String) : Single<Package>
 }

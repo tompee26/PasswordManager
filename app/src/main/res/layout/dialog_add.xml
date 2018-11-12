@@ -140,7 +140,6 @@
             android:layout_marginBottom="16dp"
             android:background="@android:color/transparent"
             android:minWidth="64dp"
-            android:enabled="false"
             android:minHeight="32dp"
             android:text="@string/control_add"
             android:textColor="@color/colorPrimary"
