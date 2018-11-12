@@ -16,6 +16,7 @@
     <string name="title_applications">Applications</string>
     <string name="title_sites">Sites</string>
     <string name="title_packages">Packages</string>
+    <string name="title_add_site">Add Site</string>
 
     <string name="message_authenticate">Touch the sensor</string>
     <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
@@ -23,9 +24,12 @@
     <string name="message_searching_packages">Finding all installed packages</string>
     <string name="message_searching_packages_credential">Finding all stored credentials</string>
     <string name="message_add_package">Set a credential for this package. Alternatively, you can also generate a strong password by tapping Generate.</string>
+    <string name="message_add_site">Set a credential for a new site. Alternatively, you can also generate a strong password by tapping Generate.</string>
 
     <string name="label_login_name">Username</string>
     <string name="label_login_pass">Password</string>
+    <string name="label_site_name">Site name</string>
+    <string name="label_site_url">URL</string>
 
     <string name="error_empty">Field cannot be empty</string>
 

@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivityMainBinding
+import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
 import com.tompee.utilities.passwordmanager.feature.packages.PackageActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -54,6 +55,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 val intent = Intent(this@MainActivity, PackageActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
+            } else {
+                val dialog = AddSitesDialog()
+                dialog.show(supportFragmentManager, "addsites")
             }
         }
 

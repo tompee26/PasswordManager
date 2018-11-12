@@ -9,6 +9,7 @@ import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.cipher.impl.CipherImpl
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.PasswordDatabase
+import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.keystore.impl.KeystoreImpl
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
@@ -63,5 +64,9 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun provideMedicineDao(database: PasswordDatabase): PackageDao = database.packageDao()
+    fun providePackageDao(database: PasswordDatabase): PackageDao = database.packageDao()
+
+    @Provides
+    @Singleton
+    fun provideSiteDao(database: PasswordDatabase): SiteDao = database.siteDao()
 }

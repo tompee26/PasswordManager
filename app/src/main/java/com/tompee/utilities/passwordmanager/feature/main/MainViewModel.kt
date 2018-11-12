@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
 import com.tompee.utilities.passwordmanager.interactor.MainInteractor
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
 
 class MainViewModel private constructor(mainInteractor: MainInteractor, context: Context) :
     BaseViewModel<MainInteractor>(mainInteractor, context) {
@@ -24,4 +26,11 @@ class MainViewModel private constructor(mainInteractor: MainInteractor, context:
     init {
         title.postValue(context.getString(R.string.app_name))
     }
+
+    fun saveCredential(siteName: String, siteUrl: String, username: String, password: String) {
+        subscriptions += interactor.saveCredential(siteName, siteUrl, username, password)
+            .subscribeOn(Schedulers.computation())
+            .subscribe()
+    }
+
 }

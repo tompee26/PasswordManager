@@ -21,8 +21,14 @@ class PackageInteractor(
 
     fun savePackageCredential(pack: Package, username: String, password: String): Completable {
         return Single.fromCallable { keystore.createKey(pack.packageName) }
-            .map { cipher.encrypt(password, it.public) }
-            .map { PackageEntity(pack.packageName, pack.name, username, it) }
+            .map {
+                PackageEntity(
+                    pack.packageName,
+                    pack.name,
+                    cipher.encrypt(username, it.public),
+                    cipher.encrypt(password, it.public)
+                )
+            }
             .flatMapCompletable { Completable.fromAction { packageDao.insert(it) } }
     }
 }

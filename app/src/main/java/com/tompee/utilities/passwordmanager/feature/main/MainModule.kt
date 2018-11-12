@@ -2,9 +2,13 @@ package com.tompee.utilities.passwordmanager.feature.main
 
 import android.content.Context
 import androidx.fragment.app.FragmentManager
+import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
+import com.tompee.utilities.passwordmanager.core.database.SiteDao
+import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.MainScope
+import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppFragment
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppModule
 import com.tompee.utilities.passwordmanager.feature.main.sites.SitesFragment
@@ -25,6 +29,9 @@ class MainModule {
 
         @ContributesAndroidInjector(modules = [SitesModule::class])
         fun bindSitesFragment(): SitesFragment
+
+        @ContributesAndroidInjector
+        fun bindAddSitesDialog(): AddSitesDialog
     }
 
     @Provides
@@ -34,8 +41,11 @@ class MainModule {
 
     @Provides
     @MainScope
-    fun provideMainInteractor(packageDao: PackageDao, packageManager: PackageManager): MainInteractor =
-        MainInteractor(packageDao, packageManager)
+    fun provideMainInteractor(
+        packageDao: PackageDao, siteDao: SiteDao, packageManager: PackageManager,
+        keystore: Keystore, cipher: Cipher
+    ): MainInteractor =
+        MainInteractor(packageDao, siteDao, packageManager, keystore, cipher)
 
     @Provides
     @MainScope

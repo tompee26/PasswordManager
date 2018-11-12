@@ -10,6 +10,7 @@ import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivityPackageBinding
 import com.tompee.utilities.passwordmanager.feature.common.DividerDecorator
+import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
 import com.tompee.utilities.passwordmanager.feature.packages.add.AddPackageDialog
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
