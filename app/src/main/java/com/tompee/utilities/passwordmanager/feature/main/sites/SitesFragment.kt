@@ -8,6 +8,8 @@ import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseFragment
 import com.tompee.utilities.passwordmanager.databinding.FragmentSitesBinding
 import com.tompee.utilities.passwordmanager.feature.common.DividerDecorator
+import com.tompee.utilities.passwordmanager.feature.main.common.SitesViewModel
+import com.tompee.utilities.passwordmanager.feature.main.view.ViewSitesDialog
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -30,6 +32,12 @@ class SitesFragment : BaseFragment<FragmentSitesBinding>() {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerDecorator(ContextCompat.getDrawable(context, R.drawable.list_divider)!!))
             adapter = sitesAdapter
+        }
+
+        sitesAdapter.listener = {
+            vm.setCurrentSite(it)
+            val dialog = ViewSitesDialog()
+            dialog.show(fragmentManager, "view")
         }
 
         vm.list.observe(this, Observer {

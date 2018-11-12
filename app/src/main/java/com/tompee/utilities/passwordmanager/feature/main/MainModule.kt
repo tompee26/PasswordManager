@@ -12,9 +12,11 @@ import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppFragment
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppViewModule
 import com.tompee.utilities.passwordmanager.feature.main.common.PackageViewModel
+import com.tompee.utilities.passwordmanager.feature.main.common.SitesViewModel
 import com.tompee.utilities.passwordmanager.feature.main.sites.SitesFragment
 import com.tompee.utilities.passwordmanager.feature.main.sites.SitesModule
 import com.tompee.utilities.passwordmanager.feature.main.view.ViewPackageDialog
+import com.tompee.utilities.passwordmanager.feature.main.view.ViewSitesDialog
 import com.tompee.utilities.passwordmanager.interactor.MainInteractor
 import dagger.Module
 import dagger.Provides
@@ -37,6 +39,9 @@ class MainModule {
 
         @ContributesAndroidInjector
         fun bindViewPackageDialog(): ViewPackageDialog
+
+        @ContributesAndroidInjector
+        fun bindViewSitesDialog(): ViewSitesDialog
     }
 
     @Provides
@@ -48,9 +53,9 @@ class MainModule {
     @MainScope
     fun provideMainInteractor(
         packageDao: PackageDao, siteDao: SiteDao, packageManager: PackageManager,
-        keystore: Keystore, cipher: Cipher
+        keystore: Keystore, cipher: Cipher, context: Context
     ): MainInteractor =
-        MainInteractor(packageDao, siteDao, packageManager, keystore, cipher)
+        MainInteractor(packageDao, siteDao, packageManager, keystore, cipher, context)
 
     @Provides
     @MainScope
@@ -70,6 +75,13 @@ class MainModule {
         mainInteractor: MainInteractor,
         context: Context
     ): PackageViewModel.Factory = PackageViewModel.Factory(mainInteractor, context)
+
+    @Provides
+    fun provideSitesViewModelFactory(
+        mainInteractor: MainInteractor,
+        context: Context
+    ): SitesViewModel.Factory =
+        SitesViewModel.Factory(mainInteractor, context)
 
     @Provides
     @MainScope

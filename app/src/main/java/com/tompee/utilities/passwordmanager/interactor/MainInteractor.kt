@@ -1,5 +1,6 @@
 package com.tompee.utilities.passwordmanager.interactor
 
+import android.content.Context
 import com.tompee.utilities.passwordmanager.base.BaseInteractor
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
@@ -7,6 +8,7 @@ import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.database.entity.SiteEntity
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
+import com.tompee.utilities.passwordmanager.feature.common.TextDrawable
 import com.tompee.utilities.passwordmanager.model.PackageCredential
 import com.tompee.utilities.passwordmanager.model.SiteCredential
 import io.reactivex.Completable
@@ -19,7 +21,8 @@ class MainInteractor(
     private val siteDao: SiteDao,
     private val packageManager: PackageManager,
     private val keystore: Keystore,
-    private val cipher: Cipher
+    private val cipher: Cipher,
+    private val context: Context
 ) : BaseInteractor {
 
     fun getPackageList(): Observable<List<PackageCredential>> {
@@ -58,7 +61,16 @@ class MainInteractor(
     fun getSiteList(): Observable<List<SiteCredential>> {
         return siteDao.getSites().concatMap { list ->
             Observable.fromIterable(list)
-                .map { SiteCredential(it.siteName, it.siteUrl, it.username, it.password) }
+                .map {
+                    val key = keystore.getKey(it.siteUrl)!!
+                    return@map SiteCredential(
+                        it.siteName,
+                        it.siteUrl,
+                        cipher.decrypt(it.username, key.private),
+                        cipher.decrypt(it.password, key.private),
+                        TextDrawable(context.resources, it.siteName.toUpperCase().substring(0, 1), false)
+                    )
+                }
                 .toList()
                 .toObservable()
         }

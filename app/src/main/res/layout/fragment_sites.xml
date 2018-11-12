@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.tompee.utilities.passwordmanager.feature.main.sites.SitesViewModel" />
+            type="com.tompee.utilities.passwordmanager.feature.main.common.SitesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

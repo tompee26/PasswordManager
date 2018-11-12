@@ -7,5 +7,5 @@ data class SiteCredential(
     val url: String,
     val username: String,
     val password: String,
-    var icon: Drawable? = null
+    val icon: Drawable
 )

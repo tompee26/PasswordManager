@@ -1,6 +1,5 @@
 package com.tompee.utilities.passwordmanager.feature.main.sites
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -9,10 +8,9 @@ import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.databinding.ListSiteCredentialBinding
-import com.tompee.utilities.passwordmanager.feature.common.TextDrawable
 import com.tompee.utilities.passwordmanager.model.SiteCredential
 
-class SitesAdapter(private val context: Context) : RecyclerView.Adapter<SitesAdapter.ViewHolder>() {
+class SitesAdapter : RecyclerView.Adapter<SitesAdapter.ViewHolder>() {
     private val siteList = SortedList<SiteCredential>(SiteCredential::class.java,
         object : SortedListAdapterCallback<SiteCredential>(this) {
             override fun areItemsTheSame(item1: SiteCredential, item2: SiteCredential): Boolean {
@@ -48,7 +46,6 @@ class SitesAdapter(private val context: Context) : RecyclerView.Adapter<SitesAda
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val current = siteList[position]
-        current.icon = TextDrawable(context.resources, current.name.toUpperCase().substring(0, 1), false)
         holder.binding.packageModel = current
         holder.binding.root.setOnClickListener {
             listener(current)
