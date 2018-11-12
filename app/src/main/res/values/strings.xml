@@ -6,8 +6,10 @@
 
     <string name="invalid_package_signature">Invalid package signature</string>
 
+    <string name="control_add">Add</string>
     <string name="control_cancel">Cancel</string>
     <string name="control_ok">OK</string>
+    <string name="control_generate">Generate</string>
 
     <string name="title_authenticate">Fingerprint Authentication</string>
     <string name="title_authenticate_subtitle">Login to access app</string>
@@ -19,5 +21,9 @@
     <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
     <string name="message_fingerprint_not_registered">No fingerprint registered in this device. Register fingerprints first.</string>
     <string name="message_searching_packages">Finding all installed packages</string>
+    <string name="message_add_package">Set a credential for this package. Alternatively, you can also generate a strong password by tapping Generate.</string>
+
+    <string name="label_login_name">Username</string>
+    <string name="label_login_pass">Password</string>
 
 </resources>

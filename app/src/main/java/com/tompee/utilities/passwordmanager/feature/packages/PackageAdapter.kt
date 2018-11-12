@@ -17,6 +17,8 @@ class PackageAdapter : RecyclerView.Adapter<PackageAdapter.ViewHolder>() {
             result.dispatchUpdatesTo(this)
         }
 
+    var listener: (Package) -> Unit = {}
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = DataBindingUtil.inflate<ListPackageBinding>(
             LayoutInflater.from(parent.context),
@@ -30,7 +32,11 @@ class PackageAdapter : RecyclerView.Adapter<PackageAdapter.ViewHolder>() {
     override fun getItemCount(): Int = packageList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.packageModel = packageList[position]
+        val current = packageList[position]
+        holder.binding.packageModel = current
+        holder.binding.root.setOnClickListener{
+            listener(current)
+        }
     }
 
     private inner class DiffUtilCallback(private val list: List<Package>) : DiffUtil.Callback() {

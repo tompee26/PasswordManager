@@ -10,6 +10,7 @@ import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivityPackageBinding
 import com.tompee.utilities.passwordmanager.feature.common.DividerDecorator
+import com.tompee.utilities.passwordmanager.feature.packages.add.AddPackageDialog
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -43,6 +44,12 @@ class PackageActivity : BaseActivity<ActivityPackageBinding>() {
 
         val vm = ViewModelProviders.of(this, factory)[PackageViewModel::class.java]
         binding.viewModel = vm
+
+        packageAdapter.listener = {
+            vm.setCurrentPackage(it)
+            val dialog = AddPackageDialog()
+            dialog.show(supportFragmentManager, "interaction")
+        }
 
         vm.packageList.observe(this, Observer {
             packageAdapter.packageList = it

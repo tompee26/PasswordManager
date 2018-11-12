@@ -28,6 +28,7 @@ class PackageViewModel private constructor(packageInteractor: PackageInteractor,
     val title = MutableLiveData<String>()
     val packageList = MutableLiveData<List<Package>>()
     val searching = MutableLiveData<Boolean>()
+    val currentPackage = MutableLiveData<Package>()
 
     init {
         title.postValue(context.getString(R.string.title_packages))
@@ -36,5 +37,9 @@ class PackageViewModel private constructor(packageInteractor: PackageInteractor,
             .subscribeOn(Schedulers.io())
             .doFinally { searching.postValue(false) }
             .subscribe(packageList::postValue)
+    }
+
+    fun setCurrentPackage(pack : Package) {
+        currentPackage.postValue(pack)
     }
 }
