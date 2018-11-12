@@ -1,5 +1,6 @@
 package com.tompee.utilities.passwordmanager.feature.splash
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +9,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivitySplashBinding
-import com.tompee.utilities.passwordmanager.feature.main.MainActivity
 import com.tompee.utilities.passwordmanager.feature.splash.authenticate.FingerprintDialog
 import com.tompee.utilities.passwordmanager.feature.splash.register.FingerprintRegisterDialog
 import com.tompee.utilities.passwordmanager.feature.splash.support.FingerprintSupportDialog
@@ -53,14 +53,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         })
 
         vm.needsClose.observe(this, Observer {
-            if (it) finish()
+            if (it) {
+                val intent = Intent()
+                setResult(Activity.RESULT_CANCELED, intent)
+                finish()
+            }
         })
 
         vm.authenticateResult.observe(this, Observer {
             if (it) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
+                val intent = Intent()
+                setResult(Activity.RESULT_OK, intent)
                 finish()
             }
         })
