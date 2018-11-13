@@ -65,12 +65,6 @@ class PackageActivity : BaseActivity<ActivityPackageBinding>() {
         })
     }
 
-    override fun finish() {
-        val intent = Intent()
-        setResult(Activity.RESULT_OK, intent)
-        super.finish()
-    }
-
     override fun onStart() {
         super.onStart()
         if (isShowAuthentication) {
@@ -86,7 +80,7 @@ class PackageActivity : BaseActivity<ActivityPackageBinding>() {
             if (resultCode == Activity.RESULT_OK) {
                 isShowAuthentication = false
             } else {
-                finish()
+                finish(Activity.RESULT_CANCELED)
             }
         }
     }

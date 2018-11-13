@@ -1,5 +1,7 @@
 package com.tompee.utilities.passwordmanager.base
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -27,10 +29,16 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), HasSuppo
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> {
-            finish()
+            finish(Activity.RESULT_OK)
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    protected fun finish(result: Int) {
+        val intent = Intent()
+        setResult(result, intent)
+        super.finish()
     }
 
     protected abstract val layoutId: Int

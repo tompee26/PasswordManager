@@ -127,7 +127,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             if (resultCode == Activity.RESULT_OK) {
                 isShowAuthentication = false
             } else {
-                finish()
+                finish(Activity.RESULT_CANCELED)
             }
         }
     }

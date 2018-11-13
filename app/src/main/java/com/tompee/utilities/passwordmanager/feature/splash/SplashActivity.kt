@@ -1,7 +1,6 @@
 package com.tompee.utilities.passwordmanager.feature.splash
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -53,19 +52,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         })
 
         vm.needsClose.observe(this, Observer {
-            if (it) {
-                val intent = Intent()
-                setResult(Activity.RESULT_CANCELED, intent)
-                finish()
-            }
+            if (it) finish(Activity.RESULT_CANCELED)
         })
 
         vm.authenticateResult.observe(this, Observer {
-            if (it) {
-                val intent = Intent()
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            }
+            if (it) finish(Activity.RESULT_OK)
         })
     }
 

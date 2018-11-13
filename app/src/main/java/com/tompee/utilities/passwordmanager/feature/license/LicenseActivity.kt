@@ -57,12 +57,6 @@ class LicenseActivity : BaseActivity<ActivityLicenseBinding>() {
         vm.onLoaded(intent.getIntExtra(TAG_MODE, LICENSE) == LICENSE)
     }
 
-    override fun finish() {
-        val intent = Intent()
-        setResult(Activity.RESULT_OK, intent)
-        super.finish()
-    }
-
     override fun onStart() {
         super.onStart()
         if (isShowAuthentication) {
@@ -78,7 +72,7 @@ class LicenseActivity : BaseActivity<ActivityLicenseBinding>() {
             if (resultCode == Activity.RESULT_OK) {
                 isShowAuthentication = false
             } else {
-                finish()
+                finish(Activity.RESULT_CANCELED)
             }
         }
     }
