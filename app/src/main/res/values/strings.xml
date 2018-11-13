@@ -13,6 +13,7 @@
     <string name="control_copy">Copy</string>
 
     <string name="title_authenticate">Fingerprint Authentication</string>
+    <string name="title_activate">Autofill Service</string>
     <string name="title_authenticate_subtitle">Login to access app</string>
     <string name="title_applications">Applications</string>
     <string name="title_sites">Sites</string>
@@ -22,6 +23,7 @@
     <string name="message_authenticate">Touch the sensor</string>
     <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
     <string name="message_fingerprint_not_registered">No fingerprint registered in this device. Register fingerprints first.</string>
+    <string name="message_activate">This app uses the autofill framework to autofill your apps with credentials. Currently, this service is not enabled. Please enable in settings.</string>
     <string name="message_searching_packages">Finding all installed packages</string>
     <string name="message_searching_packages_credential">Finding all stored credentials</string>
     <string name="message_add_package">Set a credential for this package. Alternatively, you can also generate a strong password by tapping Generate.</string>

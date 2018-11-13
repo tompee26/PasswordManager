@@ -1,13 +1,17 @@
 package com.tompee.utilities.passwordmanager.feature.splash
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivitySplashBinding
+import com.tompee.utilities.passwordmanager.feature.splash.activate.ActivateDialog
 import com.tompee.utilities.passwordmanager.feature.splash.authenticate.FingerprintDialog
 import com.tompee.utilities.passwordmanager.feature.splash.register.FingerprintRegisterDialog
 import com.tompee.utilities.passwordmanager.feature.splash.support.FingerprintSupportDialog
@@ -46,17 +50,26 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             if (!it) fingerprintSupportDialog.show(supportFragmentManager, "support")
         })
 
-
         vm.hasRegisteredFingerprint.observe(this, Observer {
             if (!it) fingerprintRegisterDialog.show(supportFragmentManager, "register")
         })
 
         vm.needsClose.observe(this, Observer {
-            if (it) finish(Activity.RESULT_CANCELED)
+            finish(if (it) Activity.RESULT_OK else Activity.RESULT_CANCELED)
         })
 
         vm.authenticateResult.observe(this, Observer {
-            if (it) finish(Activity.RESULT_OK)
+            if (it) {
+                vm.checkIfAutofillEnabled()
+            }
+        })
+        vm.autofillEnabled.observe(this, Observer {
+            if (it) {
+                finish(Activity.RESULT_OK)
+            } else {
+                val activateDialog = ActivateDialog()
+                activateDialog.show(supportFragmentManager, "activate")
+            }
         })
     }
 

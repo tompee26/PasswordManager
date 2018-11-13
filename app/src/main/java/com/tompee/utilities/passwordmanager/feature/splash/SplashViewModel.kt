@@ -6,18 +6,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
 import com.tompee.utilities.passwordmanager.core.biometric.Status
-import com.tompee.utilities.passwordmanager.interactor.FingerprintInteractor
+import com.tompee.utilities.passwordmanager.interactor.SplashInteractor
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
-class SplashViewModel private constructor(fingerprintInteractor: FingerprintInteractor, context: Context) :
-    BaseViewModel<FingerprintInteractor>(fingerprintInteractor, context) {
+class SplashViewModel private constructor(splashInteractor: SplashInteractor, context: Context) :
+    BaseViewModel<SplashInteractor>(splashInteractor, context) {
 
-    class Factory(private val fingerprintInteractor: FingerprintInteractor,
-                  private val context: Context) : ViewModelProvider.Factory {
+    class Factory(
+        private val splashInteractor: SplashInteractor,
+        private val context: Context
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return SplashViewModel(fingerprintInteractor, context) as T
+            return SplashViewModel(splashInteractor, context) as T
         }
     }
 
@@ -25,6 +28,7 @@ class SplashViewModel private constructor(fingerprintInteractor: FingerprintInte
     val hasRegisteredFingerprint = MutableLiveData<Boolean>()
     val needsClose = MutableLiveData<Boolean>()
     val authenticateResult = MutableLiveData<Boolean>()
+    val autofillEnabled = MutableLiveData<Boolean>()
 
     init {
         subscriptions += interactor.isFingerprintSupported()
@@ -36,13 +40,19 @@ class SplashViewModel private constructor(fingerprintInteractor: FingerprintInte
             .subscribe(hasRegisteredFingerprint::postValue)
     }
 
-    fun finish() {
-        needsClose.postValue(true)
+    fun finish(result: Boolean) {
+        needsClose.postValue(result)
     }
 
     fun startAuthentication() {
         subscriptions += interactor.authenticate()
             .subscribeOn(Schedulers.io())
             .subscribe { authenticateResult.postValue(it.type == Status.OK) }
+    }
+
+    fun checkIfAutofillEnabled() {
+        subscriptions += interactor.isAutofillEnabled()
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe(autofillEnabled::postValue)
     }
 }

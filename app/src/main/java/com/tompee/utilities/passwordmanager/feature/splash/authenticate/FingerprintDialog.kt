@@ -46,7 +46,7 @@ class FingerprintDialog : BaseDialogFragment() {
         val builder = AlertDialog.Builder(activity!!)
             .setView(binding.root)
             .setNegativeButton(R.string.control_cancel) { _, _ ->
-                vm.finish()
+                vm.finish(false)
             }
             .setCancelable(false)
         return builder.create()

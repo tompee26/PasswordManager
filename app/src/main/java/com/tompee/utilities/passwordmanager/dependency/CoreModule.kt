@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.core.asset.AssetManager
+import com.tompee.utilities.passwordmanager.core.autofill.AutofillManager
+import com.tompee.utilities.passwordmanager.core.autofill.impl.AutofillManagerImpl
 import com.tompee.utilities.passwordmanager.core.biometric.BiometricManager
 import com.tompee.utilities.passwordmanager.core.biometric.reprint.ReprintBiometricManager
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
@@ -68,6 +70,14 @@ class CoreModule {
     @Provides
     @Singleton
     fun provideAssetManager(context: Context): AssetManager = AssetManager(context)
+
+    @Provides
+    @Singleton
+    fun provideAutofillManager(autofillManagerImpl: AutofillManagerImpl) : AutofillManager = autofillManagerImpl
+
+    @Provides
+    @Singleton
+    fun provideAutofillManagerImpl(context: Context) : AutofillManagerImpl = AutofillManagerImpl(context)
 
     @Provides
     @Singleton
