@@ -29,6 +29,7 @@ class PackageViewModel private constructor(packageInteractor: PackageInteractor,
     val packageList = MutableLiveData<List<Package>>()
     val searching = MutableLiveData<Boolean>()
     val currentPackage = MutableLiveData<Package>()
+    val generatedPassword = MutableLiveData<String>()
 
     init {
         title.postValue(context.getString(R.string.title_packages))
@@ -48,5 +49,11 @@ class PackageViewModel private constructor(packageInteractor: PackageInteractor,
         subscriptions += interactor.savePackageCredential(pack, username, password)
             .subscribeOn(Schedulers.computation())
             .subscribe()
+    }
+
+    fun generatePassword() {
+        subscriptions += interactor.generatePassword()
+            .subscribeOn(Schedulers.computation())
+            .subscribe(generatedPassword::postValue)
     }
 }

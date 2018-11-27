@@ -15,6 +15,8 @@ import com.tompee.utilities.passwordmanager.core.clipboard.impl.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.PasswordDatabase
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
+import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
+import com.tompee.utilities.passwordmanager.core.generator.impl.RandomPasswordGenerator
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.keystore.impl.KeystoreImpl
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
@@ -94,4 +96,12 @@ class CoreModule {
     @Provides
     @Singleton
     fun provideSiteDao(database: PasswordDatabase): SiteDao = database.siteDao()
+
+    @Provides
+    @Singleton
+    fun providePasswordGenerator(randomPasswordGenerator: RandomPasswordGenerator) : PasswordGenerator = randomPasswordGenerator
+
+    @Provides
+    @Singleton
+    fun provideRandomPasswordGenerator() : RandomPasswordGenerator = RandomPasswordGenerator()
 }

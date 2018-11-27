@@ -34,11 +34,19 @@ class AddPackageDialog : BaseDialogFragment() {
             binding.appIcon.setImageDrawable(it.icon)
         })
 
-        binding.cancel.setOnClickListener{
+        vm.generatedPassword.observe(this, Observer {
+            binding.passView.editText?.setText(it)
+        })
+
+        binding.cancel.setOnClickListener {
             dismiss()
         }
 
-        binding.add.setOnClickListener{
+        binding.generate.setOnClickListener {
+            vm.generatePassword()
+        }
+
+        binding.add.setOnClickListener {
             if (binding.userView.text.isEmpty()) {
                 binding.userView.error = getString(R.string.error_empty)
                 return@setOnClickListener

@@ -6,6 +6,7 @@ import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
+import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.MainScope
@@ -54,9 +55,10 @@ class MainModule {
     @MainScope
     fun provideMainInteractor(
         packageDao: PackageDao, siteDao: SiteDao, packageManager: PackageManager,
-        keystore: Keystore, cipher: Cipher, context: Context, clipboardManager: ClipboardManager
+        keystore: Keystore, cipher: Cipher, context: Context, clipboardManager: ClipboardManager,
+        passwordGenerator: PasswordGenerator
     ): MainInteractor =
-        MainInteractor(packageDao, siteDao, packageManager, keystore, cipher, context, clipboardManager)
+        MainInteractor(packageDao, siteDao, packageManager, keystore, cipher, context, clipboardManager, passwordGenerator)
 
     @Provides
     @MainScope

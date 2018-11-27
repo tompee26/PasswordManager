@@ -35,6 +35,11 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), HasSuppo
         else -> super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        finish(Activity.RESULT_OK)
+        super.onBackPressed()
+    }
+
     protected fun finish(result: Int) {
         val intent = Intent()
         setResult(result, intent)

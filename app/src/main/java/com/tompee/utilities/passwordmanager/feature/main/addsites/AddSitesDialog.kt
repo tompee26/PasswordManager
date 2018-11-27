@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseDialogFragment
@@ -32,8 +33,16 @@ class AddSitesDialog : BaseDialogFragment() {
                 false
             )
 
+        vm.generatedPassword.observe(this, Observer {
+            binding.passView.editText?.setText(it)
+        })
+
         binding.cancel.setOnClickListener {
             dismiss()
+        }
+
+        binding.generate.setOnClickListener {
+            vm.generatePassword()
         }
 
         binding.add.setOnClickListener {

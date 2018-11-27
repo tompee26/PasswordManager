@@ -22,6 +22,7 @@ class MainViewModel private constructor(mainInteractor: MainInteractor, context:
     }
 
     val title = MutableLiveData<String>()
+    val generatedPassword = MutableLiveData<String>()
 
     init {
         title.postValue(context.getString(R.string.app_name))
@@ -33,4 +34,9 @@ class MainViewModel private constructor(mainInteractor: MainInteractor, context:
             .subscribe()
     }
 
+    fun generatePassword() {
+        subscriptions += interactor.generatePassword()
+            .subscribeOn(Schedulers.computation())
+            .subscribe(generatedPassword::postValue)
+    }
 }

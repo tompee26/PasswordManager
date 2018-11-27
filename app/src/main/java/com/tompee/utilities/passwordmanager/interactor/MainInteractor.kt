@@ -7,6 +7,7 @@ import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.database.entity.SiteEntity
+import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.feature.common.TextDrawable
@@ -24,7 +25,8 @@ class MainInteractor(
     private val keystore: Keystore,
     private val cipher: Cipher,
     private val context: Context,
-    private val clipboardManager: ClipboardManager
+    private val clipboardManager: ClipboardManager,
+    private val passwordGenerator: PasswordGenerator
 ) : BaseInteractor {
 
     fun getPackageList(): Observable<List<PackageCredential>> {
@@ -35,10 +37,11 @@ class MainInteractor(
                         .map {
                             val key = keystore.getKey(it.packageName)!!
                             return@map PackageCredential(
-                                it.name, it.packageName, cipher.decrypt(
-                                    entity.username,
-                                    key.private
-                                ), cipher.decrypt(entity.password, key.private), it.icon
+                                it.name,
+                                it.packageName,
+                                cipher.decrypt(entity.username, key.private),
+                                cipher.decrypt(entity.password, key.private),
+                                it.icon
                             )
                         }
                 }
@@ -79,4 +82,8 @@ class MainInteractor(
     }
 
     fun copyToClipboard(text: String): Completable = clipboardManager.copyToClipboard(text)
+
+    fun generatePassword(): Single<String> {
+        return Single.fromCallable { passwordGenerator.generatePassword(16) }
+    }
 }
