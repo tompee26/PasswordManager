@@ -39,4 +39,8 @@ class MainViewModel private constructor(mainInteractor: MainInteractor, context:
             .subscribeOn(Schedulers.computation())
             .subscribe(generatedPassword::postValue)
     }
+
+    fun generateEmptyPassword() {
+        generatedPassword.postValue("")
+    }
 }

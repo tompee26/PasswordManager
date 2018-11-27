@@ -57,7 +57,7 @@ class PackageActivity : BaseActivity<ActivityPackageBinding>() {
         packageAdapter.listener = {
             vm.setCurrentPackage(it)
             val dialog = AddPackageDialog()
-            dialog.show(supportFragmentManager, "interaction")
+            dialog.show(supportFragmentManager, "package")
         }
 
         vm.packageList.observe(this, Observer {

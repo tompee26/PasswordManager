@@ -28,6 +28,7 @@ class AddPackageDialog : BaseDialogFragment() {
         val binding =
             DataBindingUtil.inflate<DialogAddBinding>(LayoutInflater.from(context), R.layout.dialog_add, null, false)
 
+        vm.generateEmptyPassword()
         vm.currentPackage.observe(this, Observer {
             binding.title.text = it.name
             binding.subtitle.text = it.packageName

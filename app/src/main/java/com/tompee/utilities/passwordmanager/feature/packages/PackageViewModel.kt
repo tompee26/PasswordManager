@@ -36,6 +36,7 @@ class PackageViewModel private constructor(packageInteractor: PackageInteractor,
         subscriptions += Completable.fromAction { searching.postValue(true) }
             .andThen(interactor.getPackageList())
             .subscribeOn(Schedulers.io())
+            .doOnNext { searching.postValue(false) }
             .doFinally { searching.postValue(false) }
             .subscribe(packageList::postValue)
     }
@@ -55,5 +56,9 @@ class PackageViewModel private constructor(packageInteractor: PackageInteractor,
         subscriptions += interactor.generatePassword()
             .subscribeOn(Schedulers.computation())
             .subscribe(generatedPassword::postValue)
+    }
+
+    fun generateEmptyPassword() {
+        generatedPassword.postValue("")
     }
 }

@@ -33,6 +33,7 @@ class AddSitesDialog : BaseDialogFragment() {
                 false
             )
 
+        vm.generateEmptyPassword()
         vm.generatedPassword.observe(this, Observer {
             binding.passView.editText?.setText(it)
         })
