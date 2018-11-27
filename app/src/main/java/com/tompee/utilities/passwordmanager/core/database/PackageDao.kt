@@ -9,7 +9,7 @@ import io.reactivex.Observable
 
 @Dao
 interface PackageDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(packageEntity: PackageEntity)
 
     @Query("SELECT * FROM package")

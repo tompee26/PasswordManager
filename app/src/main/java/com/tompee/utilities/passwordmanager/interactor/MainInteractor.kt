@@ -6,11 +6,13 @@ import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
+import com.tompee.utilities.passwordmanager.core.database.entity.PackageEntity
 import com.tompee.utilities.passwordmanager.core.database.entity.SiteEntity
 import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.feature.common.TextDrawable
+import com.tompee.utilities.passwordmanager.model.Package
 import com.tompee.utilities.passwordmanager.model.PackageCredential
 import com.tompee.utilities.passwordmanager.model.SiteCredential
 import io.reactivex.Completable
@@ -61,6 +63,19 @@ class MainInteractor(
                 )
             }
             .flatMapCompletable { Completable.fromAction { siteDao.insert(it) } }
+    }
+
+    fun savePackageCredential(pack: Package, username: String, password: String): Completable {
+        return Single.fromCallable { keystore.createKey(pack.packageName) }
+            .map {
+                PackageEntity(
+                    pack.packageName,
+                    pack.name,
+                    cipher.encrypt(username, it.public),
+                    cipher.encrypt(password, it.public)
+                )
+            }
+            .flatMapCompletable { Completable.fromAction { packageDao.insert(it) } }
     }
 
     fun getSiteList(): Observable<List<SiteCredential>> {

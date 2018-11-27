@@ -9,7 +9,7 @@ import io.reactivex.Observable
 
 @Dao
 interface SiteDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(siteEntity: SiteEntity)
 
     @Query("SELECT * FROM site")

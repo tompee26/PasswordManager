@@ -40,15 +40,36 @@ class ViewPackageDialog : BaseDialogFragment() {
             binding.appIcon.setImageDrawable(it.icon)
 
             binding.generate.text = getString(R.string.control_copy)
+            binding.cancel.text = getString(R.string.control_edit)
             binding.add.text = getString(R.string.control_ok)
-            binding.cancel.visibility = View.GONE
         })
+
+        binding.cancel.setOnClickListener {
+            binding.userView.isEnabled = true
+            binding.passView.isEnabled = true
+            binding.add.text = getString(R.string.control_save)
+            binding.generate.visibility = View.GONE
+            binding.cancel.text = getString(R.string.control_cancel)
+            binding.cancel.setOnClickListener { dismiss() }
+        }
 
         binding.generate.setOnClickListener{
             vm.copyToClipboard(binding.etPassword.text.toString())
         }
 
         binding.add.setOnClickListener {
+            if (binding.userView.text.isEmpty()) {
+                binding.userView.error = getString(R.string.error_empty)
+                return@setOnClickListener
+            }
+            if (binding.etPassword.text.toString().isEmpty()) {
+                binding.etPassword.error = getString(R.string.error_empty)
+                return@setOnClickListener
+            }
+            vm.saveCredential(
+                binding.userView.text.toString(),
+                binding.etPassword.text.toString()
+            )
             dismiss()
         }
 

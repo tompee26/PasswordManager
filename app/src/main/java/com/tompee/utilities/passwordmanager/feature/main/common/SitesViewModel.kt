@@ -48,4 +48,10 @@ class SitesViewModel private constructor(mainInteractor: MainInteractor, context
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
+
+    fun saveCredential(siteName: String, siteUrl: String, username: String, password: String) {
+        subscriptions += interactor.saveCredential(siteName, siteUrl, username, password)
+            .subscribeOn(Schedulers.computation())
+            .subscribe()
+    }
 }

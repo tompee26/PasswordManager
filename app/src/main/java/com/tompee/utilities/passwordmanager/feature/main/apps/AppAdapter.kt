@@ -22,7 +22,8 @@ class AppAdapter : RecyclerView.Adapter<AppAdapter.ViewHolder>() {
             }
 
             override fun areContentsTheSame(oldItem: PackageCredential, newItem: PackageCredential): Boolean {
-                return oldItem.name == newItem.name && oldItem.packageName == newItem.packageName
+                return oldItem.name == newItem.name && oldItem.packageName == newItem.packageName &&
+                        oldItem.username == newItem.username && oldItem.password == newItem.password
             }
         })
 

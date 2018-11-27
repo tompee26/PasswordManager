@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
 import com.tompee.utilities.passwordmanager.interactor.MainInteractor
+import com.tompee.utilities.passwordmanager.model.Package
 import com.tompee.utilities.passwordmanager.model.PackageCredential
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -45,6 +46,17 @@ class PackageViewModel private constructor(mainInteractor: MainInteractor, conte
         subscriptions += interactor.copyToClipboard(text)
             .doOnComplete { copiedToClipboard.postValue(true) }
             .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+    }
+
+    fun saveCredential(username: String, password: String) {
+        val pack = currentPackage.value!!
+        subscriptions += interactor.savePackageCredential(
+            Package(pack.name, pack.packageName, pack.icon),
+            username,
+            password
+        )
+            .subscribeOn(Schedulers.computation())
             .subscribe()
     }
 }

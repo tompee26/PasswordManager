@@ -22,7 +22,8 @@ class SitesAdapter : RecyclerView.Adapter<SitesAdapter.ViewHolder>() {
             }
 
             override fun areContentsTheSame(oldItem: SiteCredential, newItem: SiteCredential): Boolean {
-                return oldItem.name == newItem.name && oldItem.url == newItem.url
+                return oldItem.name == newItem.name && oldItem.url == newItem.url &&
+                        oldItem.username == newItem.username && oldItem.password == newItem.password
             }
         })
 
