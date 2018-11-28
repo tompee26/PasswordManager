@@ -44,7 +44,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
 
     //region Dagger
-    def daggerVersion = "2.19"
+    def daggerVersion = "2.16"
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"

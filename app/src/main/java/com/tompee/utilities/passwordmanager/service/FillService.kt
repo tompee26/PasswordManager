@@ -2,6 +2,10 @@ package com.tompee.utilities.passwordmanager.service
 
 import android.os.CancellationSignal
 import android.service.autofill.*
+import android.view.autofill.AutofillValue
+import android.widget.RemoteViews
+import com.tompee.utilities.passwordmanager.R
+import com.tompee.utilities.passwordmanager.service.model.AuthField
 import com.tompee.utilities.passwordmanager.service.parser.StructureParser
 import com.tompee.utilities.passwordmanager.service.response.ResponseBuilder
 import dagger.android.AndroidInjection
@@ -18,12 +22,6 @@ class FillService : AutofillService() {
     override fun onCreate() {
         AndroidInjection.inject(this)
         super.onCreate()
-        responseBuilder.start()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        responseBuilder.stop()
     }
 
     override fun onFillRequest(request: FillRequest, cancellationSignal: CancellationSignal, callback: FillCallback) {

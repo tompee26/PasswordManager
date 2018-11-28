@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.tompee.utilities.passwordmanager.core.database.entity.PackageEntity
 import io.reactivex.Observable
+import io.reactivex.Single
 
 @Dao
 interface PackageDao {
@@ -14,4 +15,7 @@ interface PackageDao {
 
     @Query("SELECT * FROM package")
     fun getPackages(): Observable<List<PackageEntity>>
+
+    @Query("SELECT * FROM package WHERE packageName = :name")
+    fun findPackage(name: String): Single<PackageEntity>
 }
