@@ -1,10 +1,13 @@
 package com.tompee.utilities.passwordmanager.feature.splash
 
 import android.app.Activity
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.content.IntentSender
 import android.os.Bundle
-import android.provider.Settings
+import android.service.autofill.Dataset
+import android.view.autofill.AutofillManager.EXTRA_AUTHENTICATION_RESULT
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -36,6 +39,19 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     @Inject
     lateinit var fingerprintRegisterDialog: FingerprintRegisterDialog
+
+    companion object {
+        const val EXTRA_DATASET = "dataset"
+        private var requestCode = 0
+
+        fun newIntentSender(context: Context, dataset: Dataset): IntentSender {
+            val intent = Intent(context, SplashActivity::class.java)
+            intent.putExtra(EXTRA_DATASET, dataset)
+
+            return PendingIntent.getActivity(context, ++requestCode, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+                .intentSender
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -71,6 +87,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 activateDialog.show(supportFragmentManager, "activate")
             }
         })
+    }
+
+    override fun finish(result: Int, intent: Intent) {
+        val dataset = this@SplashActivity.intent.getParcelableExtra<Dataset>(EXTRA_DATASET)
+        if (result == Activity.RESULT_OK && dataset != null) {
+            val replyIntent = Intent()
+            replyIntent.putExtra(EXTRA_AUTHENTICATION_RESULT, dataset)
+            super.finish(result, replyIntent)
+            return
+        }
+        super.finish(result, intent)
     }
 
     override fun onResume() {

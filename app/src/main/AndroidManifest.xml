@@ -21,7 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.splash.SplashActivity" />
+        <activity
+            android:name=".feature.splash.SplashActivity"
+            android:taskAffinity=".feature.splash.SplashActivity" />
+
         <activity android:name=".feature.packages.PackageActivity" />
         <activity android:name=".feature.about.AboutActivity" />
         <activity android:name=".feature.license.LicenseActivity" />

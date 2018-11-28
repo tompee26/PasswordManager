@@ -40,8 +40,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), HasSuppo
         super.onBackPressed()
     }
 
-    protected fun finish(result: Int) {
-        val intent = Intent()
+    protected open fun finish(result: Int, intent : Intent = Intent()) {
         setResult(result, intent)
         super.finish()
     }

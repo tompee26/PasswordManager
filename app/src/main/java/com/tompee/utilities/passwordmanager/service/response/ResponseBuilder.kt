@@ -12,6 +12,7 @@ import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
+import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
 import com.tompee.utilities.passwordmanager.model.PackageCredential
 import com.tompee.utilities.passwordmanager.service.model.AuthField
 import io.reactivex.Observable
@@ -19,7 +20,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class ResponseBuilder(
-    private val context: Context,
     private val packageDao: PackageDao,
     private val packageManager: PackageManager,
     private val keystore: Keystore,
@@ -53,7 +53,7 @@ class ResponseBuilder(
             .subscribe { dataset = it }
     }
 
-    fun createResponse(appPackageName: String, authField: AuthField): FillResponse? {
+    fun createResponse(serviceContext: Context, appPackageName: String, authField: AuthField): FillResponse? {
         if (authField.usernameField == null && authField.passwordField == null) return null
 
         try {
@@ -75,18 +75,32 @@ class ResponseBuilder(
                 datasetBuilder.setValue(
                     authField.usernameField?.autofillId!!,
                     AutofillValue.forText(data.username),
-                    newDatasetPresentation(R.drawable.ic_account_circle_black_24dp)
+                    newDatasetPresentation(serviceContext, R.drawable.ic_account_circle_black_24dp)
                 )
             }
             if (authField.passwordField != null) {
                 datasetBuilder.setValue(
                     authField.passwordField?.autofillId!!,
                     AutofillValue.forText(data.password),
-                    newDatasetPresentation(R.drawable.ic_account_circle_black_24dp)
+                    newDatasetPresentation(serviceContext, R.drawable.ic_account_circle_black_24dp)
                 )
             }
+            val unlockedDataset = datasetBuilder.build()
+            val lockedDatasetBuilder = Dataset.Builder()
+            val authentication = SplashActivity.newIntentSender(serviceContext, unlockedDataset)
+            if (authField.usernameField != null) {
+                val presentation = newDatasetPresentation(serviceContext, R.drawable.ic_account_circle_black_24dp)
+                lockedDatasetBuilder.setValue(authField.usernameField?.autofillId!!, null, presentation)
+                    .setAuthentication(authentication)
+            }
+            if (authField.passwordField != null) {
+                val presentation = newDatasetPresentation(serviceContext, R.drawable.ic_account_circle_black_24dp)
+                lockedDatasetBuilder.setValue(authField.passwordField?.autofillId!!, null, presentation)
+                    .setAuthentication(authentication)
+            }
+
             return FillResponse.Builder()
-                .addDataset(datasetBuilder.build())
+                .addDataset(lockedDatasetBuilder.build())
                 .build()
 
         } catch (e: Exception) {
@@ -94,7 +108,7 @@ class ResponseBuilder(
         }
     }
 
-    private fun newDatasetPresentation(@DrawableRes id: Int): RemoteViews {
+    private fun newDatasetPresentation(context: Context, @DrawableRes id: Int): RemoteViews {
         val presentation = RemoteViews(context.packageName, R.layout.list_dataset)
         presentation.setTextViewText(R.id.text, context.getString(R.string.app_name))
         presentation.setImageViewResource(R.id.icon, id)

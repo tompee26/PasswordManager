@@ -29,7 +29,7 @@ class FillService : AutofillService() {
         val appPackageName = structure.activityComponent.packageName
 
         val fields = parser.parse(structure)
-        callback.onSuccess(responseBuilder.createResponse(appPackageName, fields))
+        callback.onSuccess(responseBuilder.createResponse(this, appPackageName, fields))
     }
 
     override fun onSaveRequest(request: SaveRequest, callback: SaveCallback) {

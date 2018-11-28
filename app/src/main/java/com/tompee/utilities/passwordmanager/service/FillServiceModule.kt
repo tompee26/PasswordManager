@@ -1,6 +1,5 @@
 package com.tompee.utilities.passwordmanager.service
 
-import android.content.Context
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
@@ -21,10 +20,9 @@ class FillServiceModule {
     @Provides
     @ServiceScope
     fun provideResponseBuilder(
-        context: Context,
         packageDao: PackageDao,
         packageManager: PackageManager,
         keystore: Keystore,
         cipher: Cipher
-    ): ResponseBuilder = ResponseBuilder(context, packageDao, packageManager, keystore, cipher)
+    ): ResponseBuilder = ResponseBuilder(packageDao, packageManager, keystore, cipher)
 }
