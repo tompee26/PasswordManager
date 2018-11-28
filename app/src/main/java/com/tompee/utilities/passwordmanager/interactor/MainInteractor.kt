@@ -1,6 +1,7 @@
 package com.tompee.utilities.passwordmanager.interactor
 
 import android.content.Context
+import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseInteractor
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
@@ -36,6 +37,15 @@ class MainInteractor(
             Observable.fromIterable(list)
                 .concatMapSingle { entity ->
                     packageManager.getPackageFromName(entity.packageName)
+                        .onErrorResumeNext(
+                            Single.just(
+                                Package(
+                                    entity.name,
+                                    entity.packageName,
+                                    context.getDrawable(R.drawable.ic_icon_primary)!!
+                                )
+                            )
+                        )
                         .map {
                             val key = keystore.getKey(it.packageName)!!
                             return@map PackageCredential(

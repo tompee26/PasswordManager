@@ -15,43 +15,13 @@ import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
 import com.tompee.utilities.passwordmanager.model.PackageCredential
 import com.tompee.utilities.passwordmanager.service.model.AuthField
-import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class ResponseBuilder(
     private val packageDao: PackageDao,
-    private val packageManager: PackageManager,
     private val keystore: Keystore,
     private val cipher: Cipher
 ) {
-
-    private lateinit var subscription: Disposable
-    private var dataset: List<PackageCredential> = emptyList()
-
-    fun start() {
-        subscription = packageDao.getPackages()
-            .concatMap { list ->
-                Observable.fromIterable(list)
-                    .concatMapSingle { entity ->
-                        packageManager.getPackageFromName(entity.packageName)
-                            .map {
-                                val key = keystore.getKey(it.packageName)!!
-                                return@map PackageCredential(
-                                    it.name,
-                                    it.packageName,
-                                    cipher.decrypt(entity.username, key.private),
-                                    cipher.decrypt(entity.password, key.private),
-                                    it.icon
-                                )
-                            }
-                    }
-                    .toList()
-                    .toObservable()
-            }
-            .subscribeOn(Schedulers.io())
-            .subscribe { dataset = it }
-    }
 
     fun createResponse(serviceContext: Context, appPackageName: String, authField: AuthField): FillResponse? {
         if (authField.usernameField == null && authField.passwordField == null) return null

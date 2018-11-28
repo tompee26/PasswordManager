@@ -3,7 +3,6 @@ package com.tompee.utilities.passwordmanager.service
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
-import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.ServiceScope
 import com.tompee.utilities.passwordmanager.service.parser.StructureParser
 import com.tompee.utilities.passwordmanager.service.response.ResponseBuilder
@@ -21,8 +20,7 @@ class FillServiceModule {
     @ServiceScope
     fun provideResponseBuilder(
         packageDao: PackageDao,
-        packageManager: PackageManager,
         keystore: Keystore,
         cipher: Cipher
-    ): ResponseBuilder = ResponseBuilder(packageDao, packageManager, keystore, cipher)
+    ): ResponseBuilder = ResponseBuilder(packageDao, keystore, cipher)
 }
