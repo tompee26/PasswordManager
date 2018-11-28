@@ -30,7 +30,7 @@ class SitesAdapter : RecyclerView.Adapter<SitesAdapter.ViewHolder>() {
     var listener: (SiteCredential) -> Unit = {}
 
     fun addSites(users: List<SiteCredential>) {
-        siteList.addAll(users)
+        siteList.replaceAll(users)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

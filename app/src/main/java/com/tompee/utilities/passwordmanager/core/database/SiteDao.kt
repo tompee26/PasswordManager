@@ -1,9 +1,6 @@
 package com.tompee.utilities.passwordmanager.core.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.tompee.utilities.passwordmanager.core.database.entity.SiteEntity
 import io.reactivex.Observable
 
@@ -14,4 +11,7 @@ interface SiteDao {
 
     @Query("SELECT * FROM site")
     fun getSites(): Observable<List<SiteEntity>>
+
+    @Delete
+    fun remove(siteEntity: SiteEntity)
 }

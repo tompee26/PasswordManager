@@ -30,7 +30,7 @@ class AppAdapter : RecyclerView.Adapter<AppAdapter.ViewHolder>() {
     var listener: (PackageCredential) -> Unit = {}
 
     fun addPackages(users: List<PackageCredential>) {
-        packageList.addAll(users)
+        packageList.replaceAll(users)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -39,25 +39,29 @@ class ViewPackageDialog : BaseDialogFragment() {
             binding.etPassword.setText(it.password)
             binding.appIcon.setImageDrawable(it.icon)
 
-            binding.generate.text = getString(R.string.control_copy)
-            binding.cancel.text = getString(R.string.control_edit)
-            binding.add.text = getString(R.string.control_ok)
+            binding.neutral.text = getString(R.string.control_copy)
+            binding.negative.text = getString(R.string.control_edit)
+            binding.positive.text = getString(R.string.control_ok)
         })
 
-        binding.cancel.setOnClickListener {
+        binding.negative.setOnClickListener {
             binding.userView.isEnabled = true
             binding.passView.isEnabled = true
-            binding.add.text = getString(R.string.control_save)
-            binding.generate.visibility = View.GONE
-            binding.cancel.text = getString(R.string.control_cancel)
-            binding.cancel.setOnClickListener { dismiss() }
+            binding.positive.text = getString(R.string.control_save)
+            binding.negative.text = getString(R.string.control_cancel)
+            binding.negative.setOnClickListener { dismiss() }
+            binding.neutral.text = getString(R.string.control_delete)
+            binding.neutral.setOnClickListener {
+                vm.delete(vm.currentPackage.value!!)
+                dismiss()
+            }
         }
 
-        binding.generate.setOnClickListener{
+        binding.neutral.setOnClickListener {
             vm.copyToClipboard(binding.etPassword.text.toString())
         }
 
-        binding.add.setOnClickListener {
+        binding.positive.setOnClickListener {
             if (binding.userView.text.isEmpty()) {
                 binding.userView.error = getString(R.string.error_empty)
                 return@setOnClickListener

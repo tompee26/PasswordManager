@@ -54,4 +54,10 @@ class SitesViewModel private constructor(mainInteractor: MainInteractor, context
             .subscribeOn(Schedulers.computation())
             .subscribe()
     }
+
+    fun delete(site: SiteCredential) {
+        subscriptions += interactor.delete(site)
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
 }

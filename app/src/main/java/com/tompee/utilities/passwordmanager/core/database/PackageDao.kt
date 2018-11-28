@@ -1,9 +1,6 @@
 package com.tompee.utilities.passwordmanager.core.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.tompee.utilities.passwordmanager.core.database.entity.PackageEntity
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -18,4 +15,7 @@ interface PackageDao {
 
     @Query("SELECT * FROM package WHERE packageName = :name")
     fun findPackage(name: String): Single<PackageEntity>
+
+    @Delete
+    fun remove(packageEntity: PackageEntity)
 }

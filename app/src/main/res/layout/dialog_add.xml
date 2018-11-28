@@ -139,7 +139,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/add"
+            android:id="@+id/positive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -155,7 +155,7 @@
             app:layout_constraintTop_toBottomOf="@+id/passView" />
 
         <Button
-            android:id="@+id/cancel"
+            android:id="@+id/negative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -167,11 +167,11 @@
             android:text="@string/control_cancel"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/add"
+            app:layout_constraintEnd_toStartOf="@id/positive"
             app:layout_constraintTop_toBottomOf="@+id/passView" />
 
         <Button
-            android:id="@+id/generate"
+            android:id="@+id/neutral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

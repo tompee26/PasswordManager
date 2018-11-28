@@ -4,17 +4,13 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseDialogFragment
 import com.tompee.utilities.passwordmanager.databinding.DialogAddBinding
-import com.tompee.utilities.passwordmanager.databinding.DialogAddSiteBinding
-import com.tompee.utilities.passwordmanager.feature.common.TextDrawable
 import com.tompee.utilities.passwordmanager.feature.main.common.SitesViewModel
-import com.tompee.utilities.passwordmanager.model.SiteCredential
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -44,25 +40,29 @@ class ViewSitesDialog : BaseDialogFragment() {
             binding.etPassword.isEnabled = false
             binding.etPassword.setText(it.password)
 
-            binding.generate.text = getString(R.string.control_copy)
-            binding.cancel.text = getString(R.string.control_edit)
-            binding.add.text = getString(R.string.control_ok)
+            binding.neutral.text = getString(R.string.control_copy)
+            binding.negative.text = getString(R.string.control_edit)
+            binding.positive.text = getString(R.string.control_ok)
         })
 
-        binding.cancel.setOnClickListener {
+        binding.negative.setOnClickListener {
             binding.userView.isEnabled = true
             binding.passView.isEnabled = true
-            binding.add.text = getString(R.string.control_save)
-            binding.generate.visibility = View.GONE
-            binding.cancel.text = getString(R.string.control_cancel)
-            binding.cancel.setOnClickListener { dismiss() }
+            binding.positive.text = getString(R.string.control_save)
+            binding.negative.text = getString(R.string.control_cancel)
+            binding.negative.setOnClickListener { dismiss() }
+            binding.neutral.text = getString(R.string.control_delete)
+            binding.neutral.setOnClickListener {
+                vm.delete(vm.currentSite.value!!)
+                dismiss()
+            }
         }
 
-        binding.generate.setOnClickListener {
+        binding.neutral.setOnClickListener {
             vm.copyToClipboard(binding.etPassword.text.toString())
         }
 
-        binding.add.setOnClickListener {
+        binding.positive.setOnClickListener {
             if (binding.userView.text.isEmpty()) {
                 binding.userView.error = getString(R.string.error_empty)
                 return@setOnClickListener

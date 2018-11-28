@@ -39,15 +39,15 @@ class AddPackageDialog : BaseDialogFragment() {
             binding.passView.editText?.setText(it)
         })
 
-        binding.cancel.setOnClickListener {
+        binding.negative.setOnClickListener {
             dismiss()
         }
 
-        binding.generate.setOnClickListener {
+        binding.neutral.setOnClickListener {
             vm.generatePassword()
         }
 
-        binding.add.setOnClickListener {
+        binding.positive.setOnClickListener {
             if (binding.userView.text.isEmpty()) {
                 binding.userView.error = getString(R.string.error_empty)
                 return@setOnClickListener

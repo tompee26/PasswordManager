@@ -59,4 +59,10 @@ class PackageViewModel private constructor(mainInteractor: MainInteractor, conte
             .subscribeOn(Schedulers.computation())
             .subscribe()
     }
+
+    fun delete(site: PackageCredential) {
+        subscriptions += interactor.delete(site)
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
 }

@@ -13,6 +13,7 @@
     <string name="control_copy">Copy</string>
     <string name="control_edit">Edit</string>
     <string name="control_save">Save</string>
+    <string name="control_delete">Delete</string>
 
     <string name="title_authenticate">Fingerprint Authentication</string>
     <string name="title_activate">Autofill Service</string>

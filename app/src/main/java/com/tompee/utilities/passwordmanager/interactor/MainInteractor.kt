@@ -111,4 +111,21 @@ class MainInteractor(
     fun generatePassword(): Single<String> {
         return Single.fromCallable { passwordGenerator.generatePassword(16) }
     }
+
+    fun delete(site: SiteCredential): Completable {
+        return Completable.fromAction { siteDao.remove(SiteEntity(site.name, site.url, site.username, site.password)) }
+    }
+
+    fun delete(pack: PackageCredential): Completable {
+        return Completable.fromAction {
+            packageDao.remove(
+                PackageEntity(
+                    pack.packageName,
+                    pack.name,
+                    pack.username,
+                    pack.password
+                )
+            )
+        }
+    }
 }
