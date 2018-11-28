@@ -1,5 +1,7 @@
 package com.tompee.utilities.passwordmanager.interactor
 
+import android.content.Context
+import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseInteractor
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
@@ -8,12 +10,12 @@ import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
 import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.model.Package
-import com.tompee.utilities.passwordmanager.model.PackageCredential
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
 class PackageInteractor(
+    private val context: Context,
     private val packageManager: PackageManager,
     private val keystore: Keystore,
     private val cipher: Cipher,
@@ -49,6 +51,15 @@ class PackageInteractor(
             Observable.fromIterable(list)
                 .concatMapSingle { entity ->
                     packageManager.getPackageFromName(entity.packageName)
+                        .onErrorResumeNext(
+                            Single.just(
+                                Package(
+                                    entity.name,
+                                    entity.packageName,
+                                    context.getDrawable(R.drawable.ic_icon_primary)!!
+                                )
+                            )
+                        )
                         .map { Package(it.name, it.packageName, it.icon) }
                 }
                 .toList()

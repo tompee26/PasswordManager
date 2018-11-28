@@ -33,13 +33,14 @@ class PackageModule {
     @Provides
     @PackageScope
     fun providePackageInteractor(
+        context: Context,
         packageManager: PackageManager,
         keystore: Keystore,
         cipher: Cipher,
         packageDao: PackageDao,
         passwordGenerator: PasswordGenerator
     ):
-            PackageInteractor = PackageInteractor(packageManager, keystore, cipher, packageDao, passwordGenerator)
+            PackageInteractor = PackageInteractor(context, packageManager, keystore, cipher, packageDao, passwordGenerator)
 
     @Provides
     @PackageScope
