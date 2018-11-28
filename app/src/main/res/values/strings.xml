@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name"> Ilog Password Manager</string>
-    <string name="service_name">Ilog Password Manager</string>
+    <string name="app_name"> IlogPass</string>
+    <string name="service_name">IlogPass</string>
     <string name="content_description">Content description</string>
 
     <string name="invalid_package_signature">Invalid package signature</string>

@@ -14,10 +14,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/content_description"
-            android:src="@drawable/ic_icon_primary"
+            android:src="@drawable/ic_web"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_icon_primary" />
+            tools:src="@drawable/ic_web" />
 
         <TextView
             android:id="@+id/title"

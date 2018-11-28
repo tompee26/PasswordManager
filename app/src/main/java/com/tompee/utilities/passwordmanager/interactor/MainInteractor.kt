@@ -42,7 +42,7 @@ class MainInteractor(
                                 Package(
                                     entity.name,
                                     entity.packageName,
-                                    context.getDrawable(R.drawable.ic_icon_primary)!!
+                                    context.getDrawable(R.drawable.ic_app)!!
                                 )
                             )
                         )
