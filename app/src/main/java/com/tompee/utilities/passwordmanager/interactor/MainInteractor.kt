@@ -10,7 +10,6 @@ import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.database.entity.PackageEntity
 import com.tompee.utilities.passwordmanager.core.database.entity.SiteEntity
 import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
-import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.feature.common.TextDrawable
 import com.tompee.utilities.passwordmanager.model.Package
@@ -25,7 +24,6 @@ class MainInteractor(
     private val packageDao: PackageDao,
     private val siteDao: SiteDao,
     private val packageManager: PackageManager,
-    private val keystore: Keystore,
     private val cipher: Cipher,
     private val context: Context,
     private val clipboardManager: ClipboardManager,
@@ -47,12 +45,11 @@ class MainInteractor(
                             )
                         )
                         .map {
-                            val key = keystore.getKey(it.packageName)!!
                             return@map PackageCredential(
                                 it.name,
                                 it.packageName,
-                                cipher.decrypt(entity.username, key.private),
-                                cipher.decrypt(entity.password, key.private),
+                                cipher.decrypt(entity.username, it.packageName),
+                                cipher.decrypt(entity.password, it.packageName),
                                 it.icon
                             )
                         }
@@ -63,28 +60,26 @@ class MainInteractor(
     }
 
     fun saveCredential(siteName: String, siteUrl: String, username: String, password: String): Completable {
-        return Single.fromCallable { keystore.createKey(siteUrl) }
-            .map {
-                SiteEntity(
-                    siteName,
-                    siteUrl,
-                    cipher.encrypt(username, it.public),
-                    cipher.encrypt(password, it.public)
-                )
-            }
+        return Single.fromCallable {
+            SiteEntity(
+                siteName,
+                siteUrl,
+                cipher.encrypt(username, siteUrl),
+                cipher.encrypt(password, siteUrl)
+            )
+        }
             .flatMapCompletable { Completable.fromAction { siteDao.insert(it) } }
     }
 
     fun savePackageCredential(pack: Package, username: String, password: String): Completable {
-        return Single.fromCallable { keystore.createKey(pack.packageName) }
-            .map {
-                PackageEntity(
-                    pack.packageName,
-                    pack.name,
-                    cipher.encrypt(username, it.public),
-                    cipher.encrypt(password, it.public)
-                )
-            }
+        return Single.fromCallable {
+            PackageEntity(
+                pack.packageName,
+                pack.name,
+                cipher.encrypt(username, pack.packageName),
+                cipher.encrypt(password, pack.packageName)
+            )
+        }
             .flatMapCompletable { Completable.fromAction { packageDao.insert(it) } }
     }
 
@@ -92,12 +87,11 @@ class MainInteractor(
         return siteDao.getSites().concatMap { list ->
             Observable.fromIterable(list)
                 .map {
-                    val key = keystore.getKey(it.siteUrl)!!
                     return@map SiteCredential(
                         it.siteName,
                         it.siteUrl,
-                        cipher.decrypt(it.username, key.private),
-                        cipher.decrypt(it.password, key.private),
+                        cipher.decrypt(it.username, it.siteUrl),
+                        cipher.decrypt(it.password, it.siteUrl),
                         TextDrawable(context.resources, it.siteName.toUpperCase().substring(0, 1), false)
                     )
                 }

@@ -9,7 +9,8 @@ import com.tompee.utilities.passwordmanager.core.autofill.impl.AutofillManagerIm
 import com.tompee.utilities.passwordmanager.core.biometric.BiometricManager
 import com.tompee.utilities.passwordmanager.core.biometric.reprint.ReprintBiometricManager
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
-import com.tompee.utilities.passwordmanager.core.cipher.impl.CipherImpl
+import com.tompee.utilities.passwordmanager.core.cipher.aes.AESCipher
+import com.tompee.utilities.passwordmanager.core.cipher.rsa.RSACipher
 import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.clipboard.impl.ClipboardManagerImpl
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
@@ -17,8 +18,6 @@ import com.tompee.utilities.passwordmanager.core.database.PasswordDatabase
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
 import com.tompee.utilities.passwordmanager.core.generator.impl.RandomPasswordGenerator
-import com.tompee.utilities.passwordmanager.core.keystore.Keystore
-import com.tompee.utilities.passwordmanager.core.keystore.impl.KeystoreImpl
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.core.packages.impl.PackageManagerImpl
 import dagger.Module
@@ -47,19 +46,7 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun provideCipher(cipherImpl: CipherImpl): Cipher = cipherImpl
-
-    @Provides
-    @Singleton
-    fun provideCipherImpl(): CipherImpl = CipherImpl()
-
-    @Provides
-    @Singleton
-    fun provideKeystore(keystoreImpl: KeystoreImpl): Keystore = keystoreImpl
-
-    @Provides
-    @Singleton
-    fun provideKeystoreImpl(): KeystoreImpl = KeystoreImpl()
+    fun provideCipher(): Cipher = AESCipher()
 
     @Provides
     @Singleton
@@ -75,11 +62,11 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun provideAutofillManager(autofillManagerImpl: AutofillManagerImpl) : AutofillManager = autofillManagerImpl
+    fun provideAutofillManager(autofillManagerImpl: AutofillManagerImpl): AutofillManager = autofillManagerImpl
 
     @Provides
     @Singleton
-    fun provideAutofillManagerImpl(context: Context) : AutofillManagerImpl = AutofillManagerImpl(context)
+    fun provideAutofillManagerImpl(context: Context): AutofillManagerImpl = AutofillManagerImpl(context)
 
     @Provides
     @Singleton
@@ -99,9 +86,10 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun providePasswordGenerator(randomPasswordGenerator: RandomPasswordGenerator) : PasswordGenerator = randomPasswordGenerator
+    fun providePasswordGenerator(randomPasswordGenerator: RandomPasswordGenerator): PasswordGenerator =
+        randomPasswordGenerator
 
     @Provides
     @Singleton
-    fun provideRandomPasswordGenerator() : RandomPasswordGenerator = RandomPasswordGenerator()
+    fun provideRandomPasswordGenerator(): RandomPasswordGenerator = RandomPasswordGenerator()
 }

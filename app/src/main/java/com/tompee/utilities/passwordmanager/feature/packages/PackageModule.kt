@@ -4,7 +4,6 @@ import android.content.Context
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
-import com.tompee.utilities.passwordmanager.core.keystore.Keystore
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.PackageScope
 import com.tompee.utilities.passwordmanager.feature.packages.add.AddPackageDialog
@@ -35,12 +34,12 @@ class PackageModule {
     fun providePackageInteractor(
         context: Context,
         packageManager: PackageManager,
-        keystore: Keystore,
         cipher: Cipher,
         packageDao: PackageDao,
         passwordGenerator: PasswordGenerator
     ):
-            PackageInteractor = PackageInteractor(context, packageManager, keystore, cipher, packageDao, passwordGenerator)
+            PackageInteractor =
+        PackageInteractor(context, packageManager, cipher, packageDao, passwordGenerator)
 
     @Provides
     @PackageScope

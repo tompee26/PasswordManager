@@ -10,8 +10,6 @@ import androidx.annotation.DrawableRes
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
-import com.tompee.utilities.passwordmanager.core.keystore.Keystore
-import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
 import com.tompee.utilities.passwordmanager.model.PackageCredential
 import com.tompee.utilities.passwordmanager.service.model.AuthField
@@ -19,7 +17,6 @@ import io.reactivex.schedulers.Schedulers
 
 class ResponseBuilder(
     private val packageDao: PackageDao,
-    private val keystore: Keystore,
     private val cipher: Cipher
 ) {
 
@@ -29,12 +26,11 @@ class ResponseBuilder(
         try {
             val data = packageDao.findPackage(appPackageName)
                 .map {
-                    val key = keystore.getKey(appPackageName)!!
-                    return@map PackageCredential(
+                    PackageCredential(
                         it.name,
                         it.packageName,
-                        cipher.decrypt(it.username, key.private),
-                        cipher.decrypt(it.password, key.private),
+                        cipher.decrypt(it.username, appPackageName),
+                        cipher.decrypt(it.password, appPackageName),
                         ShapeDrawable()
                     )
                 }

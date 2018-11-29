@@ -16,12 +16,13 @@ class StructureParser {
 
     private fun parseMetadata(viewNode: AssistStructure.ViewNode, field: AuthField) {
         /* We are only interested in username and password combinations. For now, auto fill hints are not yet checked */
-
-        val hint = viewNode.hint?.toLowerCase()
-        if (hint?.contains("user") == true && viewNode.className.contains("EditText")) {
-            field.usernameField = viewNode
-        } else if (hint?.contains("pass") == true && viewNode.className.contains("EditText")) {
-            field.passwordField = viewNode
+        if (viewNode.className != null && viewNode.className.contains("EditText")) {
+            val hint = viewNode.hint?.toLowerCase()
+            if (hint?.contains("user") == true || hint?.contains("email") == true) {
+                field.usernameField = viewNode
+            } else if (hint?.contains("pass") == true) {
+                field.passwordField = viewNode
+            }
         }
 
         val childCount = viewNode.childCount
