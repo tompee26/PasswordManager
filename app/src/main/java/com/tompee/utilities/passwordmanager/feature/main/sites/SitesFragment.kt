@@ -28,6 +28,7 @@ class SitesFragment : BaseFragment<FragmentSitesBinding>() {
 
     override fun setupBindingAndViewModel(binding: FragmentSitesBinding) {
         val vm = ViewModelProviders.of(activity!!, factory)[SitesViewModel::class.java]
+        binding.viewModel = vm
         binding.list.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)

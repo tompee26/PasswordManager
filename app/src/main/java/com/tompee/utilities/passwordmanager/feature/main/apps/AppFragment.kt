@@ -35,6 +35,7 @@ class AppFragment : BaseFragment<FragmentAppBinding>(), HasSupportFragmentInject
 
     override fun setupBindingAndViewModel(binding: FragmentAppBinding) {
         val vm = ViewModelProviders.of(activity!!, factory)[PackageViewModel::class.java]
+        binding.viewModel = vm
         binding.list.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
