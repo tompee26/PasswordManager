@@ -41,26 +41,26 @@ class ResponseBuilder(
                 datasetBuilder.setValue(
                     authField.usernameField?.autofillId!!,
                     AutofillValue.forText(data.username),
-                    newDatasetPresentation(serviceContext, R.drawable.ic_account_circle_black_24dp)
+                    newDatasetPresentation(serviceContext)
                 )
             }
             if (authField.passwordField != null) {
                 datasetBuilder.setValue(
                     authField.passwordField?.autofillId!!,
                     AutofillValue.forText(data.password),
-                    newDatasetPresentation(serviceContext, R.drawable.ic_account_circle_black_24dp)
+                    newDatasetPresentation(serviceContext)
                 )
             }
             val unlockedDataset = datasetBuilder.build()
             val lockedDatasetBuilder = Dataset.Builder()
             val authentication = SplashActivity.newIntentSender(serviceContext, unlockedDataset)
             if (authField.usernameField != null) {
-                val presentation = newDatasetPresentation(serviceContext, R.drawable.ic_account_circle_black_24dp)
+                val presentation = newDatasetPresentation(serviceContext)
                 lockedDatasetBuilder.setValue(authField.usernameField?.autofillId!!, null, presentation)
                     .setAuthentication(authentication)
             }
             if (authField.passwordField != null) {
-                val presentation = newDatasetPresentation(serviceContext, R.drawable.ic_account_circle_black_24dp)
+                val presentation = newDatasetPresentation(serviceContext)
                 lockedDatasetBuilder.setValue(authField.passwordField?.autofillId!!, null, presentation)
                     .setAuthentication(authentication)
             }
@@ -74,10 +74,10 @@ class ResponseBuilder(
         }
     }
 
-    private fun newDatasetPresentation(context: Context, @DrawableRes id: Int): RemoteViews {
+    private fun newDatasetPresentation(context: Context): RemoteViews {
         val presentation = RemoteViews(context.packageName, R.layout.list_dataset)
-        presentation.setTextViewText(R.id.text, context.getString(R.string.app_name))
-        presentation.setImageViewResource(R.id.icon, id)
+        presentation.setTextViewText(R.id.text, context.getString(R.string.message_autofill))
+        presentation.setImageViewResource(R.id.icon, R.drawable.ic_icon_primary)
         return presentation
     }
 }

@@ -30,4 +30,5 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <style name="FragmentDialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert"/>
 </resources>

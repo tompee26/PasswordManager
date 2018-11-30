@@ -87,6 +87,17 @@ dependencies {
     implementation "com.github.ajalt.reprint:core:$reprint"
     implementation "com.github.ajalt.reprint:rxjava2:$reprint"
 
+    def firebase = "16.0.5"
+    implementation "com.google.firebase:firebase-core:$firebase"
+
+    def firebase_auth = "16.0.5"
+    implementation "com.google.firebase:firebase-auth:$firebase_auth"
+
+    def firebase_firestore = "17.1.3"
+    implementation "com.google.firebase:firebase-firestore:$firebase_firestore"
+
     implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -3,6 +3,8 @@ package com.tompee.utilities.passwordmanager.dependency
 import com.tompee.utilities.passwordmanager.dependency.scope.*
 import com.tompee.utilities.passwordmanager.feature.about.AboutActivity
 import com.tompee.utilities.passwordmanager.feature.about.AboutModule
+import com.tompee.utilities.passwordmanager.feature.auth.LoginActivity
+import com.tompee.utilities.passwordmanager.feature.auth.LoginModule
 import com.tompee.utilities.passwordmanager.feature.license.LicenseActivity
 import com.tompee.utilities.passwordmanager.feature.license.LicenseModule
 import com.tompee.utilities.passwordmanager.feature.packages.PackageActivity
@@ -36,4 +38,8 @@ internal abstract class ActivityModule {
     @LicenseScope
     @ContributesAndroidInjector(modules = [LicenseModule::class])
     internal abstract fun bindLicenseActivity(): LicenseActivity
+
+    @LoginScope
+    @ContributesAndroidInjector(modules = [LoginModule::class])
+    internal abstract fun bindLoginActivity() : LoginActivity
 }

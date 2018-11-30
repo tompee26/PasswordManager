@@ -6,6 +6,8 @@
     <color name="colorLight">#ffffff</color>
     <color name="colorBackground">#00FFFFFF</color>
     <color name="colorDivider">#808080</color>
+    <color name="colorLoginButton">#42A5F5</color>
+    <color name="colorSignUpButton">#EF5350</color>
 
     <color name="bg_fingerprint">#341980</color>
     <color name="dialog_title">#4b4b4b</color>

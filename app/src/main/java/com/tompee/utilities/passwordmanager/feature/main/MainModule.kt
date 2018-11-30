@@ -12,6 +12,7 @@ import com.tompee.utilities.passwordmanager.dependency.scope.MainScope
 import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppFragment
 import com.tompee.utilities.passwordmanager.feature.main.apps.AppViewModule
+import com.tompee.utilities.passwordmanager.feature.main.backup.BackupDialog
 import com.tompee.utilities.passwordmanager.feature.main.common.PackageViewModel
 import com.tompee.utilities.passwordmanager.feature.main.common.SitesViewModel
 import com.tompee.utilities.passwordmanager.feature.main.sites.SitesFragment
@@ -43,6 +44,9 @@ class MainModule {
 
         @ContributesAndroidInjector
         fun bindViewSitesDialog(): ViewSitesDialog
+
+        @ContributesAndroidInjector
+        fun bindBackupDialog(): BackupDialog
     }
 
     @Provides

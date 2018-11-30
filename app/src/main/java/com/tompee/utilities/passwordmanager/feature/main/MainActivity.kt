@@ -14,6 +14,7 @@ import com.tompee.utilities.passwordmanager.databinding.ActivityMainBinding
 import com.tompee.utilities.passwordmanager.feature.about.AboutActivity
 import com.tompee.utilities.passwordmanager.feature.license.LicenseActivity
 import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
+import com.tompee.utilities.passwordmanager.feature.main.backup.BackupDialog
 import com.tompee.utilities.passwordmanager.feature.packages.PackageActivity
 import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
 import dagger.android.AndroidInjection
@@ -34,7 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private var isShowAuthentication = true
 
     companion object {
-        private const val REQUEST = 1809
+        const val REQUEST = 1809
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +52,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val intent: Intent
         when (item.itemId) {
+            R.id.menu_backup -> {
+                val dialog = BackupDialog()
+                dialog.show(supportFragmentManager, "backup")
+                return true
+            }
             R.id.menu_about -> {
                 intent = Intent(this, AboutActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

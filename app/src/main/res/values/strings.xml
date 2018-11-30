@@ -14,6 +14,7 @@
     <string name="control_edit">Edit</string>
     <string name="control_save">Save</string>
     <string name="control_delete">Delete</string>
+    <string name="control_proceed">Proceed</string>
 
     <string name="title_authenticate">Fingerprint Authentication</string>
     <string name="title_activate">Autofill Service</string>
@@ -22,6 +23,7 @@
     <string name="title_sites">Sites</string>
     <string name="title_packages">Packages</string>
     <string name="title_add_site">Add Site</string>
+    <string name="title_login">Enter your credentials</string>
 
     <string name="message_authenticate">Touch the sensor</string>
     <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
@@ -34,15 +36,25 @@
     <string name="message_add_site">Set a credential for a new site. Alternatively, you can also generate a strong password by tapping Generate.</string>
     <string name="message_clipboard">Password has been copied to clipboard</string>
     <string name="message_copyright">Copyright 2018, Tompee. All rights reserved.</string>
+    <string name="message_autofill">Autofill with IlogPass</string>
+    <string name="message_backup">Important Notice!\n\nBackup requires you to connect to the application server and publish your details. All details published will be encrypted using your registered key. This app does not in any way save your keys so there\'s no way to retrieve your data in case you forgot about your key. If you are not comfortable in publishing your encrypted details, please backup manually.</string>
 
     <string name="label_login_name">Username</string>
     <string name="label_login_pass">Password</string>
     <string name="label_site_name">Site name</string>
     <string name="label_site_url">URL</string>
     <string name="label_about">About</string>
+    <string name="label_backup">Backup</string>
     <string name="label_version">Version %1$s</string>
     <string name="label_license">License</string>
     <string name="label_policy">Privacy Policy</string>
+    <string name="label_login">Login</string>
+    <string name="label_sign_up">Sign up</string>
+    <string name="label_login_new_account">Create an account</string>
+    <string name="label_login_registered">Login now</string>
+
+    <string name="progress_login_register">Registering account…</string>
+    <string name="progress_login_authenticate">Logging in…</string>
 
     <string name="error_empty">Field cannot be empty</string>
 

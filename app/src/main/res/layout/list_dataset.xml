@@ -20,5 +20,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:src="@drawable/ic_account_circle_black_24dp" />
+        android:src="@drawable/ic_icon_primary" />
 </LinearLayout>
