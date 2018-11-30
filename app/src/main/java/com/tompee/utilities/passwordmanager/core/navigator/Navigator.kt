@@ -5,6 +5,7 @@ import android.content.Intent
 import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.feature.about.AboutActivity
 import com.tompee.utilities.passwordmanager.feature.auth.LoginActivity
+import com.tompee.utilities.passwordmanager.feature.backup.BackupActivity
 import com.tompee.utilities.passwordmanager.feature.license.LicenseActivity
 import com.tompee.utilities.passwordmanager.feature.packages.PackageActivity
 import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
@@ -13,6 +14,7 @@ class Navigator(private val activity: Activity) {
 
     fun setClear(screen: Screen) {
         setAddToBackStack(screen)
+        activity.setResult(Activity.RESULT_OK)
         activity.finish()
     }
 
@@ -41,6 +43,7 @@ class Navigator(private val activity: Activity) {
                 )
             }
             Login -> Intent(activity, LoginActivity::class.java)
+            Backup -> Intent(activity, BackupActivity::class.java)
         }
     }
 }

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tompee.utilities.passwordmanager.feature.backup.BackupViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbarInclude"
+            layout="@layout/toolbar"
+            app:title="@{viewModel.title}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/key"
+            style="@style/BackupItem"
+            app:layout_constraintTop_toBottomOf="@id/toolbarInclude">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/keyFab"
+                style="@style/BackupItemFab"
+                android:backgroundTint="@color/colorLoginButton"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_key"
+                app:layout_constraintBottom_toBottomOf="@id/keyFab"
+                app:layout_constraintEnd_toEndOf="@id/keyFab"
+                app:layout_constraintStart_toStartOf="@id/keyFab"
+                app:layout_constraintTop_toTopOf="@id/keyFab" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/label_register_key"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="@color/colorDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/keyFab"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            style="@style/BackupItemDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/key" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/backup"
+            style="@style/BackupItem"
+            app:layout_constraintTop_toBottomOf="@id/key">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/backupFab"
+                style="@style/BackupItemFab"
+                android:backgroundTint="@color/colorSignUpButton"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_backup"
+                app:layout_constraintBottom_toBottomOf="@id/backupFab"
+                app:layout_constraintEnd_toEndOf="@id/backupFab"
+                app:layout_constraintStart_toStartOf="@id/backupFab"
+                app:layout_constraintTop_toTopOf="@id/backupFab" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/title_backup"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="@color/colorDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/backupFab"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            style="@style/BackupItemDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backup" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/restore"
+            style="@style/BackupItem"
+            app:layout_constraintTop_toBottomOf="@id/backup">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/restoreFab"
+                style="@style/BackupItemFab"
+                android:backgroundTint="@color/dialog_cancel_btn"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_restore"
+                app:layout_constraintBottom_toBottomOf="@id/restoreFab"
+                app:layout_constraintEnd_toEndOf="@id/restoreFab"
+                app:layout_constraintStart_toStartOf="@id/restoreFab"
+                app:layout_constraintTop_toTopOf="@id/restoreFab" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/title_restore"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="@color/colorDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/restoreFab"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            style="@style/BackupItemDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/restore" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/delete"
+            style="@style/BackupItem"
+            app:layout_constraintTop_toBottomOf="@id/restore">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/deleteFab"
+                style="@style/BackupItemFab"
+                android:backgroundTint="@color/colorBlue"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintBottom_toBottomOf="@id/deleteFab"
+                app:layout_constraintEnd_toEndOf="@id/deleteFab"
+                app:layout_constraintStart_toStartOf="@id/deleteFab"
+                app:layout_constraintTop_toTopOf="@id/deleteFab" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/title_delete"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="@color/colorDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/deleteFab"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

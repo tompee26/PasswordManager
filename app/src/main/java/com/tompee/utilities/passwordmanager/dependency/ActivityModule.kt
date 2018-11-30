@@ -5,12 +5,14 @@ import com.tompee.utilities.passwordmanager.feature.about.AboutActivity
 import com.tompee.utilities.passwordmanager.feature.about.AboutModule
 import com.tompee.utilities.passwordmanager.feature.auth.LoginActivity
 import com.tompee.utilities.passwordmanager.feature.auth.LoginModule
+import com.tompee.utilities.passwordmanager.feature.backup.BackupActivity
+import com.tompee.utilities.passwordmanager.feature.backup.BackupModule
 import com.tompee.utilities.passwordmanager.feature.license.LicenseActivity
 import com.tompee.utilities.passwordmanager.feature.license.LicenseModule
-import com.tompee.utilities.passwordmanager.feature.packages.PackageActivity
-import com.tompee.utilities.passwordmanager.feature.packages.PackageModule
 import com.tompee.utilities.passwordmanager.feature.main.MainActivity
 import com.tompee.utilities.passwordmanager.feature.main.MainModule
+import com.tompee.utilities.passwordmanager.feature.packages.PackageActivity
+import com.tompee.utilities.passwordmanager.feature.packages.PackageModule
 import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
 import com.tompee.utilities.passwordmanager.feature.splash.SplashModule
 import dagger.Module
@@ -41,5 +43,9 @@ internal abstract class ActivityModule {
 
     @LoginScope
     @ContributesAndroidInjector(modules = [LoginModule::class])
-    internal abstract fun bindLoginActivity() : LoginActivity
+    internal abstract fun bindLoginActivity(): LoginActivity
+
+    @BackupScope
+    @ContributesAndroidInjector(modules = [BackupModule::class])
+    internal abstract fun bindBackupActivity(): BackupActivity
 }

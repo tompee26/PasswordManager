@@ -7,24 +7,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
+import com.tompee.utilities.passwordmanager.core.navigator.Backup
 import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.feature.common.ObservableString
 import com.tompee.utilities.passwordmanager.feature.common.observe
-import com.tompee.utilities.passwordmanager.interactor.BackupInteractor
+import com.tompee.utilities.passwordmanager.interactor.LoginInteractor
 import io.reactivex.Completable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import java.util.concurrent.TimeUnit
 
 class LoginViewModel private constructor(
-    backupInteractor: BackupInteractor,
+    backupInteractor: LoginInteractor,
     context: Context,
     navigator: Navigator
 ) :
-    BaseViewModel<BackupInteractor>(backupInteractor, context, navigator) {
+    BaseViewModel<LoginInteractor>(backupInteractor, context, navigator) {
 
     class Factory(
-        private val backupInteractor: BackupInteractor,
+        private val backupInteractor: LoginInteractor,
         private val context: Context,
         private val navigator: Navigator
     ) : ViewModelProvider.Factory {
@@ -90,13 +91,13 @@ class LoginViewModel private constructor(
         subscriptions += Completable.fromAction { processing.postValue(true) }
             .andThen(interactor.login(username.get()!!, password.get()!!))
             .doFinally { processing.postValue(false) }
-            .subscribe({}) { commandError.postValue(it.message) }
+            .subscribe({ navigator.setClear(Backup) }) { commandError.postValue(it.message) }
     }
 
     fun startSignup() {
         subscriptions += Completable.fromAction { processing.postValue(true) }
             .andThen(interactor.signup(username.get()!!, password.get()!!))
             .doFinally { processing.postValue(false) }
-            .subscribe({}) { commandError.postValue(it.message) }
+            .subscribe({ navigator.setClear(Backup) }) { commandError.postValue(it.message) }
     }
 }

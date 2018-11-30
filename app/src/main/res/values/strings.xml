@@ -24,6 +24,9 @@
     <string name="title_packages">Packages</string>
     <string name="title_add_site">Add Site</string>
     <string name="title_login">Enter your credentials</string>
+    <string name="title_backup">Backup</string>
+    <string name="title_restore">Restore</string>
+    <string name="title_delete">Delete</string>
 
     <string name="message_authenticate">Touch the sensor</string>
     <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
@@ -52,6 +55,7 @@
     <string name="label_sign_up">Sign up</string>
     <string name="label_login_new_account">Create an account</string>
     <string name="label_login_registered">Login now</string>
+    <string name="label_register_key">Register key</string>
 
     <string name="progress_login_register">Registering account…</string>
     <string name="progress_login_authenticate">Logging in…</string>
