@@ -26,7 +26,7 @@ class ActivateDialog : BaseDialogFragment() {
             .setTitle(R.string.title_activate)
             .setMessage(R.string.message_activate)
             .setPositiveButton(R.string.control_ok) { _, _ ->
-                vm.finish(true)
+                vm.requestFinish(true)
             }
             .setCancelable(false)
             .create()

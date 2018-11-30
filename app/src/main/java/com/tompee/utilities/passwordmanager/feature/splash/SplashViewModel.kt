@@ -11,48 +11,50 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
-class SplashViewModel private constructor(splashInteractor: SplashInteractor, context: Context) :
+class SplashViewModel private constructor(
+    splashInteractor: SplashInteractor,
+    context: Context,
+    private val splashDialogManager: SplashDialogManager
+) :
     BaseViewModel<SplashInteractor>(splashInteractor, context) {
 
     class Factory(
         private val splashInteractor: SplashInteractor,
-        private val context: Context
+        private val context: Context,
+        private val splashDialogManager: SplashDialogManager
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return SplashViewModel(splashInteractor, context) as T
+            return SplashViewModel(splashInteractor, context, splashDialogManager) as T
         }
     }
 
-    val isFingerprintSupported = MutableLiveData<Boolean>()
-    val hasRegisteredFingerprint = MutableLiveData<Boolean>()
     val needsClose = MutableLiveData<Boolean>()
     val authenticateResult = MutableLiveData<Boolean>()
-    val autofillEnabled = MutableLiveData<Boolean>()
 
     init {
         subscriptions += interactor.isFingerprintSupported()
+            .filter { !it }
+            .map { SplashDialogManager.Dialogs.FINGERPRINT_NOT_SUPPORTED }
+            .mergeWith(interactor.hasFingerprintRegistered()
+                .filter { !it }
+                .map { SplashDialogManager.Dialogs.NO_REGISTERED_FINGERPRINTS })
+            .first(SplashDialogManager.Dialogs.AUTHENTICATION)
             .subscribeOn(Schedulers.io())
-            .subscribe(isFingerprintSupported::postValue)
-
-        subscriptions += interactor.hasFingerprintRegistered()
-            .subscribeOn(Schedulers.io())
-            .subscribe(hasRegisteredFingerprint::postValue)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(splashDialogManager::showDialog)
     }
 
-    fun finish(result: Boolean) {
+    fun requestFinish(result: Boolean) {
         needsClose.postValue(result)
     }
 
     fun startAuthentication() {
         subscriptions += interactor.authenticate()
             .subscribeOn(Schedulers.io())
-            .subscribe { authenticateResult.postValue(it.type == Status.OK) }
-    }
-
-    fun checkIfAutofillEnabled() {
-        subscriptions += interactor.isAutofillEnabled()
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe(autofillEnabled::postValue)
+            .doOnNext { authenticateResult.postValue(it.type == Status.OK) }
+            .filter { it.type == Status.OK }
+            .flatMapSingle { interactor.isAutofillEnabled() }
+            .subscribe { if (it) needsClose.postValue(it) else splashDialogManager.showDialog(SplashDialogManager.Dialogs.ENABLE_AUTOFILL) }
     }
 }

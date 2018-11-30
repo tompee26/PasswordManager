@@ -1,6 +1,7 @@
 package com.tompee.utilities.passwordmanager.feature.splash
 
 import android.content.Context
+import androidx.fragment.app.FragmentManager
 import com.tompee.utilities.passwordmanager.core.autofill.AutofillManager
 import com.tompee.utilities.passwordmanager.core.biometric.BiometricManager
 import com.tompee.utilities.passwordmanager.dependency.scope.FingerprintScope
@@ -47,14 +48,39 @@ class SplashModule {
 
     @Provides
     @SplashScope
+    fun provideActivateDialog(): ActivateDialog = ActivateDialog()
+
+    @Provides
+    @SplashScope
     fun provideSplashViewModelFactory(
         splashInteractor: SplashInteractor,
-        context: Context
+        context: Context,
+        splashDialogManager: SplashDialogManager
     ): SplashViewModel.Factory =
-        SplashViewModel.Factory(splashInteractor, context)
+        SplashViewModel.Factory(splashInteractor, context, splashDialogManager)
 
     @Provides
     @SplashScope
     fun provideFingerprintInteractor(biometricManager: BiometricManager, autofillManager: AutofillManager):
             SplashInteractor = SplashInteractor(biometricManager, autofillManager)
+
+    @Provides
+    @SplashScope
+    fun provideSplashDialogManager(
+        fragmentManager: FragmentManager,
+        fingerprintSupportDialog: FingerprintSupportDialog,
+        fingerprintRegisterDialog: FingerprintRegisterDialog,
+        activateDialog: ActivateDialog,
+        fingerprintDialog: FingerprintDialog
+    ): SplashDialogManager = SplashDialogManager(
+        fragmentManager,
+        fingerprintSupportDialog,
+        fingerprintRegisterDialog,
+        activateDialog,
+        fingerprintDialog
+    )
+
+    @Provides
+    @SplashScope
+    fun provideFragmentManager(activity: SplashActivity): FragmentManager = activity.supportFragmentManager
 }

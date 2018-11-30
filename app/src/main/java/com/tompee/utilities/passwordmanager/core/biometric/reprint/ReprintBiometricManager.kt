@@ -9,7 +9,7 @@ import com.tompee.utilities.passwordmanager.core.biometric.Status
 import io.reactivex.Flowable
 import io.reactivex.Single
 
-class ReprintBiometricManager() : BiometricManager {
+class ReprintBiometricManager : BiometricManager {
     override fun isSupported(): Single<Boolean> = Single.fromCallable { Reprint.isHardwarePresent() }
 
     override fun hasRegisteredFingerprints(): Single<Boolean> = Single.fromCallable { Reprint.hasFingerprintRegistered() }

@@ -14,10 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivitySplashBinding
-import com.tompee.utilities.passwordmanager.feature.splash.activate.ActivateDialog
-import com.tompee.utilities.passwordmanager.feature.splash.authenticate.FingerprintDialog
-import com.tompee.utilities.passwordmanager.feature.splash.register.FingerprintRegisterDialog
-import com.tompee.utilities.passwordmanager.feature.splash.support.FingerprintSupportDialog
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -30,15 +26,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     @Inject
     lateinit var factory: SplashViewModel.Factory
-
-    @Inject
-    lateinit var fingerprintDialog: FingerprintDialog
-
-    @Inject
-    lateinit var fingerprintSupportDialog: FingerprintSupportDialog
-
-    @Inject
-    lateinit var fingerprintRegisterDialog: FingerprintRegisterDialog
 
     companion object {
         const val EXTRA_DATASET = "dataset"
@@ -62,30 +49,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         val vm = ViewModelProviders.of(this, factory)[SplashViewModel::class.java]
         binding.viewModel = vm
 
-        vm.isFingerprintSupported.observe(this, Observer {
-            if (!it) fingerprintSupportDialog.show(supportFragmentManager, "support")
-        })
-
-        vm.hasRegisteredFingerprint.observe(this, Observer {
-            if (!it) fingerprintRegisterDialog.show(supportFragmentManager, "register")
-        })
-
         vm.needsClose.observe(this, Observer {
             finish(if (it) Activity.RESULT_OK else Activity.RESULT_CANCELED)
-        })
-
-        vm.authenticateResult.observe(this, Observer {
-            if (it) {
-                vm.checkIfAutofillEnabled()
-            }
-        })
-        vm.autofillEnabled.observe(this, Observer {
-            if (it) {
-                finish(Activity.RESULT_OK)
-            } else {
-                val activateDialog = ActivateDialog()
-                activateDialog.show(supportFragmentManager, "activate")
-            }
         })
     }
 
@@ -98,16 +63,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             return
         }
         super.finish(result, intent)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        fingerprintDialog.show(supportFragmentManager, "authenticate")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        fingerprintDialog.dismiss()
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector

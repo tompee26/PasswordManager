@@ -26,7 +26,7 @@ class FingerprintRegisterDialog : BaseDialogFragment() {
                 .setTitle(R.string.title_authenticate)
                 .setMessage(R.string.message_fingerprint_not_registered)
                 .setPositiveButton(R.string.control_ok) { _, _ ->
-                    vm.finish(false)
+                    vm.requestFinish(false)
                 }
                 .setCancelable(false)
                 .create()
