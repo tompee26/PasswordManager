@@ -1,7 +1,5 @@
 package com.tompee.utilities.passwordmanager.feature.packages
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -9,17 +7,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tompee.utilities.passwordmanager.R
-import com.tompee.utilities.passwordmanager.base.BaseActivity
+import com.tompee.utilities.passwordmanager.base.BaseAuthActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivityPackageBinding
 import com.tompee.utilities.passwordmanager.feature.common.DividerDecorator
 import com.tompee.utilities.passwordmanager.feature.packages.add.AddPackageDialog
-import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import javax.inject.Inject
 
-class PackageActivity : BaseActivity<ActivityPackageBinding>() {
+class PackageActivity : BaseAuthActivity<ActivityPackageBinding>() {
 
     @Inject
     lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
@@ -29,12 +26,6 @@ class PackageActivity : BaseActivity<ActivityPackageBinding>() {
 
     @Inject
     lateinit var packageAdapter: PackageAdapter
-
-    private var isShowAuthentication = false
-
-    companion object {
-        private const val REQUEST = 1808
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -65,32 +56,9 @@ class PackageActivity : BaseActivity<ActivityPackageBinding>() {
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (isShowAuthentication) {
-            val intent = Intent(this, SplashActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivityForResult(intent, REQUEST)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                isShowAuthentication = false
-            } else {
-                finish(Activity.RESULT_CANCELED)
-            }
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        isShowAuthentication = true
-    }
-
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = supportFragmentInjector
 
     override val layoutId: Int = R.layout.activity_package
+
+    override fun isAuthInitiallyRequired(): Boolean = false
 }
