@@ -6,22 +6,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
+import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.interactor.PackageInteractor
 import com.tompee.utilities.passwordmanager.model.Package
 import io.reactivex.Completable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
-class PackageViewModel private constructor(packageInteractor: PackageInteractor, context: Context) :
-    BaseViewModel<PackageInteractor>(packageInteractor, context) {
+class PackageViewModel private constructor(
+    packageInteractor: PackageInteractor,
+    context: Context,
+    navigator: Navigator
+) :
+    BaseViewModel<PackageInteractor>(packageInteractor, context, navigator) {
 
     class Factory(
         private val packageInteractor: PackageInteractor,
-        private val context: Context
+        private val context: Context,
+        private val navigator: Navigator
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return PackageViewModel(packageInteractor, context) as T
+            return PackageViewModel(packageInteractor, context, navigator) as T
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
+import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.PackageScope
 import com.tompee.utilities.passwordmanager.feature.packages.add.AddPackageDialog
@@ -25,9 +26,14 @@ class PackageModule {
     @PackageScope
     fun providePackageViewModelFactory(
         packageInteractor: PackageInteractor,
-        context: Context
+        context: Context,
+        navigator: Navigator
     ): PackageViewModel.Factory =
-        PackageViewModel.Factory(packageInteractor, context)
+        PackageViewModel.Factory(packageInteractor, context, navigator)
+
+    @Provides
+    @PackageScope
+    fun provideNavigator(packageActivity: PackageActivity): Navigator = Navigator(packageActivity)
 
     @Provides
     @PackageScope

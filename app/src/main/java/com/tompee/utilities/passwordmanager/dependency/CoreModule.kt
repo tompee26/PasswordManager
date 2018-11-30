@@ -10,9 +10,7 @@ import com.tompee.utilities.passwordmanager.core.biometric.BiometricManager
 import com.tompee.utilities.passwordmanager.core.biometric.reprint.ReprintBiometricManager
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.cipher.aes.AESCipher
-import com.tompee.utilities.passwordmanager.core.cipher.rsa.RSACipher
 import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
-import com.tompee.utilities.passwordmanager.core.clipboard.impl.ClipboardManagerImpl
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.PasswordDatabase
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
@@ -50,11 +48,7 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun provideClipboardManager(clipboardManagerImpl: ClipboardManagerImpl): ClipboardManager = clipboardManagerImpl
-
-    @Provides
-    @Singleton
-    fun provideClipboardManagerImpl(context: Context): ClipboardManagerImpl = ClipboardManagerImpl(context)
+    fun provideClipboardManagerImpl(context: Context): ClipboardManager = ClipboardManager(context)
 
     @Provides
     @Singleton

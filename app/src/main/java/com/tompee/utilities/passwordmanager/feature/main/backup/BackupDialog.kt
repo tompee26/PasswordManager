@@ -4,26 +4,31 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProviders
 import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseDialogFragment
 import com.tompee.utilities.passwordmanager.feature.auth.LoginActivity
+import com.tompee.utilities.passwordmanager.feature.main.MainViewModel
 import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class BackupDialog : BaseDialogFragment() {
+
+    @Inject
+    lateinit var factory: MainViewModel.Factory
 
     override fun setupDependencies() {
         AndroidSupportInjection.inject(this)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val vm = ViewModelProviders.of(activity!!, factory)[MainViewModel::class.java]
         return AlertDialog.Builder(activity!!)
             .setTitle(R.string.label_backup)
             .setMessage(R.string.message_backup)
             .setPositiveButton(R.string.control_proceed) { _, _ ->
-                val intent = Intent(activity, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                activity?.startActivityForResult(intent, Constants.REQUEST_CODE)
+                vm.moveToBackUpScreen()
                 dismiss()
             }
             .setNegativeButton(R.string.control_cancel) { _, _ -> dismiss() }

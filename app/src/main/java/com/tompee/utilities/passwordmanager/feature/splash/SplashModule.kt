@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.fragment.app.FragmentManager
 import com.tompee.utilities.passwordmanager.core.autofill.AutofillManager
 import com.tompee.utilities.passwordmanager.core.biometric.BiometricManager
+import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.dependency.scope.FingerprintScope
 import com.tompee.utilities.passwordmanager.dependency.scope.SplashScope
 import com.tompee.utilities.passwordmanager.feature.splash.activate.ActivateDialog
@@ -55,9 +56,14 @@ class SplashModule {
     fun provideSplashViewModelFactory(
         splashInteractor: SplashInteractor,
         context: Context,
+        navigator: Navigator,
         splashDialogManager: SplashDialogManager
     ): SplashViewModel.Factory =
-        SplashViewModel.Factory(splashInteractor, context, splashDialogManager)
+        SplashViewModel.Factory(splashInteractor, context, navigator, splashDialogManager)
+
+    @Provides
+    @SplashScope
+    fun provideNavigator(splashActivity: SplashActivity): Navigator = Navigator(splashActivity)
 
     @Provides
     @SplashScope

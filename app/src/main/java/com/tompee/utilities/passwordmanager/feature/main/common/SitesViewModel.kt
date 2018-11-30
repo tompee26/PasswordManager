@@ -5,22 +5,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
+import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.interactor.MainInteractor
-import com.tompee.utilities.passwordmanager.model.PackageCredential
 import com.tompee.utilities.passwordmanager.model.SiteCredential
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
-class SitesViewModel private constructor(mainInteractor: MainInteractor, context: Context) :
-    BaseViewModel<MainInteractor>(mainInteractor, context) {
+class SitesViewModel private constructor(mainInteractor: MainInteractor,
+                                         context: Context,
+                                         navigator: Navigator) :
+    BaseViewModel<MainInteractor>(mainInteractor, context, navigator) {
 
-    class Factory(private val mainInteractor: MainInteractor, private val context: Context) :
+    class Factory(private val mainInteractor: MainInteractor,
+                  private val context: Context,
+                  private val navigator: Navigator) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return SitesViewModel(mainInteractor, context) as T
+            return SitesViewModel(mainInteractor, context, navigator) as T
         }
     }
 

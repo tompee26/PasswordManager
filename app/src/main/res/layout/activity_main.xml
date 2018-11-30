@@ -44,6 +44,7 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/colorPrimary"
             android:elevation="0dp"
+            android:onClick="@{() -> viewPager.getCurrentItem() == 0 ? viewModel.addPackage() : viewModel.addSite()}"
             app:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

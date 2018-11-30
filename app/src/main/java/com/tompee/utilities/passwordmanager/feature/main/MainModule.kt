@@ -7,6 +7,7 @@ import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
+import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.dependency.scope.MainScope
 import com.tompee.utilities.passwordmanager.feature.main.addsites.AddSitesDialog
@@ -51,8 +52,17 @@ class MainModule {
 
     @Provides
     @MainScope
-    fun provideMainViewModelFactory(mainInteractor: MainInteractor, context: Context): MainViewModel.Factory =
-        MainViewModel.Factory(mainInteractor, context)
+    fun provideMainViewModelFactory(
+        mainInteractor: MainInteractor,
+        context: Context,
+        navigator: Navigator,
+        fragmentManager: FragmentManager
+    ): MainViewModel.Factory =
+        MainViewModel.Factory(mainInteractor, context, navigator, fragmentManager)
+
+    @Provides
+    @MainScope
+    fun provideNavigator(mainActivity: MainActivity): Navigator = Navigator(mainActivity)
 
     @Provides
     @MainScope
@@ -87,15 +97,17 @@ class MainModule {
     @Provides
     fun providePackageViewModelFactory(
         mainInteractor: MainInteractor,
-        context: Context
-    ): PackageViewModel.Factory = PackageViewModel.Factory(mainInteractor, context)
+        context: Context,
+        navigator: Navigator
+    ): PackageViewModel.Factory = PackageViewModel.Factory(mainInteractor, context, navigator)
 
     @Provides
     fun provideSitesViewModelFactory(
         mainInteractor: MainInteractor,
-        context: Context
+        context: Context,
+        navigator: Navigator
     ): SitesViewModel.Factory =
-        SitesViewModel.Factory(mainInteractor, context)
+        SitesViewModel.Factory(mainInteractor, context, navigator)
 
     @Provides
     @MainScope

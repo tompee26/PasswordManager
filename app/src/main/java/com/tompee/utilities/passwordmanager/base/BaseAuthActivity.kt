@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
 import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.feature.splash.SplashActivity
@@ -20,6 +21,7 @@ abstract class BaseAuthActivity<T : ViewDataBinding> : AppCompatActivity(), HasS
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
         val binding: T = DataBindingUtil.setContentView(this, layoutId)
         binding.setLifecycleOwner(this)
         setupBindingAndViewModel(binding)
@@ -31,12 +33,14 @@ abstract class BaseAuthActivity<T : ViewDataBinding> : AppCompatActivity(), HasS
         supportActionBar?.setDisplayHomeAsUpEnabled(homeButtonEnable)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        android.R.id.home -> {
-            finish(Activity.RESULT_OK)
-            true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish(Activity.RESULT_OK)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
 import com.tompee.utilities.passwordmanager.core.biometric.Status
+import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.interactor.SplashInteractor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
@@ -14,18 +15,20 @@ import io.reactivex.schedulers.Schedulers
 class SplashViewModel private constructor(
     splashInteractor: SplashInteractor,
     context: Context,
+    navigator: Navigator,
     private val splashDialogManager: SplashDialogManager
 ) :
-    BaseViewModel<SplashInteractor>(splashInteractor, context) {
+    BaseViewModel<SplashInteractor>(splashInteractor, context, navigator) {
 
     class Factory(
         private val splashInteractor: SplashInteractor,
         private val context: Context,
+        private val navigator: Navigator,
         private val splashDialogManager: SplashDialogManager
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return SplashViewModel(splashInteractor, context, splashDialogManager) as T
+            return SplashViewModel(splashInteractor, context, navigator, splashDialogManager) as T
         }
     }
 

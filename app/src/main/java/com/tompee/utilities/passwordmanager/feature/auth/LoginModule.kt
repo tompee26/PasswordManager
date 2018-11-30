@@ -2,6 +2,7 @@ package com.tompee.utilities.passwordmanager.feature.auth
 
 import android.content.Context
 import androidx.fragment.app.FragmentManager
+import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.dependency.scope.LoginScope
 import com.tompee.utilities.passwordmanager.feature.auth.page.LoginPageFragment
 import com.tompee.utilities.passwordmanager.interactor.BackupInteractor
@@ -16,7 +17,7 @@ class LoginModule {
     @Module
     interface Bindings {
         @ContributesAndroidInjector
-        fun bindLoginPageFragment() : LoginPageFragment
+        fun bindLoginPageFragment(): LoginPageFragment
     }
 
     @Provides
@@ -24,28 +25,36 @@ class LoginModule {
     fun provideFragmentManager(activity: LoginActivity): FragmentManager = activity.supportFragmentManager
 
     @Provides
+    @LoginScope
     @Named("login")
     fun provideLoginFragment(): LoginPageFragment = LoginPageFragment.newInstance(LoginPageFragment.LOGIN)
 
     @Provides
+    @LoginScope
     @Named("signup")
     fun provideSignUpFragment(): LoginPageFragment = LoginPageFragment.newInstance(LoginPageFragment.SIGN_UP)
 
-    @LoginScope
     @Provides
+    @LoginScope
     fun provideLoginPagerAdapter(
         fragmentManager: FragmentManager,
         @Named("login") loginFragment: LoginPageFragment,
         @Named("signup") signupFragment: LoginPageFragment
     ) = LoginPagerAdapter(fragmentManager, loginFragment, signupFragment)
 
-    @LoginScope
     @Provides
-    fun provideLoginViewModelFactory(backupInteractor: BackupInteractor,
-                                     context: Context) : LoginViewModel.Factory =
-        LoginViewModel.Factory(backupInteractor, context)
+    @LoginScope
+    fun provideLoginViewModelFactory(
+        backupInteractor: BackupInteractor,
+        context: Context,
+        navigator: Navigator
+    ): LoginViewModel.Factory = LoginViewModel.Factory(backupInteractor, context, navigator)
 
-    @LoginScope
     @Provides
-    fun provideBackupInteractor() : BackupInteractor = BackupInteractor()
+    @LoginScope
+    fun provideNavigator(loginActivity: LoginActivity): Navigator = Navigator(loginActivity)
+
+    @Provides
+    @LoginScope
+    fun provideBackupInteractor(): BackupInteractor = BackupInteractor()
 }
