@@ -2,6 +2,7 @@ package com.tompee.utilities.passwordmanager.feature.auth
 
 import android.content.Context
 import androidx.fragment.app.FragmentManager
+import com.tompee.utilities.passwordmanager.core.auth.Authenticator
 import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.dependency.scope.LoginScope
 import com.tompee.utilities.passwordmanager.feature.auth.page.LoginPageFragment
@@ -56,5 +57,5 @@ class LoginModule {
 
     @Provides
     @LoginScope
-    fun provideBackupInteractor(): BackupInteractor = BackupInteractor()
+    fun provideBackupInteractor(authenticator: Authenticator): BackupInteractor = BackupInteractor(authenticator)
 }

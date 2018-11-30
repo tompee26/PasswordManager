@@ -1,7 +1,11 @@
 package com.tompee.utilities.passwordmanager.feature.auth.page
 
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseFragment
 import com.tompee.utilities.passwordmanager.databinding.FragmentLoginBinding
@@ -37,6 +41,8 @@ class LoginPageFragment : BaseFragment<FragmentLoginBinding>() {
 
     override fun setupBindingAndViewModel(binding: FragmentLoginBinding) {
         val vm = ViewModelProviders.of(activity!!, factory)[LoginViewModel::class.java]
+        binding.viewModel = vm
+
         val type = arguments?.getInt(TYPE_TAG) ?: LOGIN
         binding.switchButton.setOnClickListener { vm.pageSwitch(type) }
         if (type == LOGIN) {
@@ -50,6 +56,71 @@ class LoginPageFragment : BaseFragment<FragmentLoginBinding>() {
             binding.commandButton.text = getString(R.string.label_sign_up)
             binding.commandButton.setBackgroundResource(R.drawable.ripple_sign_up)
         }
+
+        vm.emailError.observe(this, Observer {
+            when (it) {
+                LoginViewModel.InputError.EMAIL_EMPTY -> {
+                    binding.userView.error =
+                            getString(R.string.error_field_required)
+                    binding.userView.requestFocus()
+                }
+                LoginViewModel.InputError.EMAIL_INVALID -> {
+                    binding.userView.error =
+                            getString(R.string.error_invalid_email)
+                    binding.userView.requestFocus()
+                }
+                else -> binding.userView.error = null
+            }
+        })
+
+        vm.passwordError.observe(this, Observer {
+            when (it) {
+                LoginViewModel.InputError.PASSWORD_EMPTY -> {
+                    binding.passView.error =
+                            getString(R.string.error_field_required)
+                    binding.passView.requestFocus()
+                }
+                LoginViewModel.InputError.PASSWORD_SHORT -> {
+                    binding.passView.error =
+                            getString(R.string.error_pass_min)
+                    binding.passView.requestFocus()
+                }
+                else -> binding.passView.error = null
+            }
+        })
+
+        vm.processing.observe(this, Observer {
+            if (userVisibleHint) {
+                if (it) {
+                    progressDialog.show(fragmentManager, "progress")
+                } else {
+                    progressDialog.dismiss()
+                }
+            }
+        })
+
+        vm.commandError.observe(this, Observer {
+            if (userVisibleHint) {
+                Snackbar.make(
+                    activity?.findViewById(android.R.id.content)!!,
+                    it, Snackbar.LENGTH_LONG
+                ).show()
+            }
+        })
+
+        binding.commandButton.setOnClickListener {
+            hideKeyboard()
+            if (type == LOGIN) {
+                vm.startLogin()
+            } else {
+                vm.startSignup()
+            }
+        }
+    }
+
+    private fun hideKeyboard() {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     override val layoutId: Int = R.layout.fragment_login

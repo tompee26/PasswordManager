@@ -51,7 +51,7 @@ class ProgressDialog : BaseDialogFragment() {
 
         binding.progressText.setText(arguments?.getInt(TAG_TEXT) ?: R.string.app_name)
         return AlertDialog.Builder(activity!!)
-            .setView(view)
+            .setView(binding.root)
             .setCancelable(false)
             .create()
     }

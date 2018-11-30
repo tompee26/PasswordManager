@@ -2,8 +2,11 @@ package com.tompee.utilities.passwordmanager.dependency
 
 import android.content.Context
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
 import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.core.asset.AssetManager
+import com.tompee.utilities.passwordmanager.core.auth.Authenticator
+import com.tompee.utilities.passwordmanager.core.auth.firebase.FirebaseAuthenticator
 import com.tompee.utilities.passwordmanager.core.autofill.AutofillManager
 import com.tompee.utilities.passwordmanager.core.autofill.impl.AutofillManagerImpl
 import com.tompee.utilities.passwordmanager.core.biometric.BiometricManager
@@ -86,4 +89,12 @@ class CoreModule {
     @Provides
     @Singleton
     fun provideRandomPasswordGenerator(): RandomPasswordGenerator = RandomPasswordGenerator()
+
+    @Provides
+    @Singleton
+    fun provideAuthenticator(firebaseAuthenticator: FirebaseAuthenticator) : Authenticator = firebaseAuthenticator
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuthenticator() : FirebaseAuthenticator = FirebaseAuthenticator(FirebaseAuth.getInstance())
 }

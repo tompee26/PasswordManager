@@ -5,4 +5,5 @@ object Constants {
     const val LICENSE_ASSET = "opensource.html"
     const val POLICY_ASSET = "policy.html"
     const val REQUEST_CODE = 1808
+    const val MIN_PASS_COUNT = 6
 }

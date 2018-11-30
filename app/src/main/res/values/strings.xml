@@ -57,5 +57,8 @@
     <string name="progress_login_authenticate">Logging in…</string>
 
     <string name="error_empty">Field cannot be empty</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_email">Invalid email format</string>
+    <string name="error_pass_min">Must be at least 6 characters</string>
 
 </resources>

@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.tompee.utilities.passwordmanager.feature.auth.LoginViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +45,9 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
+            android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
+            android:text="@={viewModel.username}"
             android:textColor="@color/colorLight"
             android:textCursorDrawable="@null"
             app:layout_constraintHorizontal_bias="0.0"
@@ -87,7 +96,9 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
+            android:imeOptions="actionDone"
             android:inputType="textWebPassword"
+            android:text="@={viewModel.password}"
             android:textColor="@color/colorLight"
             android:textCursorDrawable="@null"
             app:layout_constraintLeft_toLeftOf="@+id/tv_pass_label"
@@ -121,6 +132,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/ripple_login"
+            android:enabled="@{viewModel.commandEnable}"
             android:text="@string/label_login"
             android:textAllCaps="true"
             android:textColor="@color/colorLight"

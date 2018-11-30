@@ -2,13 +2,10 @@ package com.tompee.utilities.passwordmanager.feature.main.backup
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
-import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseDialogFragment
-import com.tompee.utilities.passwordmanager.feature.auth.LoginActivity
 import com.tompee.utilities.passwordmanager.feature.main.MainViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
