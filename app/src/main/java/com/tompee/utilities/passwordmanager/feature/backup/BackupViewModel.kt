@@ -34,9 +34,6 @@ class BackupViewModel private constructor(
 
     val title = MutableLiveData<String>()
     val keyAvailable = MutableLiveData<Boolean>()
-    val backupOngoing = MutableLiveData<Boolean>()
-    val backupError = MutableLiveData<String>()
-    val backupFinished = MutableLiveData<Boolean>()
 
     init {
         title.postValue(context.getString(R.string.title_backup))
@@ -50,8 +47,11 @@ class BackupViewModel private constructor(
     }
 
     fun showBackupDialog() {
-        backupFinished.postValue(false)
         dialogManager.showDialog(BackupDialogManager.Dialogs.BACKUP)
+    }
+
+    fun showRestoreDialog() {
+        dialogManager.showDialog(BackupDialogManager.Dialogs.RESTORE)
     }
 
     fun setKey(key: String) {
@@ -59,21 +59,5 @@ class BackupViewModel private constructor(
         subscriptions += interactor.saveEncryptedIdentifier(key)
             .subscribeOn(Schedulers.io())
             .subscribe()
-    }
-
-    fun proceedWithBackup(key: String) {
-        subscriptions += Completable.fromAction {
-            backupOngoing.postValue(true)
-            backupError.postValue("")
-        }
-            .andThen(interactor.backup(key))
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                backupOngoing.postValue(false)
-                backupFinished.postValue(true)
-            }) {
-                backupOngoing.postValue(false)
-                backupError.postValue(it.message)
-            }
     }
 }
