@@ -35,7 +35,7 @@ class AddSitesDialog : BaseDialogFragment() {
 
         vm.generateEmptyPassword()
         vm.generatedPassword.observe(this, Observer {
-            binding.passView.editText?.setText(it)
+            binding.sitePassword.editText?.setText(it)
         })
 
         binding.cancel.setOnClickListener {
@@ -47,27 +47,31 @@ class AddSitesDialog : BaseDialogFragment() {
         }
 
         binding.add.setOnClickListener {
-            if (binding.siteNameView.text.isEmpty()) {
-                binding.siteNameView.error = getString(R.string.error_empty)
+            if (binding.siteName.editText?.text.toString().isEmpty()) {
+                binding.siteName.error = getString(R.string.error_empty)
                 return@setOnClickListener
             }
-            if (binding.siteUrlView.text.isEmpty()) {
-                binding.siteUrlView.error = getString(R.string.error_empty)
+            binding.siteName.error = null
+            if (binding.siteUrl.editText?.text.toString().isEmpty()) {
+                binding.siteUrl.error = getString(R.string.error_empty)
                 return@setOnClickListener
             }
-            if (binding.userView.text.isEmpty()) {
-                binding.userView.error = getString(R.string.error_empty)
+            binding.siteUrl.error = null
+            if (binding.siteUsername.editText?.text.toString().isEmpty()) {
+                binding.siteUsername.error = getString(R.string.error_empty)
                 return@setOnClickListener
             }
-            if (binding.etPassword.text.toString().isEmpty()) {
-                binding.etPassword.error = getString(R.string.error_empty)
+            binding.siteUsername.error = null
+            if (binding.sitePassword.editText?.text.toString().isEmpty()) {
+                binding.sitePassword.error = getString(R.string.error_empty)
                 return@setOnClickListener
             }
+            binding.siteName.error = null
             vm.saveCredential(
-                binding.siteNameView.text.toString(),
-                binding.siteUrlView.text.toString(),
-                binding.userView.text.toString(),
-                binding.etPassword.text.toString()
+                binding.siteName.editText?.text.toString(),
+                binding.siteUrl.editText?.text.toString(),
+                binding.siteUsername.editText?.text.toString(),
+                binding.sitePassword.editText?.text.toString()
             )
             dismiss()
         }

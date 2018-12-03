@@ -48,150 +48,82 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appIcon" />
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/siteName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:labelFor="@id/siteNameView"
-            android:text="@string/label_site_name"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dialog_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
-
-        <AutoCompleteTextView
-            android:id="@+id/siteNameView"
-            android:layout_width="0dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
-            android:background="@android:color/transparent"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:textColor="@color/dialog_title"
-            android:textCursorDrawable="@null"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="@+id/siteName"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/siteName" />
+            android:hint="@string/label_site_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description">
 
-        <View
-            android:id="@+id/siteUnderline"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="4dp"
-            android:background="@color/dialog_title"
-            app:layout_constraintLeft_toLeftOf="@+id/siteNameView"
-            app:layout_constraintRight_toRightOf="@+id/siteNameView"
-            app:layout_constraintTop_toBottomOf="@+id/siteNameView" />
-
-        <TextView
-            android:id="@+id/siteUrl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:labelFor="@id/siteUrlView"
-            android:text="@string/label_site_url"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dialog_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/siteUnderline" />
-
-        <AutoCompleteTextView
-            android:id="@+id/siteUrlView"
-            android:layout_width="0dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:background="@android:color/transparent"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/dialog_title"
-            android:textCursorDrawable="@null"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="@+id/siteUrl"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/siteUrl" />
-
-        <View
-            android:id="@+id/siteUrlUnderline"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="4dp"
-            android:background="@color/dialog_title"
-            app:layout_constraintLeft_toLeftOf="@+id/siteUrlView"
-            app:layout_constraintRight_toRightOf="@+id/siteUrlView"
-            app:layout_constraintTop_toBottomOf="@+id/siteUrlView" />
-
-        <TextView
-            android:id="@+id/tv_user_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:labelFor="@id/userView"
-            android:text="@string/label_login_name"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dialog_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/siteUrlUnderline" />
-
-        <AutoCompleteTextView
-            android:id="@+id/userView"
-            android:layout_width="0dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:background="@android:color/transparent"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/dialog_title"
-            android:textCursorDrawable="@null"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_user_label"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_user_label" />
-
-        <View
-            android:id="@+id/view_user_underline"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="4dp"
-            android:background="@color/dialog_title"
-            app:layout_constraintLeft_toLeftOf="@+id/userView"
-            app:layout_constraintRight_toRightOf="@+id/userView"
-            app:layout_constraintTop_toBottomOf="@+id/userView" />
-
-        <TextView
-            android:id="@+id/tv_pass_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:labelFor="@id/passView"
-            android:text="@string/label_login_pass"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/dialog_title"
-            app:layout_constraintLeft_toLeftOf="@+id/view_user_underline"
-            app:layout_constraintTop_toBottomOf="@+id/view_user_underline" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:textColor="@color/dialog_title" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passView"
+            android:id="@+id/siteUrl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintLeft_toLeftOf="@+id/tv_pass_label"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_pass_label"
+            android:hint="@string/label_site_url"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/siteName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:textColor="@color/dialog_title" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/siteUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/label_login_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/siteUrl">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:textColor="@color/dialog_title" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sitePassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/label_login_pass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/siteUsername"
             app:passwordToggleDrawable="@drawable/ic_show_password"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorPrimary">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
@@ -213,7 +145,7 @@
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passView" />
+            app:layout_constraintTop_toBottomOf="@+id/sitePassword" />
 
         <Button
             android:id="@+id/cancel"
@@ -229,7 +161,7 @@
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/add"
-            app:layout_constraintTop_toBottomOf="@+id/passView" />
+            app:layout_constraintTop_toBottomOf="@+id/sitePassword" />
 
         <Button
             android:id="@+id/generate"
