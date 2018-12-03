@@ -7,6 +7,7 @@ import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.dependency.scope.LoginScope
 import com.tompee.utilities.passwordmanager.feature.auth.page.LoginPageFragment
 import com.tompee.utilities.passwordmanager.interactor.LoginInteractor
+import com.tompee.utilities.passwordmanager.model.UserContainer
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -57,5 +58,8 @@ class LoginModule {
 
     @Provides
     @LoginScope
-    fun provideBackupInteractor(authenticator: Authenticator): LoginInteractor = LoginInteractor(authenticator)
+    fun provideBackupInteractor(
+        authenticator: Authenticator,
+        userContainer: UserContainer
+    ): LoginInteractor = LoginInteractor(authenticator, userContainer)
 }

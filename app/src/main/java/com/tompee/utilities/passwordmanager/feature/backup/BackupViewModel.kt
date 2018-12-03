@@ -8,6 +8,8 @@ import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
 import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.interactor.BackupInteractor
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
 
 class BackupViewModel private constructor(
     backupInteractor: BackupInteractor,
@@ -30,9 +32,13 @@ class BackupViewModel private constructor(
     }
 
     val title = MutableLiveData<String>()
+    val keyAvailable = MutableLiveData<Boolean>()
 
     init {
         title.postValue(context.getString(R.string.title_backup))
+        subscriptions += interactor.getEncryptedIdentifier()
+            .subscribeOn(Schedulers.io())
+            .subscribe { keyAvailable.postValue(it.isNotEmpty()) }
     }
 
     fun showRegisterKeyDialog() {
@@ -40,5 +46,9 @@ class BackupViewModel private constructor(
     }
 
     fun setKey(key: String) {
+        keyAvailable.postValue(true)
+        subscriptions += interactor.saveEncryptedIdentifier(key)
+            .subscribeOn(Schedulers.io())
+            .subscribe()
     }
 }

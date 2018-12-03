@@ -58,6 +58,7 @@
     <string name="progress_login_authenticate">Logging in…</string>
 
     <string name="error_empty">Field cannot be empty</string>
+    <string name="error_mismatch">Field values mismatch</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_email">Invalid email format</string>
     <string name="error_pass_min">Must be at least 6 characters</string>
@@ -70,8 +71,10 @@
     <string name="message_setup_subtitle">Key for encrypting backup data</string>
     <string name="message_backup_subtitle">Backup all saved credentials to the cloud</string>
     <string name="message_restore_subtitle">Pull all saved credentials from the cloud</string>
-    <string name="message_delete_subtitle">Delete all uploaded credentials</string>
+    <string name="message_delete_subtitle">Delete all uploaded credentials and key</string>
     <string name="message_key_dialog">This one time key cannot be modified and will not be recoverable from this application.
         Please backup this key to be able to restore data from the cloud.</string>
+    <string name="message_password_1_hint">Enter key here</string>
+    <string name="message_password_2_hint">Verify your key</string>
 
 </resources>

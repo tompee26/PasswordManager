@@ -1,10 +1,10 @@
 package com.tompee.utilities.passwordmanager.core.datastore
 
 import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.Observable
 
 interface DataStore {
     fun saveEncryptedIdentifier(email: String, key: String): Completable
 
-    fun getEncryptedIdentifier(email: String, key: String): Single<String>
+    fun getEncryptedIdentifier(email: String): Observable<String>
 }

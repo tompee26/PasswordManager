@@ -3,6 +3,7 @@ package com.tompee.utilities.passwordmanager.dependency
 import android.content.Context
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.core.asset.AssetManager
 import com.tompee.utilities.passwordmanager.core.auth.Authenticator
@@ -17,10 +18,13 @@ import com.tompee.utilities.passwordmanager.core.clipboard.ClipboardManager
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.PasswordDatabase
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
+import com.tompee.utilities.passwordmanager.core.datastore.DataStore
+import com.tompee.utilities.passwordmanager.core.datastore.firebase.FirebaseDataStore
 import com.tompee.utilities.passwordmanager.core.generator.PasswordGenerator
 import com.tompee.utilities.passwordmanager.core.generator.impl.RandomPasswordGenerator
 import com.tompee.utilities.passwordmanager.core.packages.PackageManager
 import com.tompee.utilities.passwordmanager.core.packages.impl.PackageManagerImpl
+import com.tompee.utilities.passwordmanager.model.UserContainer
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -92,9 +96,21 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun provideAuthenticator(firebaseAuthenticator: FirebaseAuthenticator) : Authenticator = firebaseAuthenticator
+    fun provideAuthenticator(firebaseAuthenticator: FirebaseAuthenticator): Authenticator = firebaseAuthenticator
 
     @Provides
     @Singleton
-    fun provideFirebaseAuthenticator() : FirebaseAuthenticator = FirebaseAuthenticator(FirebaseAuth.getInstance())
+    fun provideFirebaseAuthenticator(): FirebaseAuthenticator = FirebaseAuthenticator(FirebaseAuth.getInstance())
+
+    @Provides
+    @Singleton
+    fun provideUserContainer(): UserContainer = UserContainer("t@g.com")
+
+    @Provides
+    @Singleton
+    fun provideDataStore(firebaseDataStore: FirebaseDataStore): DataStore = firebaseDataStore
+
+    @Provides
+    @Singleton
+    fun provideFirebaseDataStore(): FirebaseDataStore = FirebaseDataStore(FirebaseFirestore.getInstance())
 }
