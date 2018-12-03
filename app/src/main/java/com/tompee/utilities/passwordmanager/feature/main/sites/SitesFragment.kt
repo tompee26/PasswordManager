@@ -39,7 +39,7 @@ class SitesFragment : BaseFragment<FragmentSitesBinding>() {
         sitesAdapter.listener = {
             vm.setCurrentSite(it)
             val dialog = ViewSitesDialog()
-            dialog.show(fragmentManager, "view")
+            dialog.show(fragmentManager!!, "view")
         }
 
         vm.copiedToClipboard.observe(this, Observer {

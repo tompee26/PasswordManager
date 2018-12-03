@@ -7,14 +7,42 @@ import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.cipher.base.BaseKeystore
 import java.nio.ByteBuffer
 import java.security.KeyStore
+import java.security.SecureRandom
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
+import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.GCMParameterSpec
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.PBEKeySpec
+import javax.crypto.spec.SecretKeySpec
 
 class AESCipher : BaseKeystore(), Cipher {
 
     companion object {
         private const val SYMMETRIC_TRANSFORMATION = "AES/GCM/NoPadding"
+    }
+
+    override fun encryptWithPassKey(data: String, passKey: String): String {
+        val secureRandom = SecureRandom.getInstanceStrong()
+        val salt = ByteArray(16)
+        secureRandom.nextBytes(salt)
+
+        val spec = PBEKeySpec(passKey.toCharArray(), salt, 65536, 256)
+        val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
+        val key = factory.generateSecret(spec).encoded
+        val keySpec = SecretKeySpec(key, "AES")
+        val iv = ByteArray(16)
+        secureRandom.nextBytes(iv)
+        val ivSpec = IvParameterSpec(iv)
+
+        val cipher = javax.crypto.Cipher.getInstance(SYMMETRIC_TRANSFORMATION)
+        cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, keySpec, ivSpec)
+        val bytes = cipher.doFinal(data.toByteArray())
+        val byteBuffer = ByteBuffer.allocate(4 + cipher.iv.size + bytes.size)
+        byteBuffer.putInt(cipher.iv.size)
+        byteBuffer.put(cipher.iv)
+        byteBuffer.put(bytes)
+        return Base64.encodeToString(byteBuffer.array(), Base64.DEFAULT)
     }
 
     override fun encrypt(data: String, alias: String): String {

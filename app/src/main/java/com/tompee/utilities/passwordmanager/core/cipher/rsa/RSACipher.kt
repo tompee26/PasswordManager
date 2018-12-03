@@ -10,6 +10,9 @@ import java.security.KeyPairGenerator
 import java.security.PrivateKey
 
 class RSACipher : BaseKeystore(), Cipher {
+    override fun encryptWithPassKey(data: String, passKey: String): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     companion object {
         private const val ASYMMETRIC_TRANSFORMATION = "RSA/ECB/PKCS1Padding"

@@ -19,7 +19,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         return binding.root
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         setupDependencies()
         super.onAttach(context)
     }

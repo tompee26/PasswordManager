@@ -34,6 +34,6 @@ class ActivateDialog : BaseDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        dialog.setCancelable(false)
+        dialog?.setCancelable(false)
     }
 }

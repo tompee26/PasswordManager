@@ -46,7 +46,7 @@ class AppFragment : BaseFragment<FragmentAppBinding>(), HasSupportFragmentInject
         appAdapter.listener = {
             vm.setCurrentPackage(it)
             val dialog = ViewPackageDialog()
-            dialog.show(fragmentManager, "view")
+            dialog.show(fragmentManager!!, "view")
         }
 
         vm.copiedToClipboard.observe(this, Observer {

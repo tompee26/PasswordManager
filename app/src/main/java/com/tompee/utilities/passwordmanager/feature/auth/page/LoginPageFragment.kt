@@ -92,7 +92,7 @@ class LoginPageFragment : BaseFragment<FragmentLoginBinding>() {
         vm.processing.observe(this, Observer {
             if (userVisibleHint) {
                 if (it) {
-                    progressDialog.show(fragmentManager, "progress")
+                    progressDialog.show(fragmentManager!!, "progress")
                 } else {
                     progressDialog.dismiss()
                 }

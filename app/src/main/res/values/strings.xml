@@ -24,9 +24,6 @@
     <string name="title_packages">Packages</string>
     <string name="title_add_site">Add Site</string>
     <string name="title_login">Enter your credentials</string>
-    <string name="title_backup">Backup</string>
-    <string name="title_restore">Restore</string>
-    <string name="title_delete">Delete</string>
 
     <string name="message_authenticate">Touch the sensor</string>
     <string name="message_fingerprint_not_supported">Fingerprint authentication is not supported in this device.</string>
@@ -64,5 +61,17 @@
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_email">Invalid email format</string>
     <string name="error_pass_min">Must be at least 6 characters</string>
+
+    <!-- Backup -->
+    <string name="title_backup">Backup</string>
+    <string name="title_restore">Restore</string>
+    <string name="title_delete">Clean</string>
+    <string name="title_setup">Setup</string>
+    <string name="message_setup_subtitle">Key for encrypting backup data</string>
+    <string name="message_backup_subtitle">Backup all saved credentials to the cloud</string>
+    <string name="message_restore_subtitle">Pull all saved credentials from the cloud</string>
+    <string name="message_delete_subtitle">Delete all uploaded credentials</string>
+    <string name="message_key_dialog">This one time key cannot be modified and will not be recoverable from this application.
+        Please backup this key to be able to restore data from the cloud.</string>
 
 </resources>
