@@ -36,7 +36,7 @@ class AddPackageDialog : BaseDialogFragment() {
         })
 
         vm.generatedPassword.observe(this, Observer {
-            binding.passView.editText?.setText(it)
+            binding.packPassword.editText?.setText(it)
         })
 
         binding.negative.setOnClickListener {
@@ -48,15 +48,20 @@ class AddPackageDialog : BaseDialogFragment() {
         }
 
         binding.positive.setOnClickListener {
-            if (binding.userView.text.isEmpty()) {
-                binding.userView.error = getString(R.string.error_empty)
+            if (binding.packUsername.editText?.text.toString().isEmpty()) {
+                binding.packUsername.error = getString(R.string.error_empty)
                 return@setOnClickListener
             }
-            if (binding.etPassword.text.toString().isEmpty()) {
-                binding.etPassword.error = getString(R.string.error_empty)
+            binding.packUsername.error = null
+            if (binding.packPassword.editText?.text.toString().isEmpty()) {
+                binding.packPassword.error = getString(R.string.error_empty)
                 return@setOnClickListener
             }
-            vm.saveCredential(binding.userView.text.toString(), binding.etPassword.text.toString())
+            binding.packPassword.error = null
+            vm.saveCredential(
+                binding.packUsername.editText?.text.toString(),
+                binding.packPassword.editText?.text.toString()
+            )
             dismiss()
         }
 

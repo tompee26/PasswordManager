@@ -32,13 +32,13 @@ class ViewSitesDialog : BaseDialogFragment() {
             binding.title.text = it.name
             binding.subtitle.text = it.url
 
-            binding.userView.isEnabled = false
-            binding.userView.setText(it.username)
+            binding.packUsername.isEnabled = false
+            binding.packUsername.editText?.setText(it.username)
 
             binding.description.text = getString(R.string.message_view_credential)
 
-            binding.etPassword.isEnabled = false
-            binding.etPassword.setText(it.password)
+            binding.packPassword.isEnabled = false
+            binding.packPassword.editText?.setText(it.password)
 
             binding.neutral.text = getString(R.string.control_copy)
             binding.negative.text = getString(R.string.control_edit)
@@ -46,8 +46,8 @@ class ViewSitesDialog : BaseDialogFragment() {
         })
 
         binding.negative.setOnClickListener {
-            binding.userView.isEnabled = true
-            binding.passView.isEnabled = true
+            binding.packUsername.isEnabled = true
+            binding.packPassword.isEnabled = true
             binding.positive.text = getString(R.string.control_save)
             binding.negative.text = getString(R.string.control_cancel)
             binding.negative.setOnClickListener { dismiss() }
@@ -59,23 +59,25 @@ class ViewSitesDialog : BaseDialogFragment() {
         }
 
         binding.neutral.setOnClickListener {
-            vm.copyToClipboard(binding.etPassword.text.toString())
+            vm.copyToClipboard(binding.packPassword.editText?.text.toString())
         }
 
         binding.positive.setOnClickListener {
-            if (binding.userView.text.isEmpty()) {
-                binding.userView.error = getString(R.string.error_empty)
+            if (binding.packUsername.editText?.text.toString().isEmpty()) {
+                binding.packUsername.error = getString(R.string.error_empty)
                 return@setOnClickListener
             }
-            if (binding.etPassword.text.toString().isEmpty()) {
-                binding.etPassword.error = getString(R.string.error_empty)
+            binding.packUsername.error = null
+            if (binding.packPassword.editText?.text.toString().isEmpty()) {
+                binding.packPassword.error = getString(R.string.error_empty)
                 return@setOnClickListener
             }
+            binding.packPassword.error = null
             vm.saveCredential(
                 vm.currentSite.value?.name!!,
                 vm.currentSite.value?.url!!,
-                binding.userView.text.toString(),
-                binding.etPassword.text.toString()
+                binding.packUsername.editText?.text.toString(),
+                binding.packPassword.editText?.text.toString()
             )
             dismiss()
         }
