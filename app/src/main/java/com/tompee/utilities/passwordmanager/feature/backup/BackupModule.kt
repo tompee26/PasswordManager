@@ -3,9 +3,12 @@ package com.tompee.utilities.passwordmanager.feature.backup
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
+import com.tompee.utilities.passwordmanager.core.database.PackageDao
+import com.tompee.utilities.passwordmanager.core.database.SiteDao
 import com.tompee.utilities.passwordmanager.core.datastore.DataStore
 import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.dependency.scope.BackupScope
+import com.tompee.utilities.passwordmanager.feature.backup.backup.BackupDialog
 import com.tompee.utilities.passwordmanager.feature.backup.key.RegisterKeyDialog
 import com.tompee.utilities.passwordmanager.interactor.BackupInteractor
 import com.tompee.utilities.passwordmanager.model.UserContainer
@@ -20,6 +23,9 @@ class BackupModule {
     interface Bindings {
         @ContributesAndroidInjector
         fun bindRegisterKeyDialog(): RegisterKeyDialog
+
+        @ContributesAndroidInjector
+        fun bindBackupDialog(): BackupDialog
     }
 
     @Provides
@@ -37,8 +43,10 @@ class BackupModule {
     fun provideBackupInteractor(
         cipher: Cipher,
         dataStore: DataStore,
+        packageDao: PackageDao,
+        siteDao: SiteDao,
         userContainer: UserContainer
-    ): BackupInteractor = BackupInteractor(cipher, dataStore, userContainer)
+    ): BackupInteractor = BackupInteractor(cipher, dataStore, packageDao, siteDao, userContainer)
 
     @Provides
     @BackupScope
@@ -52,11 +60,16 @@ class BackupModule {
     @BackupScope
     fun provideDialogManager(
         fragmentManager: FragmentManager,
-        registerKeyDialog: RegisterKeyDialog
+        registerKeyDialog: RegisterKeyDialog,
+        backupDialog: BackupDialog
     ): BackupDialogManager =
-        BackupDialogManager(fragmentManager, registerKeyDialog)
+        BackupDialogManager(fragmentManager, registerKeyDialog, backupDialog)
 
     @Provides
     @BackupScope
     fun provideRegisterKeyDialog(): RegisterKeyDialog = RegisterKeyDialog()
+
+    @Provides
+    @BackupScope
+    fun provideBackupDialog(): BackupDialog = BackupDialog()
 }

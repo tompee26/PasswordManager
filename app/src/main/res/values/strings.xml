@@ -76,5 +76,7 @@
         Please backup this key to be able to restore data from the cloud.</string>
     <string name="message_password_1_hint">Enter key here</string>
     <string name="message_password_2_hint">Verify your key</string>
+    <string name="message_key_backup">Warning. Backing up will delete all previous cloud data and will be replaced with the currently stored data. Proceed with caution.</string>
+    <string name="message_backup_ongoing">Backup ongoing. Please do not close the application or press any button. This dialog will automatically close once backup is finished.</string>
 
 </resources>

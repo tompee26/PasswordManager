@@ -8,6 +8,7 @@ import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseViewModel
 import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.interactor.BackupInteractor
+import io.reactivex.Completable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
@@ -33,6 +34,9 @@ class BackupViewModel private constructor(
 
     val title = MutableLiveData<String>()
     val keyAvailable = MutableLiveData<Boolean>()
+    val backupOngoing = MutableLiveData<Boolean>()
+    val backupError = MutableLiveData<String>()
+    val backupFinished = MutableLiveData<Boolean>()
 
     init {
         title.postValue(context.getString(R.string.title_backup))
@@ -45,10 +49,31 @@ class BackupViewModel private constructor(
         dialogManager.showDialog(BackupDialogManager.Dialogs.REGISTER_KEY)
     }
 
+    fun showBackupDialog() {
+        backupFinished.postValue(false)
+        dialogManager.showDialog(BackupDialogManager.Dialogs.BACKUP)
+    }
+
     fun setKey(key: String) {
         keyAvailable.postValue(true)
         subscriptions += interactor.saveEncryptedIdentifier(key)
             .subscribeOn(Schedulers.io())
             .subscribe()
+    }
+
+    fun proceedWithBackup(key: String) {
+        subscriptions += Completable.fromAction {
+            backupOngoing.postValue(true)
+            backupError.postValue("")
+        }
+            .andThen(interactor.backup(key))
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                backupOngoing.postValue(false)
+                backupFinished.postValue(true)
+            }) {
+                backupOngoing.postValue(false)
+                backupError.postValue(it.message)
+            }
     }
 }
