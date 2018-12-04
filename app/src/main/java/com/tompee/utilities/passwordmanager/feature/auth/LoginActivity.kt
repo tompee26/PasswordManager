@@ -1,11 +1,14 @@
 package com.tompee.utilities.passwordmanager.feature.auth
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
+import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseAuthActivity
 import com.tompee.utilities.passwordmanager.databinding.ActivityLoginBinding
@@ -50,6 +53,17 @@ class LoginActivity : BaseAuthActivity<ActivityLoginBinding>(), ViewPager.PageTr
             addOnPageChangeListener(this@LoginActivity)
             setPageTransformer(false, this@LoginActivity)
             adapter = loginPagerAdapter
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                finish(Activity.RESULT_OK)
+            } else {
+                finish(Activity.RESULT_CANCELED)
+            }
         }
     }
 

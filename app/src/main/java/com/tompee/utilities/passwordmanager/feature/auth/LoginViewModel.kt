@@ -91,13 +91,13 @@ class LoginViewModel private constructor(
         subscriptions += Completable.fromAction { processing.postValue(true) }
             .andThen(interactor.login(username.get()!!, password.get()!!))
             .doFinally { processing.postValue(false) }
-            .subscribe({ navigator.setClear(Backup) }) { commandError.postValue(it.message) }
+            .subscribe({ navigator.setAddToBackStack(Backup) }) { commandError.postValue(it.message) }
     }
 
     fun startSignup() {
         subscriptions += Completable.fromAction { processing.postValue(true) }
             .andThen(interactor.signup(username.get()!!, password.get()!!))
             .doFinally { processing.postValue(false) }
-            .subscribe({ navigator.setClear(Backup) }) { commandError.postValue(it.message) }
+            .subscribe({ navigator.setAddToBackStack(Backup) }) { commandError.postValue(it.message) }
     }
 }

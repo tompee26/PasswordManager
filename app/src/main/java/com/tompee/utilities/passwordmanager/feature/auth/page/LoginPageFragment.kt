@@ -62,12 +62,10 @@ class LoginPageFragment : BaseFragment<FragmentLoginBinding>() {
                 LoginViewModel.InputError.EMAIL_EMPTY -> {
                     binding.userView.error =
                             getString(R.string.error_field_required)
-                    binding.userView.requestFocus()
                 }
                 LoginViewModel.InputError.EMAIL_INVALID -> {
                     binding.userView.error =
                             getString(R.string.error_invalid_email)
-                    binding.userView.requestFocus()
                 }
                 else -> binding.userView.error = null
             }
@@ -78,12 +76,10 @@ class LoginPageFragment : BaseFragment<FragmentLoginBinding>() {
                 LoginViewModel.InputError.PASSWORD_EMPTY -> {
                     binding.passView.error =
                             getString(R.string.error_field_required)
-                    binding.passView.requestFocus()
                 }
                 LoginViewModel.InputError.PASSWORD_SHORT -> {
                     binding.passView.error =
                             getString(R.string.error_pass_min)
-                    binding.passView.requestFocus()
                 }
                 else -> binding.passView.error = null
             }
