@@ -91,7 +91,7 @@ dependencies {
     implementation "com.github.ajalt.reprint:core:$reprint"
     implementation "com.github.ajalt.reprint:rxjava2:$reprint"
 
-    def firebase = "16.0.5"
+    def firebase = "16.0.6"
     implementation "com.google.firebase:firebase-core:$firebase"
 
     def firebase_auth = "16.0.5"
