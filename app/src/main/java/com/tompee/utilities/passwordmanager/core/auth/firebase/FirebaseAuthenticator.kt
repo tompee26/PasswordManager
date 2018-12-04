@@ -18,7 +18,7 @@ class FirebaseAuthenticator(private val firebaseAuth: FirebaseAuth) : Authentica
         }
     }
 
-    override fun signup(email: String, password: String): Completable {
+    override fun signup(email: String, password: String): Single<String> {
         return Completable.create { emitter ->
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
@@ -28,14 +28,24 @@ class FirebaseAuthenticator(private val firebaseAuth: FirebaseAuth) : Authentica
                         emitter.onError(Throwable(it.exception?.message))
                     }
                 }
-        }.andThen(Completable.fromAction { firebaseAuth.signOut() })
+        }
+            .andThen(Completable.fromAction { firebaseAuth.signOut() })
+            .andThen(Single.create<String> { emitter ->
+                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        emitter.onSuccess(firebaseAuth.currentUser?.uid!!)
+                    } else {
+                        emitter.onError(Throwable(it.exception?.message))
+                    }
+                }
+            })
     }
 
     override fun login(email: String, password: String): Single<String> =
         Single.create<String> { emitter ->
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    emitter.onSuccess(firebaseAuth.currentUser?.email!!)
+                    emitter.onSuccess(firebaseAuth.currentUser?.uid!!)
                 } else {
                     emitter.onError(Throwable(it.exception?.message))
                 }

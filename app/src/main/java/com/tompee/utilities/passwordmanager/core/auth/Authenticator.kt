@@ -6,7 +6,7 @@ import io.reactivex.Single
 interface Authenticator {
     fun getCurrentUser(): Single<String>
 
-    fun signup(email: String, password: String): Completable
+    fun signup(email: String, password: String): Single<String>
 
     fun login(email: String, password: String): Single<String>
 

@@ -11,8 +11,8 @@ class LoginInteractor(
 ) : BaseInteractor {
 
     fun signup(email: String, pass: String) = authenticator.signup(email, pass)
-        .doOnComplete { userContainer.email = email }
+        .doOnSuccess { userContainer.userId = it }
 
     fun login(email: String, pass: String): Single<String> = authenticator.login(email, pass)
-        .doOnSuccess { userContainer.email = email }
+        .doOnSuccess { userContainer.userId = it }
 }
