@@ -72,7 +72,8 @@
     <string name="message_backup_subtitle">Backup all saved credentials to the cloud</string>
     <string name="message_restore_subtitle">Pull all saved credentials from the cloud</string>
     <string name="message_delete_subtitle">Delete all uploaded credentials and key</string>
-    <string name="message_key_dialog">This one time key cannot be modified and will not be recoverable from this application.
+    <string name="message_key_dialog">This one time key will be used to encrypt all your data before sending to the cloud.
+        Once set, this key cannot be modified unless a Clean is performed. The key will not be persisted and therefore cannot be recoverable from this application.
         Please backup this key to be able to restore data from the cloud.</string>
     <string name="message_password_1_hint">Enter key here</string>
     <string name="message_password_2_hint">Verify your key</string>
@@ -80,4 +81,5 @@
     <string name="message_backup_ongoing">Backup ongoing. Please do not close the application or press any button. This dialog will automatically close once backup is finished.</string>
     <string name="message_key_restore">Warning. Restoring will delete all local data and will be replaced with remote data. Proceed with caution.</string>
     <string name="message_restore_ongoing">Restoration ongoing. Please do not close the application or press any button. This dialog will automatically close once restoration is finished.</string>
+    <string name="message_register_ongoing">Registering key. Please do not close the application or press any button. This dialog will automatically close once operation is finished.</string>
 </resources>

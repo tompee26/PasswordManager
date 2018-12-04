@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dp"
+                android:breakStrategy="simple"
                 android:text="@string/message_key_dialog"
                 android:textColor="?android:attr/textColorSecondary" />
 
@@ -61,6 +62,26 @@
                     android:inputType="textPassword"
                     android:textColor="@color/dialog_title" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:breakStrategy="simple"
+                android:gravity="center"
+                android:text="@string/message_register_ongoing"
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

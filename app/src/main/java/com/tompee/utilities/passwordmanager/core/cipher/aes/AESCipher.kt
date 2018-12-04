@@ -20,7 +20,7 @@ import javax.crypto.spec.SecretKeySpec
 class AESCipher : BaseKeystore(), Cipher {
     companion object {
         private const val SYMMETRIC_TRANSFORMATION = "AES/GCM/NoPadding"
-        private const val ITERATIONS = 10835
+        private const val ITERATIONS = 65536
         private const val KEY_LENGTH = 256
     }
 

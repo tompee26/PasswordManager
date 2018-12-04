@@ -11,6 +11,7 @@ import com.tompee.utilities.passwordmanager.dependency.scope.BackupScope
 import com.tompee.utilities.passwordmanager.feature.backup.backup.BackupDialog
 import com.tompee.utilities.passwordmanager.feature.backup.backup.BackupDialogModule
 import com.tompee.utilities.passwordmanager.feature.backup.key.RegisterKeyDialog
+import com.tompee.utilities.passwordmanager.feature.backup.key.RegisterKeyModule
 import com.tompee.utilities.passwordmanager.feature.backup.restore.RestoreDialog
 import com.tompee.utilities.passwordmanager.feature.backup.restore.RestoreModule
 import com.tompee.utilities.passwordmanager.interactor.BackupInteractor
@@ -24,7 +25,7 @@ class BackupModule {
 
     @Module
     interface Bindings {
-        @ContributesAndroidInjector
+        @ContributesAndroidInjector(modules = [RegisterKeyModule::class])
         fun bindRegisterKeyDialog(): RegisterKeyDialog
 
         @ContributesAndroidInjector(modules = [BackupDialogModule::class])

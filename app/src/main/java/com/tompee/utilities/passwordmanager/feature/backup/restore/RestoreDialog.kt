@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseDialogFragment
 import com.tompee.utilities.passwordmanager.databinding.DialogRestoreBinding
-import com.tompee.utilities.passwordmanager.feature.backup.BackupViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
