@@ -73,4 +73,21 @@ class BackupInteractor(
                         .flatMapCompletable { dataStore.saveSite(userContainer.email, it) }
                 })
     }
+
+    fun clean(key: String): Completable {
+        return dataStore.getEncryptedIdentifier(userContainer.email)
+            .firstOrError()
+            .flatMapCompletable {
+                Completable.fromCallable {
+                    cipher.validatePasskey(
+                        it,
+                        key,
+                        Constants.TEST_IDENTIFIER
+                    )
+                }
+            }
+            .andThen(dataStore.saveEncryptedIdentifier(userContainer.email, ""))
+            .andThen(dataStore.deletePackages(userContainer.email))
+            .andThen(dataStore.deleteSites(userContainer.email))
+    }
 }

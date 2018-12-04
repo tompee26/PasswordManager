@@ -10,6 +10,8 @@ import com.tompee.utilities.passwordmanager.core.navigator.Navigator
 import com.tompee.utilities.passwordmanager.dependency.scope.BackupScope
 import com.tompee.utilities.passwordmanager.feature.backup.backup.BackupDialog
 import com.tompee.utilities.passwordmanager.feature.backup.backup.BackupDialogModule
+import com.tompee.utilities.passwordmanager.feature.backup.clean.CleanDialog
+import com.tompee.utilities.passwordmanager.feature.backup.clean.CleanDialogModule
 import com.tompee.utilities.passwordmanager.feature.backup.key.RegisterKeyDialog
 import com.tompee.utilities.passwordmanager.feature.backup.key.RegisterKeyModule
 import com.tompee.utilities.passwordmanager.feature.backup.restore.RestoreDialog
@@ -33,6 +35,9 @@ class BackupModule {
 
         @ContributesAndroidInjector(modules = [RestoreModule::class])
         fun bindRestoreDialog(): RestoreDialog
+
+        @ContributesAndroidInjector(modules = [CleanDialogModule::class])
+        fun bindCleanDialog(): CleanDialog
     }
 
     @Provides
@@ -66,12 +71,7 @@ class BackupModule {
     @Provides
     @BackupScope
     fun provideDialogManager(
-        fragmentManager: FragmentManager,
-        registerKeyDialog: RegisterKeyDialog
+        fragmentManager: FragmentManager
     ): BackupDialogManager =
-        BackupDialogManager(fragmentManager, registerKeyDialog)
-
-    @Provides
-    @BackupScope
-    fun provideRegisterKeyDialog(): RegisterKeyDialog = RegisterKeyDialog()
+        BackupDialogManager(fragmentManager)
 }

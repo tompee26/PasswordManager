@@ -53,4 +53,8 @@ class BackupViewModel private constructor(
     fun showRestoreDialog() {
         dialogManager.showDialog(BackupDialogManager.Dialogs.RESTORE)
     }
+
+    fun showCleanDialog() {
+        dialogManager.showDialog(BackupDialogManager.Dialogs.CLEAN)
+    }
 }
