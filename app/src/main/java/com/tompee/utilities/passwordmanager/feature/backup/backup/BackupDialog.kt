@@ -51,6 +51,7 @@ class BackupDialog : BaseDialogFragment() {
                 binding.progressBar.visibility = View.GONE
                 binding.textView.visibility = View.GONE
             }
+            binding.pass1.isEnabled = !it
         })
         vm.backupFinished.observe(this, Observer {
             if (it) dismiss()

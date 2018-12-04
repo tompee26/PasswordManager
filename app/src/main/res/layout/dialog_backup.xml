@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="18dp"
+                android:breakStrategy="simple"
                 android:text="@string/message_key_backup"
                 android:textColor="?android:attr/textColorSecondary" />
 
@@ -59,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
+                android:breakStrategy="simple"
                 android:gravity="center"
                 android:text="@string/message_backup_ongoing"
                 android:textColor="@color/colorPrimary"

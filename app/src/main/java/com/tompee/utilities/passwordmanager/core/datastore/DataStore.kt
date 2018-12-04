@@ -8,7 +8,11 @@ interface DataStore {
 
     fun getEncryptedIdentifier(email: String): Observable<String>
 
-    fun savePackage(email : String, pack: PackageModel): Completable
+    fun savePackage(email: String, pack: PackageModel): Completable
 
-    fun saveSite(email : String, site: SiteModel): Completable
+    fun saveSite(email: String, site: SiteModel): Completable
+
+    fun deletePackages(email: String): Completable
+
+    fun deleteSites(email: String): Completable
 }

@@ -42,22 +42,23 @@ class BackupInteractor(
                     )
                 }
             }
-            .andThen(
-                packageDao.getPackages()
-                    .firstElement()
-                    .flatMapCompletable { list ->
-                        Observable.fromIterable(list)
-                            .map {
-                                PackageModel(
-                                    cipher.encryptWithPassKey(it.name, key),
-                                    cipher.encryptWithPassKey(it.packageName, key),
-                                    cipher.encryptWithPassKey(cipher.decrypt(it.username, it.packageName), key),
-                                    cipher.encryptWithPassKey(cipher.decrypt(it.password, it.packageName), key)
-                                )
-                            }
-                            .flatMapCompletable { dataStore.savePackage(userContainer.email, it) }
-                    }
-            ).andThen(siteDao.getSites()
+            .andThen(dataStore.deletePackages(userContainer.email))
+            .andThen(packageDao.getPackages()
+                .firstElement()
+                .flatMapCompletable { list ->
+                    Observable.fromIterable(list)
+                        .map {
+                            PackageModel(
+                                cipher.encryptWithPassKey(it.name, key),
+                                cipher.encryptWithPassKey(it.packageName, key),
+                                cipher.encryptWithPassKey(cipher.decrypt(it.username, it.packageName), key),
+                                cipher.encryptWithPassKey(cipher.decrypt(it.password, it.packageName), key)
+                            )
+                        }
+                        .flatMapCompletable { dataStore.savePackage(userContainer.email, it) }
+                })
+            .andThen(dataStore.deleteSites(userContainer.email))
+            .andThen(siteDao.getSites()
                 .firstElement()
                 .flatMapCompletable { list ->
                     Observable.fromIterable(list)

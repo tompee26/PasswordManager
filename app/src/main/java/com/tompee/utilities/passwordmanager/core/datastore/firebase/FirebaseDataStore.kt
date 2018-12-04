@@ -9,7 +9,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 
 class FirebaseDataStore(private val db: FirebaseFirestore) : DataStore {
-
     companion object {
         private const val ACCOUNT = "account"
         private const val PACKAGES = "packages"
@@ -45,6 +44,34 @@ class FirebaseDataStore(private val db: FirebaseFirestore) : DataStore {
     override fun saveSite(email: String, site: SiteModel): Completable {
         return Completable.fromAction {
             db.collection(ACCOUNT).document(email).collection(SITES).add(site)
+        }
+    }
+
+    override fun deletePackages(email: String): Completable {
+        return Completable.create { emitter ->
+            db.collection(ACCOUNT).document(email).collection(PACKAGES).get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        document.reference.delete()
+                    }
+                    emitter.onComplete()
+                }.addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+    }
+
+    override fun deleteSites(email: String): Completable {
+        return Completable.create { emitter ->
+            db.collection(ACCOUNT).document(email).collection(SITES).get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        document.reference.delete()
+                    }
+                    emitter.onComplete()
+                }.addOnFailureListener {
+                    emitter.onError(it)
+                }
         }
     }
 }
