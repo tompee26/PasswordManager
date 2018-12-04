@@ -37,7 +37,10 @@ class BackupDialogViewModel private constructor(
             backupOngoing.postValue(true)
             backupError.postValue("")
         }
-            .andThen(interactor.backup(key))
+            .andThen(
+                interactor.backup(key)
+                    .subscribeOn(Schedulers.io())
+            )
             .subscribeOn(Schedulers.io())
             .subscribe({
                 backupOngoing.postValue(false)

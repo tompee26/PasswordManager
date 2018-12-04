@@ -26,7 +26,10 @@ class BackupInteractor(
 
     fun saveEncryptedIdentifier(key: String): Completable {
         return Single.fromCallable { cipher.encryptWithPassKey(Constants.TEST_IDENTIFIER, key) }
-            .flatMapCompletable { dataStore.saveEncryptedIdentifier(userContainer.email, it) }
+            .flatMapCompletable {
+                dataStore.saveEncryptedIdentifier(userContainer.email, it)
+                    .subscribeOn(Schedulers.io())
+            }
     }
 
     fun getEncryptedIdentifier(): Observable<String> {
@@ -38,14 +41,13 @@ class BackupInteractor(
             .firstOrError()
             .flatMapCompletable {
                 Completable.fromCallable {
-                    cipher.validatePasskey(
-                        it,
-                        key,
-                        Constants.TEST_IDENTIFIER
-                    )
-                }
+                    cipher.validatePasskey(it, key, Constants.TEST_IDENTIFIER)
+                }.subscribeOn(Schedulers.computation())
             }
-            .andThen(dataStore.deletePackages(userContainer.email))
+            .andThen(
+                dataStore.deletePackages(userContainer.email)
+                    .subscribeOn(Schedulers.io())
+            )
             .andThen(packageDao.getPackages()
                 .firstElement()
                 .flatMapCompletable { list ->
@@ -58,9 +60,15 @@ class BackupInteractor(
                                 cipher.encryptWithPassKey(cipher.decrypt(it.password, it.packageName), key)
                             )
                         }
+                        .observeOn(Schedulers.io())
                         .flatMapCompletable { dataStore.savePackage(userContainer.email, it) }
-                })
-            .andThen(dataStore.deleteSites(userContainer.email))
+                        .subscribeOn(Schedulers.computation())
+                }
+                .subscribeOn(Schedulers.io()))
+            .andThen(
+                dataStore.deleteSites(userContainer.email)
+                    .subscribeOn(Schedulers.io())
+            )
             .andThen(siteDao.getSites()
                 .firstElement()
                 .flatMapCompletable { list ->
@@ -73,8 +81,11 @@ class BackupInteractor(
                                 cipher.encryptWithPassKey(cipher.decrypt(it.password, it.siteUrl), key)
                             )
                         }
+                        .observeOn(Schedulers.io())
                         .flatMapCompletable { dataStore.saveSite(userContainer.email, it) }
-                })
+                        .subscribeOn(Schedulers.computation())
+                }
+                .subscribeOn(Schedulers.io()))
     }
 
     fun clean(key: String): Completable {
@@ -82,16 +93,21 @@ class BackupInteractor(
             .firstOrError()
             .flatMapCompletable {
                 Completable.fromCallable {
-                    cipher.validatePasskey(
-                        it,
-                        key,
-                        Constants.TEST_IDENTIFIER
-                    )
-                }
+                    cipher.validatePasskey(it, key, Constants.TEST_IDENTIFIER)
+                }.subscribeOn(Schedulers.computation())
             }
-            .andThen(dataStore.saveEncryptedIdentifier(userContainer.email, ""))
-            .andThen(dataStore.deletePackages(userContainer.email))
-            .andThen(dataStore.deleteSites(userContainer.email))
+            .andThen(
+                dataStore.saveEncryptedIdentifier(userContainer.email, "")
+                    .subscribeOn(Schedulers.io())
+            )
+            .andThen(
+                dataStore.deletePackages(userContainer.email)
+                    .subscribeOn(Schedulers.io())
+            )
+            .andThen(
+                dataStore.deleteSites(userContainer.email)
+                    .subscribeOn(Schedulers.io())
+            )
     }
 
     fun restore(key: String): Completable {

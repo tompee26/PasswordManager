@@ -37,7 +37,10 @@ class CleanDialogViewModel private constructor(
             cleanOngoing.postValue(true)
             cleanError.postValue("")
         }
-            .andThen(interactor.clean(key))
+            .andThen(
+                interactor.clean(key)
+                    .subscribeOn(Schedulers.io())
+            )
             .subscribeOn(Schedulers.io())
             .subscribe({
                 cleanOngoing.postValue(false)

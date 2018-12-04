@@ -39,7 +39,10 @@ class RegisterKeyViewModel private constructor(
 
     fun setKey(key: String) {
         subscriptions += Completable.fromAction { registerOngoing.postValue(true) }
-            .andThen(interactor.saveEncryptedIdentifier(key))
+            .andThen(
+                interactor.saveEncryptedIdentifier(key)
+                    .subscribeOn(Schedulers.computation())
+            )
             .subscribeOn(Schedulers.io())
             .subscribe { registerOngoing.postValue(false) }
     }
