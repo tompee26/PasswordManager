@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.tompee.utilities.passwordmanager.Constants
 import com.tompee.utilities.passwordmanager.core.asset.AssetManager
 import com.tompee.utilities.passwordmanager.core.auth.Authenticator
@@ -104,7 +105,7 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun provideUserContainer(): UserContainer = UserContainer("t@g.com")
+    fun provideUserContainer(): UserContainer = UserContainer("")
 
     @Provides
     @Singleton
@@ -112,5 +113,12 @@ class CoreModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseDataStore(): FirebaseDataStore = FirebaseDataStore(FirebaseFirestore.getInstance())
+    fun provideFirebaseDataStore(): FirebaseDataStore {
+        val settings = FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(false)
+            .build()
+        val db = FirebaseFirestore.getInstance()
+        db.firestoreSettings = settings
+        return FirebaseDataStore(db)
+    }
 }
