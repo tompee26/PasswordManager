@@ -47,5 +47,4 @@ class CleanDialogViewModel private constructor(
                 cleanError.postValue(it.message)
             }
     }
-
 }

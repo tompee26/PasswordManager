@@ -8,4 +8,6 @@ interface Cipher {
     fun encryptWithPassKey(data: String, passKey: String): String
 
     fun validatePasskey(encryptedData: String, passKey: String, testData: String)
+
+    fun decryptWithPassKey(data: String, passKey: String): String
 }

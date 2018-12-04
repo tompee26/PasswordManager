@@ -5,6 +5,8 @@ import com.tompee.utilities.passwordmanager.base.BaseInteractor
 import com.tompee.utilities.passwordmanager.core.cipher.Cipher
 import com.tompee.utilities.passwordmanager.core.database.PackageDao
 import com.tompee.utilities.passwordmanager.core.database.SiteDao
+import com.tompee.utilities.passwordmanager.core.database.entity.PackageEntity
+import com.tompee.utilities.passwordmanager.core.database.entity.SiteEntity
 import com.tompee.utilities.passwordmanager.core.datastore.DataStore
 import com.tompee.utilities.passwordmanager.core.datastore.PackageModel
 import com.tompee.utilities.passwordmanager.core.datastore.SiteModel
@@ -12,6 +14,7 @@ import com.tompee.utilities.passwordmanager.model.UserContainer
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 
 class BackupInteractor(
     private val cipher: Cipher,
@@ -89,5 +92,55 @@ class BackupInteractor(
             .andThen(dataStore.saveEncryptedIdentifier(userContainer.email, ""))
             .andThen(dataStore.deletePackages(userContainer.email))
             .andThen(dataStore.deleteSites(userContainer.email))
+    }
+
+    fun restore(key: String): Completable {
+        return dataStore.getEncryptedIdentifier(userContainer.email)
+            .firstOrError()
+            .flatMapCompletable {
+                Completable.fromCallable {
+                    cipher.validatePasskey(it, key, Constants.TEST_IDENTIFIER)
+                }.subscribeOn(Schedulers.computation())
+            }
+            .andThen(
+                dataStore.getPackages(userContainer.email)
+                    .concatMapSingle { packageModel ->
+                        Single.fromCallable {
+                            val packageName = cipher.decryptWithPassKey(packageModel.packageName, key)
+                            return@fromCallable PackageEntity(
+                                packageName,
+                                cipher.decryptWithPassKey(packageModel.name, key),
+                                cipher.encrypt(cipher.decryptWithPassKey(packageModel.username, key), packageName),
+                                cipher.encrypt(cipher.decryptWithPassKey(packageModel.password, key), packageName)
+                            )
+                        }
+                            .observeOn(Schedulers.io())
+                            .doOnSuccess { packageDao.insert(it) }
+                            .subscribeOn(Schedulers.computation())
+                    }
+                    .toList()
+                    .ignoreElement()
+                    .subscribeOn(Schedulers.io())
+            )
+            .andThen(
+                dataStore.getSites(userContainer.email)
+                    .concatMapSingle { siteModel ->
+                        Single.fromCallable {
+                            val url = cipher.decryptWithPassKey(siteModel.url, key)
+                            return@fromCallable SiteEntity(
+                                cipher.decryptWithPassKey(siteModel.name, key),
+                                url,
+                                cipher.encrypt(cipher.decryptWithPassKey(siteModel.username, key), url),
+                                cipher.encrypt(cipher.decryptWithPassKey(siteModel.password, key), url)
+                            )
+                        }
+                            .observeOn(Schedulers.io())
+                            .doOnSuccess { siteDao.insert(it) }
+                            .subscribeOn(Schedulers.computation())
+                    }
+                    .toList()
+                    .ignoreElement()
+                    .subscribeOn(Schedulers.io())
+            )
     }
 }

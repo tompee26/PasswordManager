@@ -79,8 +79,8 @@
     <string name="message_password_2_hint">Verify your key</string>
     <string name="message_key_backup">Warning. Backing up will erase all previous cloud data and will be replaced with the currently stored data. Proceed by providing the registered key.</string>
     <string name="message_backup_ongoing">Backup ongoing. Please do not close the application or press any button. This dialog will automatically close once backup is finished.</string>
-    <string name="message_key_restore">Warning. Restoring will delete all local data and will be replaced with remote data. Proceed with caution.</string>
-    <string name="message_restore_ongoing">Restoration ongoing. Please do not close the application or press any button. This dialog will automatically close once restoration is finished.</string>
+    <string name="message_key_restore">Warning. Restoring will overwrite duplicate apps or sites. Proceed by providing the registered key.</string>
+    <string name="message_restore_ongoing">Restoration ongoing. Please do not close the application or press any button. This dialog will automatically close once operation is finished.</string>
     <string name="message_register_ongoing">Registering key. Please do not close the application or press any button. This dialog will automatically close once operation is finished.</string>
     <string name="message_key_clean">Warning. Cleanup will erase all cloud data including the key. This process cannot be undone. Proceed by providing the registered key.</string>
     <string name="message_clean_ongoing">Cleanup ongoing. Please do not close the application or press any button. This dialog will automatically close once operation is finished.</string>

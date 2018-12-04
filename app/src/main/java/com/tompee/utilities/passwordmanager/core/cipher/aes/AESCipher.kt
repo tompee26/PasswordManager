@@ -41,7 +41,7 @@ class AESCipher : BaseKeystore(), Cipher {
         val cipherText = ByteArray(byteBuffer.remaining())
         byteBuffer.get(cipherText)
 
-        val cipher = generateCipher(passKey, salt, iv)
+        val cipher = generateCipher(passKey, salt, iv, true)
         val bytes = cipher.doFinal(testData.toByteArray())
         if (bytes?.contentEquals(cipherText) == false) {
             throw Exception("Invalid key")
@@ -56,7 +56,7 @@ class AESCipher : BaseKeystore(), Cipher {
         val iv = ByteArray(16)
         secureRandom.nextBytes(iv)
 
-        val cipher = generateCipher(passKey, salt, iv)
+        val cipher = generateCipher(passKey, salt, iv, true)
 
         val bytes = cipher.doFinal(data.toByteArray())
         val byteBuffer = ByteBuffer.allocate(4 + cipher.iv.size + 4 + salt.size + bytes.size)
@@ -66,6 +66,29 @@ class AESCipher : BaseKeystore(), Cipher {
         byteBuffer.put(salt)
         byteBuffer.put(bytes)
         return Base64.encodeToString(byteBuffer.array(), Base64.DEFAULT)
+    }
+
+    override fun decryptWithPassKey(data: String, passKey: String): String {
+        val cipherMessage = Base64.decode(data, Base64.DEFAULT)
+        val byteBuffer = ByteBuffer.wrap(cipherMessage)
+
+        val ivLength = byteBuffer.int
+        if (ivLength < 12 || ivLength > 16) { // check input parameter
+            throw IllegalArgumentException("invalid iv length")
+        }
+        val iv = ByteArray(ivLength)
+        byteBuffer.get(iv)
+
+        val saltLength = byteBuffer.int
+        val salt = ByteArray(saltLength)
+        byteBuffer.get(salt)
+
+        val cipherText = ByteArray(byteBuffer.remaining())
+        byteBuffer.get(cipherText)
+
+        val cipher = generateCipher(passKey, salt, iv, false)
+        val decodedData = cipher.doFinal(cipherText)
+        return String(decodedData)
     }
 
     override fun encrypt(data: String, alias: String): String {
@@ -116,7 +139,7 @@ class AESCipher : BaseKeystore(), Cipher {
         return (keyStore.getEntry(alias, null) as KeyStore.SecretKeyEntry?)?.secretKey
     }
 
-    private fun generateCipher(passKey: String, salt: ByteArray, iv: ByteArray): javax.crypto.Cipher {
+    private fun generateCipher(passKey: String, salt: ByteArray, iv: ByteArray, mode: Boolean): javax.crypto.Cipher {
         val spec = PBEKeySpec(passKey.toCharArray(), salt, ITERATIONS, KEY_LENGTH)
         val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
         val key = factory.generateSecret(spec).encoded
@@ -125,7 +148,7 @@ class AESCipher : BaseKeystore(), Cipher {
         val ivSpec = IvParameterSpec(iv)
 
         val cipher = javax.crypto.Cipher.getInstance(SYMMETRIC_TRANSFORMATION)
-        cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, keySpec, ivSpec)
+        cipher.init(if (mode) javax.crypto.Cipher.ENCRYPT_MODE else javax.crypto.Cipher.DECRYPT_MODE, keySpec, ivSpec)
         return cipher
     }
 }

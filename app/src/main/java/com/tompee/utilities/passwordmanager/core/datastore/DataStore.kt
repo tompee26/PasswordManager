@@ -15,4 +15,8 @@ interface DataStore {
     fun deletePackages(email: String): Completable
 
     fun deleteSites(email: String): Completable
+
+    fun getPackages(email: String): Observable<PackageModel>
+
+    fun getSites(email: String): Observable<SiteModel>
 }

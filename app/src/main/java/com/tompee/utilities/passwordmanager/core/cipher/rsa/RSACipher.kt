@@ -10,6 +10,10 @@ import java.security.KeyPairGenerator
 import java.security.PrivateKey
 
 class RSACipher : BaseKeystore(), Cipher {
+    override fun decryptWithPassKey(data: String, passKey: String): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun validatePasskey(encryptedData: String, passKey: String, testData: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

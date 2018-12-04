@@ -9,6 +9,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 
 class FirebaseDataStore(private val db: FirebaseFirestore) : DataStore {
+
     companion object {
         private const val ACCOUNT = "account"
         private const val PACKAGES = "packages"
@@ -67,6 +68,34 @@ class FirebaseDataStore(private val db: FirebaseFirestore) : DataStore {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         document.reference.delete()
+                    }
+                    emitter.onComplete()
+                }.addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+    }
+
+    override fun getPackages(email: String): Observable<PackageModel> {
+        return Observable.create { emitter ->
+            db.collection(ACCOUNT).document(email).collection(PACKAGES).get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        emitter.onNext(document.toObject(PackageModel::class.java))
+                    }
+                    emitter.onComplete()
+                }.addOnFailureListener {
+                    emitter.onError(it)
+                }
+        }
+    }
+
+    override fun getSites(email: String): Observable<SiteModel> {
+        return Observable.create { emitter ->
+            db.collection(ACCOUNT).document(email).collection(SITES).get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        emitter.onNext(document.toObject(SiteModel::class.java))
                     }
                     emitter.onComplete()
                 }.addOnFailureListener {

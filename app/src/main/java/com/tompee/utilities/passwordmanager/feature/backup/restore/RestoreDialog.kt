@@ -5,9 +5,11 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tompee.utilities.passwordmanager.R
 import com.tompee.utilities.passwordmanager.base.BaseDialogFragment
@@ -34,25 +36,26 @@ class RestoreDialog : BaseDialogFragment() {
             null,
             false
         )
-//        vm.backupError.observe(this, Observer {
-//            if (it.isNotEmpty()) {
-//                binding.pass1.error = it
-//            } else {
-//                binding.pass1.error = null
-//            }
-//        })
-//        vm.backupOngoing.observe(this, Observer {
-//            if (it) {
-//                binding.progressBar.visibility = View.VISIBLE
-//                binding.textView.visibility = View.VISIBLE
-//            } else {
-//                binding.progressBar.visibility = View.GONE
-//                binding.textView.visibility = View.GONE
-//            }
-//        })
-//        vm.backupFinished.observe(this, Observer {
-//            if (it) dismiss()
-//        })
+        vm.restoreError.observe(this, Observer {
+            if (it.isNotEmpty()) {
+                binding.pass1.error = it
+            } else {
+                binding.pass1.error = null
+            }
+        })
+        vm.restoreOngoing.observe(this, Observer {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.textView.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+                binding.textView.visibility = View.GONE
+            }
+            binding.pass1.isEnabled = !it
+        })
+        vm.restoreFinished.observe(this, Observer {
+            if (it) dismiss()
+        })
         return AlertDialog.Builder(activity!!)
             .setTitle(R.string.title_restore)
             .setView(binding.root)
@@ -74,7 +77,7 @@ class RestoreDialog : BaseDialogFragment() {
             }
             binding.pass1.error = null
             hideKeyboard()
-//            vm.proceedWithBackup(binding.pass1.editText?.text.toString())
+            vm.restore(binding.pass1.editText?.text.toString())
         }
     }
 
